@@ -8,6 +8,7 @@ import { NavigationList } from '../../components/navigation-list';
 import { Search } from '../../components/search';
 import { useGetAllBooksQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
+import { defineRoute } from '../../shared/define-ru-category';
 import { Book } from '../../shared/types.books';
 
 import styles from './main-page.module.css';
@@ -19,17 +20,13 @@ export function MainPage() {
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
 
-  const [booksArray, setBooksArray] = useState<Book[]>([])
-  const [categorySelected, setCategorySelected] = useState('Бизнес')
+  const { category } = useParams();
 
   const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
 
   useEffect(() => {
     if (!isLoading && books) {
       dispatch({ type: 'IS_LOADING', payload: false });
-      const filtered = books.filter(book => book.categories[0] === categorySelected);
-
-      console.log(filtered);
     }
     if (isLoading) {
       dispatch({ type: 'IS_LOADING', payload: true });
@@ -41,8 +38,20 @@ export function MainPage() {
     }
   });
 
-  const renderBooks = () => books.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
+  function renderBooks(genre: string | undefined) {
+    let booksArray: Book[] = [];
 
+    if (!category) {
+      booksArray = books;
+    }
+
+    if (category) {
+      booksArray = books.filter((book: Book) => book.categories.indexOf(defineRoute(genre)) > -1);
+      console.log(defineRoute(genre));
+    }
+
+    return booksArray.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
+  }
 
   return (
     <section className={classNames(styles.MainPage, { [styles.MainPage_noScroll]: isBurgerOpen })}>
@@ -56,7 +65,7 @@ export function MainPage() {
             isListView ? `${styles.MainPage__books} ${styles.MainPage__books_list}` : `${styles.MainPage__books}`
           }
         >
-          {renderBooks()}
+          {renderBooks(category)}
         </div>
       </div>
     </section>
