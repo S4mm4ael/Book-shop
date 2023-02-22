@@ -32,10 +32,10 @@
 .Header__person p{
   font-size:14px;
 }
-@media screen and (max-width:1109px) {
+@media screen and (max-width:1110px) {
   .Header{
-    padding-left:10px;
-    padding-right:10px;
+    padding-left:20px;
+    padding-right:20px;
     width:100%;;
   }
 }

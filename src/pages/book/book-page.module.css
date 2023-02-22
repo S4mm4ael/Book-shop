@@ -247,6 +247,10 @@
     width:100%;
     justify-content:center;
   }
+  .BookPage__properties{
+    width:100%;
+    padding-left:40px;
+  }
   .BookPage__bookWrapper{
     flex-direction:column;
     align-items:center;
@@ -255,9 +259,12 @@
 }
 .BookPage__route{
   padding-left:10px;
-  width:100%;
+  max-width:100%;
   display:flex;
-  align-items:center;
+  justify-content:flex-start;
+}
+.BookPage__routeContainer{
+  min-width:auto;
 }
 .BookPage__book,
 .BookPage__properties
@@ -431,6 +438,9 @@
   .BookPage__detailsBook{
     align-items:center;
     flex-direction:column;
+  }
+  .BookPage__details{
+    padding-left:10px;
   }
   .BookPage__commentSection{
     padding:0 10px;
