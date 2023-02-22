@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { Card } from '../../components/card';
@@ -7,6 +8,7 @@ import { NavigationList } from '../../components/navigation-list';
 import { Search } from '../../components/search';
 import { useGetAllBooksQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
+import { Book } from '../../shared/types.books';
 
 import styles from './main-page.module.css';
 
@@ -17,12 +19,17 @@ export function MainPage() {
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
 
+  const [booksArray, setBooksArray] = useState<Book[]>([])
+  const [categorySelected, setCategorySelected] = useState('Бизнес')
+
   const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
 
   useEffect(() => {
     if (!isLoading && books) {
       dispatch({ type: 'IS_LOADING', payload: false });
-      // console.log(books.forEach((book) => console.log(book.authors)));
+      const filtered = books.filter(book => book.categories[0] === categorySelected);
+
+      console.log(filtered);
     }
     if (isLoading) {
       dispatch({ type: 'IS_LOADING', payload: true });
@@ -34,7 +41,8 @@ export function MainPage() {
     }
   });
 
-  const renderBooks = () => books.map((book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
+  const renderBooks = () => books.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
+
 
   return (
     <section className={classNames(styles.MainPage, { [styles.MainPage_noScroll]: isBurgerOpen })}>

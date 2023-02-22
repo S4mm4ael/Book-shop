@@ -59,7 +59,7 @@ export function NavigationList() {
       <ul className={styles.NavigationList__list}>
         <li className={styles.NavigationList__item}>
           <div
-            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__title_active}`
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all' && `${styles.NavigationList__title_active}`
               }`}
           >
             {' '}
@@ -92,7 +92,7 @@ export function NavigationList() {
                 to='/books'
                 data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
                 onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__booksItem_active}`
+                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all' && `${styles.NavigationList__booksItem_active}`
                   }`}
               >
                 Все книги

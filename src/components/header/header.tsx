@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 import avatar from '../../assets/png/avatar.png';
@@ -12,7 +11,7 @@ export function Header() {
 
     <div className={styles.Header}>
       <Burger />
-      <Link className={styles.Header__logo} to='/books'>
+      <Link className={styles.Header__logo} to='/books/all'>
         <img className={styles.Header__img} src={logo} alt='logo' />
         <p className={styles.Header__text}>Cleverland</p>
       </Link>
