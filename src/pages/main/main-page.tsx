@@ -15,7 +15,6 @@ import styles from './main-page.module.css';
 
 export function MainPage() {
   const dispatch: AppDispatch = useDispatch();
-
   const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
@@ -40,6 +39,7 @@ export function MainPage() {
 
   function renderBooks(genre: string | undefined) {
     let booksArray: Book[] = [];
+    const message = document.getElementById('empty');
 
     if (!category) {
       booksArray = books;
@@ -47,7 +47,17 @@ export function MainPage() {
 
     if (category) {
       booksArray = books.filter((book: Book) => book.categories.indexOf(defineRoute(genre)) > -1);
-      console.log(defineRoute(genre));
+    }
+
+    if (booksArray.length !== 0) {
+      if (message) {
+        message.style.display = 'none';
+      }
+    }
+    if (booksArray.length === 0) {
+      if (message) {
+        message.style.display = 'block';
+      }
     }
 
     return booksArray.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
@@ -66,6 +76,9 @@ export function MainPage() {
           }
         >
           {renderBooks(category)}
+          <p id='empty' className={styles.MainPage__emptyMessage}>
+            В этой категории книг ещё нет
+          </p>
         </div>
       </div>
     </section>
