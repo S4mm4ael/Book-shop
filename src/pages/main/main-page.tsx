@@ -18,10 +18,11 @@ export function MainPage() {
   const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
-
-  const { category } = useParams();
+  const category: string | undefined = useSelector((state: RootState) => state.data.category);
 
   const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
+
+
 
   useEffect(() => {
     if (!isLoading && books) {
@@ -35,18 +36,20 @@ export function MainPage() {
       // eslint-disable-next-line no-console
       console.log(error);
     }
-  });
+  }, [isLoading, books, dispatch, error])
 
   function renderBooks(genre: string | undefined) {
     let booksArray: Book[] = [];
     const message = document.getElementById('empty');
 
-    if (!category) {
+    if (category === undefined) {
       booksArray = books;
     }
 
     if (category) {
       booksArray = books.filter((book: Book) => book.categories.indexOf(defineRoute(genre)) > -1);
+
+
     }
 
     if (booksArray.length !== 0) {
