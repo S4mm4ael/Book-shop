@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useGetAllBooksQuery } from '../../../redux/features/books-slice';
-import { AppDispatch, RootState } from '../../../redux/store';
-import { defineRoute } from '../../../shared/define-ru-category';
-import { Book, Category } from '../../../shared/types.books';
+import { AppDispatch } from '../../../redux/store';
+import { Category } from '../../../shared/types.books';
 
 import styles from '../navigation-list.module.css';
 
@@ -13,7 +12,7 @@ export function CategoryItem({ name, path }: Category) {
   const location = useLocation();
   const dispatch: AppDispatch = useDispatch();
 
-  const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
+  const { data: books = [] } = useGetAllBooksQuery('');
 
   function handleClick() {
     dispatch({ type: 'IS_BURGER_OPEN', payload: false })
