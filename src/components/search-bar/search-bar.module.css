@@ -32,11 +32,23 @@
 }
 .SearchBar__icon{
   position:absolute;
-  left:16px;
+  left:12px;
+
+}
+.SearchBar__sortWrapper button{
+  position:relative;
+  cursor:pointer;
+  all:unset;
+  cursor:pointer;
 }
 .SearchBar__iconSort{
+  top:10px;
   position:absolute;
-  left:16px;
+  left:12px;
+  transform:.3s;
+}
+.SearchBar__iconSort_rotate{
+  transform:rotate(180deg);
 }
 .SearchBar__sort{
   appearance:none;

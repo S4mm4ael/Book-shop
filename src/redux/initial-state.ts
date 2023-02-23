@@ -6,7 +6,7 @@ interface CounterState {
   isFetchError: boolean;
   isLoading: boolean;
   category: string | undefined;
-  sorting: string | undefined;
+  sorting: boolean;
 }
 
 export const initialState: CounterState = {
@@ -14,6 +14,6 @@ export const initialState: CounterState = {
   isGenreMenuOpen: false,
   isFetchError: false,
   isLoading:true,
-  sorting: undefined,
+  sorting: true,
   category: undefined,
 };

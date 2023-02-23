@@ -1,15 +1,21 @@
+
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import cross from '../../assets/svg/cross.svg';
 import search from '../../assets/svg/search.svg';
 import sort from '../../assets/svg/sort.svg';
+import { AppDispatch, RootState } from '../../redux/store';
 import { SearchBarProps } from '../../shared/types.interface';
 
 import styles from './search-bar.module.css';
 
 export function SearchBar({ isSearching, changeView }: SearchBarProps) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 660);
+  const dispatch: AppDispatch = useDispatch();
+  const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
+
   const updateMedia = () => {
     setDesktop(window.innerWidth > 660);
   };
@@ -19,6 +25,15 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
 
     return () => window.removeEventListener('resize', updateMedia);
   });
+
+  function handleSortChange() {
+    if (sorting) {
+      dispatch({ type: 'SORTING', payload: false })
+    }
+    if (!sorting) {
+      dispatch({ type: 'SORTING', payload: true })
+    }
+  }
 
   return (
     <div className={classNames(styles.SearchBar, { [styles.SearchBar_active]: isSearching })}>
@@ -68,11 +83,13 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
       )}
       {!isSearching && (
         <div className={styles.SearchBar__sortWrapper}>
-          <img className={styles.SearchBar__iconSort} src={sort} alt='sort-icon' />
-          <select className={styles.SearchBar__sort} name='sorting' id='sorting'>
-            {!isDesktop && <option value=''> </option>}
-            <option value='rating'>По рейтингу</option>
-          </select>
+          <button onClick={() => handleSortChange()} type='button'>
+            <img className={classNames(styles.SearchBar__iconSort, { [styles.SearchBar__iconSort_rotate]: !sorting })} src={sort} alt='sort-icon' />
+            <select className={styles.SearchBar__sort} name='sorting' id='sorting'>
+              {!isDesktop && <option value=''> </option>}
+              <option value='rating'>По рейтингу</option>
+            </select>
+          </button>
         </div>
       )}
     </div>
