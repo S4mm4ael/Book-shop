@@ -15,6 +15,7 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 660);
   const dispatch: AppDispatch = useDispatch();
   const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
+  const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 660);
@@ -33,6 +34,12 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
     if (!sorting) {
       dispatch({ type: 'SORTING', payload: true })
     }
+  }
+
+  function handleSearchQuery(query: string) {
+    dispatch({ type: 'SEARCH_QUERY', payload: query })
+    console.log(searchQuery);
+
   }
 
   return (
@@ -58,6 +65,8 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
               className={classNames(styles.SearchBar__input, { [styles.SearchBar__input_hidden]: !isSearching })}
               type='text'
               placeholder='Поиск книги или автора…'
+              onChange={(e) => handleSearchQuery(e.target.value)}
+              value={searchQuery}
             />
             <button
               onClick={() => changeView(false)}
@@ -78,6 +87,8 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
             className={styles.SearchBar__input}
             type='text'
             placeholder={isDesktop ? 'Поиск книги или автора…' : ''}
+            onChange={(e) => handleSearchQuery(e.target.value)}
+            value={searchQuery}
           />
         </React.Fragment>
       )}
