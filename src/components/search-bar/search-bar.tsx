@@ -38,8 +38,6 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
 
   function handleSearchQuery(query: string) {
     dispatch({ type: 'SEARCH_QUERY', payload: query })
-    console.log(searchQuery);
-
   }
 
   return (
@@ -66,7 +64,7 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
               type='text'
               placeholder='Поиск книги или автора…'
               onChange={(e) => handleSearchQuery(e.target.value)}
-              value={searchQuery}
+              value={searchQuery || ''}
             />
             <button
               onClick={() => changeView(false)}
@@ -88,7 +86,7 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
             type='text'
             placeholder={isDesktop ? 'Поиск книги или автора…' : ''}
             onChange={(e) => handleSearchQuery(e.target.value)}
-            value={searchQuery}
+            value={searchQuery || ''}
           />
         </React.Fragment>
       )}

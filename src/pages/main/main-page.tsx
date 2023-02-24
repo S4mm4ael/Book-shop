@@ -19,6 +19,7 @@ export function MainPage() {
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
   const category: string | undefined = useSelector((state: RootState) => state.data.category);
   const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
+  const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
 
   const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
 
@@ -43,6 +44,7 @@ export function MainPage() {
     let booksArray: Book[] = [];
 
     booksArray = filterBooks()
+    booksArray = searchBooks(booksArray)
     booksArray = sortBooks(booksArray)
 
     return booksArray.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
@@ -86,6 +88,22 @@ export function MainPage() {
     }
 
     return booksArraySorted
+  }
+
+  function searchBooks(booksArray: Book[]) {
+    let booksArraySearched: Book[] = []
+
+    if (!searchQuery) {
+      booksArraySearched = booksArray
+
+    }
+    if (searchQuery) {
+      const regexp = new RegExp(searchQuery, 'ig')
+
+      booksArraySearched = booksArray.filter((book: Book) => book.title.match(regexp))
+    }
+
+    return booksArraySearched
   }
 
   return (
