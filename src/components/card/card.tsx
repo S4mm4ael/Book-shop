@@ -1,15 +1,18 @@
+import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import empty from '../../assets/img/book-cover-none.jpg';
 import emptyList from '../../assets/img/book-cover-none-list.jpg';
 import { renderStars } from '../../shared/render-stars';
 import { BookCard } from '../../shared/types.books';
+import { Hightlight } from '../hightlight';
 
 import styles from './card.module.css';
 
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
   const category = categories[0];
+  // const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
 
   function Truncate(string: string, amount: number) {
     return string.length > amount ? `${string.substring(0, amount - 3)}...` : string;
@@ -56,6 +59,7 @@ export function Card(props: BookCard) {
 
     return path;
   }
+  // const hightlight = useCallback((str: string) => <Hightlight str={str} />, [])
 
   if (props.isListView) {
     return (
@@ -108,7 +112,7 @@ export function Card(props: BookCard) {
         </div>
         <div className={styles.Card__rating}>{rating ? renderStars(rating) : 'ещё нет оценок'}</div>
         <div className={styles.Card__content}>
-          <h5 className={styles.Card__title}>{Truncate(title, 41)}</h5>
+          <h5 className={styles.Card__title}>{hightlight(title)}</h5>
           <p className={styles.Card__authors}>
             {authors.map((author) => `${author}`)}, <span className={styles.Card__year}>{issueYear}</span>
           </p>

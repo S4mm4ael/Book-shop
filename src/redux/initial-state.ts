@@ -7,7 +7,7 @@ interface CounterState {
   isLoading: boolean;
   category: string | undefined;
   sorting: boolean;
-  searchQuery: string | undefined;
+  searchQuery: string | null;
 }
 
 export const initialState: CounterState = {
@@ -17,5 +17,5 @@ export const initialState: CounterState = {
   isLoading:true,
   sorting: true,
   category: undefined,
-  searchQuery: undefined,
+  searchQuery: null,
 };
