@@ -22,7 +22,7 @@ export function MainPage() {
   const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
 
   const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
-
+ 
 
 
   useEffect(() => {

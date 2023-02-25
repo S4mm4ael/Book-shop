@@ -1,18 +1,24 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint @typescript-eslint/no-var-requires: "off" */
 import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers/root-reducer';
 import empty from '../../assets/img/book-cover-none.jpg';
 import emptyList from '../../assets/img/book-cover-none-list.jpg';
 import { renderStars } from '../../shared/render-stars';
 import { BookCard } from '../../shared/types.books';
-import { Hightlight } from '../hightlight';
 
 import styles from './card.module.css';
+
+const Highlight = require('react-highlighter');
 
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
   const category = categories[0];
-  // const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
+ 
+  const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
 
   function Truncate(string: string, amount: number) {
     return string.length > amount ? `${string.substring(0, amount - 3)}...` : string;
@@ -59,7 +65,6 @@ export function Card(props: BookCard) {
 
     return path;
   }
-  // const hightlight = useCallback((str: string) => <Hightlight str={str} />, [])
 
   if (props.isListView) {
     return (
@@ -70,7 +75,8 @@ export function Card(props: BookCard) {
           {!image && <img src={emptyList} alt='book-cover' height='170px' />}
           <div className={`${styles.Card__wrapper} ${styles.Card__wrapperList}`}>
             <div className={`${styles.Card__content} ${styles.Card__content_list}`}>
-              <h5 className={`${styles.Card__title} ${styles.Card__title_list}`}>{Truncate(title, 85)}</h5>
+              <h5 className={`${styles.Card__title} ${styles.Card__title_list}`}>{<Highlight search={searchQuery && searchQuery}>{Truncate(title, 85)}</Highlight>}
+              </h5>
               <p className={`${styles.Card__authors_list} ${styles.Card__authors}`}>
                 {authors.map((author) => `${author}`)}
                 <span className={styles.Card__year}>, {issueYear}</span>
@@ -112,7 +118,9 @@ export function Card(props: BookCard) {
         </div>
         <div className={styles.Card__rating}>{rating ? renderStars(rating) : 'ещё нет оценок'}</div>
         <div className={styles.Card__content}>
-          <h5 className={styles.Card__title}>{hightlight(title)}</h5>
+          <h5 className={styles.Card__title}>
+            <Highlight search={searchQuery && searchQuery}>{Truncate(title, 41)}</Highlight>
+            </h5>
           <p className={styles.Card__authors}>
             {authors.map((author) => `${author}`)}, <span className={styles.Card__year}>{issueYear}</span>
           </p>

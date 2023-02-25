@@ -15,7 +15,7 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 660);
   const dispatch: AppDispatch = useDispatch();
   const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
-  const searchQuery: string | null = useSelector((state: RootState) => state.data.searchQuery);
+  const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 660);
