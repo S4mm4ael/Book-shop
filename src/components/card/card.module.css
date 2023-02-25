@@ -45,8 +45,8 @@
   font-weight:600;
   font-size:14px;
   line-height:18px;
-  height:80px;
-
+  min-height:54px;
+  align-items: center;
 }
 .Card__title_list{
   font-weight:700;

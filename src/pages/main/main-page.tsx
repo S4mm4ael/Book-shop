@@ -49,10 +49,19 @@ export function MainPage() {
 
     return booksArray.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
   }
+function showMessage(type:string, show:boolean){
 
+  const message = document.getElementById(type);
+
+  if (message && !show) {
+    message.style.display = 'none';
+  }
+  if (message && show) {
+    message.style.display = 'block';
+  }
+}
   function filterBooks() {
 
-    const message = document.getElementById('empty');
     let booksArrayFiltered: Book[] = []
 
     if (category === undefined) {
@@ -64,14 +73,10 @@ export function MainPage() {
 
     }
     if (booksArrayFiltered.length !== 0) {
-      if (message) {
-        message.style.display = 'none';
-      }
+      showMessage('empty', false)
     }
     if (booksArrayFiltered.length === 0) {
-      if (message) {
-        message.style.display = 'block';
-      }
+      showMessage('empty', true)
     }
 
     return booksArrayFiltered
@@ -101,6 +106,12 @@ export function MainPage() {
       const regexp = new RegExp(searchQuery, 'ig')
 
       booksArraySearched = booksArray.filter((book: Book) => book.title.match(regexp))
+      if (booksArraySearched.length !== 0) {
+        showMessage('empty-search', false)
+      }
+      if (booksArraySearched.length === 0) {
+        showMessage('empty-search', true)
+      }
     }
 
     return booksArraySearched
@@ -119,8 +130,11 @@ export function MainPage() {
           }
         >
           {renderBooks()}
-          <p id='empty' className={styles.MainPage__emptyMessage}>
+          <p id='empty' data-test-id="empty-category" className={styles.MainPage__emptyMessage}>
             В этой категории книг ещё нет
+          </p>
+          <p data-test-id="search-result-not-found" id='empty-search' className={styles.MainPage__emptyMessage}>
+          По запросу ничего не найдено
           </p>
         </div>
       </div>

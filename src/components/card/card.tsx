@@ -75,7 +75,7 @@ export function Card(props: BookCard) {
           {!image && <img src={emptyList} alt='book-cover' height='170px' />}
           <div className={`${styles.Card__wrapper} ${styles.Card__wrapperList}`}>
             <div className={`${styles.Card__content} ${styles.Card__content_list}`}>
-              <h5 className={`${styles.Card__title} ${styles.Card__title_list}`}>{<Highlight search={searchQuery && searchQuery}>{Truncate(title, 85)}</Highlight>}
+              <h5 className={`${styles.Card__title} ${styles.Card__title_list}`}><Highlight search={searchQuery ? searchQuery : ""} data-test-id="highlight-matches">{Truncate(title, 85)}</Highlight>
               </h5>
               <p className={`${styles.Card__authors_list} ${styles.Card__authors}`}>
                 {authors.map((author) => `${author}`)}
@@ -119,7 +119,7 @@ export function Card(props: BookCard) {
         <div className={styles.Card__rating}>{rating ? renderStars(rating) : 'ещё нет оценок'}</div>
         <div className={styles.Card__content}>
           <h5 className={styles.Card__title}>
-            <Highlight search={searchQuery && searchQuery}>{Truncate(title, 41)}</Highlight>
+            <Highlight search={searchQuery ? searchQuery : ""}>{Truncate(title, 41)}</Highlight>
             </h5>
           <p className={styles.Card__authors}>
             {authors.map((author) => `${author}`)}, <span className={styles.Card__year}>{issueYear}</span>
