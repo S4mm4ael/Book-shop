@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
@@ -29,15 +28,15 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
 
   function handleSortChange() {
     if (sorting) {
-      dispatch({ type: 'SORTING', payload: false })
+      dispatch({ type: 'SORTING', payload: false });
     }
     if (!sorting) {
-      dispatch({ type: 'SORTING', payload: true })
+      dispatch({ type: 'SORTING', payload: true });
     }
   }
 
   function handleSearchQuery(query: string) {
-    dispatch({ type: 'SEARCH_QUERY', payload: query })
+    dispatch({ type: 'SEARCH_QUERY', payload: query });
   }
 
   return (
@@ -92,8 +91,12 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
       )}
       {!isSearching && (
         <div className={styles.SearchBar__sortWrapper}>
-          <button onClick={() => handleSortChange()} type='button'>
-            <img className={classNames(styles.SearchBar__iconSort, { [styles.SearchBar__iconSort_rotate]: !sorting })} src={sort} alt='sort-icon' />
+          <button data-test-id='sort-rating-button' onClick={() => handleSortChange()} type='button'>
+            <img
+              className={classNames(styles.SearchBar__iconSort, { [styles.SearchBar__iconSort_rotate]: !sorting })}
+              src={sort}
+              alt='sort-icon'
+            />
             <select className={styles.SearchBar__sort} name='sorting' id='sorting'>
               {!isDesktop && <option value=''> </option>}
               <option value='rating'>По рейтингу</option>

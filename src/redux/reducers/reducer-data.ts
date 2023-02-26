@@ -5,7 +5,7 @@ import { initialState } from '../initial-state';
 
 const category = createAction<string | undefined>('CATEGORY');
 const sorting = createAction<boolean>('SORTING');
-const searchQuery = createAction<string | undefined>('SEARCH_QUERY');
+const searchQuery = createAction<string>('SEARCH_QUERY');
 
 export const dataReducer = createReducer(initialState, (builder) => {
   builder.addCase(category, (state, action) => {

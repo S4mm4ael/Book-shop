@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
@@ -19,11 +19,19 @@ export function MainPage() {
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
   const category: string | undefined = useSelector((state: RootState) => state.data.category);
   const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
-  const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
+  const searchQuery: string = useSelector((state: RootState) => state.data.searchQuery);
 
-  const { data: books = [], error, isLoading } = useGetAllBooksQuery('');
- 
+  const {
+    data: books = [],
+    error,
+    isLoading,
+  } = useGetAllBooksQuery('', {
+    refetchOnMountOrArgChange: true,
+  });
 
+  useEffect(() => {
+    dispatch({ type: 'CATEGORY', payload: window.location.href.split(':')[3] });
+  }, [dispatch]);
 
   useEffect(() => {
     if (!isLoading && books) {
@@ -37,84 +45,79 @@ export function MainPage() {
       // eslint-disable-next-line no-console
       console.log(error);
     }
-  }, [isLoading, books, dispatch, error])
-
+  }, [isLoading, books, dispatch, error]);
 
   function renderBooks() {
     let booksArray: Book[] = [];
 
-    booksArray = filterBooks()
-    booksArray = searchBooks(booksArray)
-    booksArray = sortBooks(booksArray)
+    booksArray = filterBooks();
+    booksArray = searchBooks(booksArray);
+    booksArray = sortBooks(booksArray);
 
     return booksArray.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
   }
-function showMessage(type:string, show:boolean){
+  function showMessage(type: string, show: boolean) {
+    const message = document.getElementById(type);
 
-  const message = document.getElementById(type);
-
-  if (message && !show) {
-    message.style.display = 'none';
-  }
-  if (message && show) {
-    message.style.display = 'block';
-  }
-}
-  function filterBooks() {
-
-    let booksArrayFiltered: Book[] = []
-
-    if (category === undefined) {
-      booksArrayFiltered = books;
+    if (message && !show) {
+      message.style.display = 'none';
     }
+    if (message && show) {
+      message.style.display = 'block';
+    }
+  }
+  function filterBooks() {
+    let booksArrayFiltered: Book[] = [];
 
     if (category) {
       booksArrayFiltered = books.filter((book: Book) => book.categories.indexOf(defineRoute(category)) > -1);
-
+    }
+    if (category === undefined || window.location.href.slice(-3) === 'all') {
+      booksArrayFiltered = books;
     }
     if (booksArrayFiltered.length !== 0) {
-      showMessage('empty', false)
+      showMessage('empty', false);
     }
     if (booksArrayFiltered.length === 0) {
-      showMessage('empty', true)
+      showMessage('empty', true);
     }
 
-    return booksArrayFiltered
+    return booksArrayFiltered;
   }
 
   function sortBooks(booksArray: Book[]) {
-    let booksArraySorted: Book[] = []
+    let booksArraySorted: Book[] = [];
 
     if (!sorting) {
-      booksArraySorted = booksArray.slice().sort((a, b) => a.rating - b.rating)
+      booksArraySorted = booksArray.slice().sort((a, b) => a.rating - b.rating);
     }
     if (sorting) {
-      booksArraySorted = booksArray.slice().sort((a, b) => b.rating - a.rating)
+      booksArraySorted = booksArray.slice().sort((a, b) => b.rating - a.rating);
     }
 
-    return booksArraySorted
+    return booksArraySorted;
   }
 
   function searchBooks(booksArray: Book[]) {
-    let booksArraySearched: Book[] = []
+    let booksArraySearched: Book[] = [];
 
-    if (!searchQuery) {
-      booksArraySearched = booksArray
-
+    if (searchQuery === '') {
+      booksArraySearched = booksArray;
     }
     if (searchQuery) {
-      const regexp = new RegExp(searchQuery, 'ig')
+      const regexp = new RegExp(searchQuery, 'ig');
 
-      booksArraySearched = booksArray.filter((book: Book) => book.title.match(regexp))
-      if (booksArraySearched.length !== 0) {
-        showMessage('empty-search', false)
-      }
-      if (booksArraySearched.length === 0) {
-        showMessage('empty-search', true)
-      }
+      booksArraySearched = booksArray.filter((book: Book) => book.title.match(regexp));
     }
 
-    return booksArraySearched
+    if (booksArraySearched.length !== 0) {
+      showMessage('empty-search', false);
+    }
+    if (booksArraySearched.length === 0 && searchQuery !== '') {
+      showMessage('empty-search', true);
+    }
+
+    return booksArraySearched;
   }
 
   return (
@@ -130,12 +133,17 @@ function showMessage(type:string, show:boolean){
           }
         >
           {renderBooks()}
-          <p id='empty' data-test-id="empty-category" className={styles.MainPage__emptyMessage}>
-            В этой категории книг ещё нет
-          </p>
-          <p data-test-id="search-result-not-found" id='empty-search' className={styles.MainPage__emptyMessage}>
-          По запросу ничего не найдено
-          </p>
+          {!isLoading && (
+            <React.Fragment>
+              {' '}
+              <p id='empty' data-test-id='empty-category' className={styles.MainPage__emptyMessage}>
+                В этой категории книг ещё нет
+              </p>
+              <p data-test-id='search-result-not-found' id='empty-search' className={styles.MainPage__emptyMessage}>
+                По запросу ничего не найдено
+              </p>
+            </React.Fragment>
+          )}
         </div>
       </div>
     </section>

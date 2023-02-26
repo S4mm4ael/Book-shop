@@ -32,8 +32,9 @@ export  function defineRoute(category: string | undefined) {
     case ':other':
       categoryRu = 'Другое';
       break;
+
     default:
-      categoryRu = 'Бизнес книги';
+      categoryRu = 'Все книги';
       break;
   }
 

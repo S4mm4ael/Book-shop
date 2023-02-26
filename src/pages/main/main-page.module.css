@@ -74,7 +74,7 @@
   }
 }
 .MainPage__emptyMessage{
-  display:block;
+  display:none;
   font-weight:700;
   font-size:32px;
   line-height:40px;

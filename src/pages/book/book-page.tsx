@@ -66,17 +66,17 @@ export function BookPage() {
       <div className={styles.BookPage__route}>
         {isDesktopSize ? (
           <div className={styles.BookPage__routeContainer}>
-            <Link to={`/books/${category}`}>
+            <Link data-test-id='breadcrumbs-link' to={`/books/${category}`}>
               <span>{category && defineRoute(category)}</span>
             </Link>{' '}
-            /<span>{book?.title}</span>
+            /<span data-test-id='book-name'>{book?.title}</span>
           </div>
         ) : (
           <div className={styles.BookPage__route_tablet}>
-            <Link to='/'>
-              <span>{book?.categories[0]} книги</span>
+            <Link data-test-id='breadcrumbs-link' to={`/books/${category}`}>
+              <span>{category && defineRoute(category)}</span>
             </Link>{' '}
-            / {book?.title}
+            / <span data-test-id='book-name'>{book?.title}</span>
           </div>
         )}
       </div>
@@ -91,7 +91,9 @@ export function BookPage() {
                   {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
                 </div>
                 <div className={styles.BookPage__text}>
-                  <h1 className={styles.BookPage__title}>{book?.title}</h1>
+                  <h1 className={styles.BookPage__title} data-test-id='book-title'>
+                    {book?.title}
+                  </h1>
                   <div className={styles.BookPage__authors}>
                     <p>{book?.authors.map((author) => `${author}, `)}</p>
                     <span>{book?.issueYear}</span>
@@ -112,7 +114,9 @@ export function BookPage() {
                     {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
                   </div>
                   <div className={styles.BookPage__bookWrapperRight_tablet}>
-                    <h1 className={styles.BookPage__title}>{book?.title}</h1>
+                    <h1 className={styles.BookPage__title} data-test-id='book-title'>
+                      {book?.title}
+                    </h1>
                     <div className={styles.BookPage__authors}>
                       <p>{book?.authors.map((author) => `${author}, `)}</p>
                       <span>{book?.issueYear}</span>
