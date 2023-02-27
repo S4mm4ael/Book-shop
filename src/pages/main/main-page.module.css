@@ -73,3 +73,14 @@
     row-gap:16px;
   }
 }
+.MainPage__emptyMessage{
+  display:none;
+  font-weight:700;
+  font-size:32px;
+  line-height:40px;
+  text-align:center;
+  letter-spacing:0.1px;
+  color:#A7A7A7;
+  margin:0 auto;
+  margin-top:200px;
+}

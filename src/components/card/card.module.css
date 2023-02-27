@@ -15,6 +15,9 @@
   min-height:202px;
   width:100%;
 }
+.Card__image{
+  margin:0 auto;
+}
 .Card__wrapper{
   display:flex;
   width:100%;
@@ -45,8 +48,8 @@
   font-weight:600;
   font-size:14px;
   line-height:18px;
-  height:80px;
-
+  min-height:54px;
+  align-items:center;
 }
 .Card__title_list{
   font-weight:700;
@@ -128,7 +131,10 @@
   font-size:16px;
   line-height:24px;
 }
-
+.Card__titleHighlighter{
+  color:rgb(255, 82, 83);
+  background-color:#fff;
+}
 @media screen and (max-width:1120px) {
   .Card_list{
     max-height:240px;
@@ -255,3 +261,4 @@
     min-width:300px;
     max-width:350px;
   }}
+

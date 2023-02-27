@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import strokeDown from '../../assets/svg/stroke-down.svg';
@@ -21,6 +21,8 @@ export function NavigationList() {
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 945);
 
+  const { path } = useParams();
+
   useEffect(() => {
     const updateMedia = () => {
       setDesktopSize(window.innerWidth > 945);
@@ -30,7 +32,14 @@ export function NavigationList() {
 
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
+
   const { data: categories = [], error, isLoading } = useGetCategoriesQuery('');
+
+  useEffect(() => {
+    if (path) {
+      dispatch({ type: 'CATEGORY', payload: path });
+    }
+  }, [path, dispatch]);
 
   useEffect(() => {
     if (error) {
@@ -59,13 +68,13 @@ export function NavigationList() {
       <ul className={styles.NavigationList__list}>
         <li className={styles.NavigationList__item}>
           <div
-            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__title_active}`
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all' && `${styles.NavigationList__title_active}`
               }`}
           >
             {' '}
             <Link
               data-test-id={isDesktopSize ? 'navigation-showcase' : 'burger-showcase'}
-              to='/books'
+              to='/books/all'
               onClick={() => {
                 dispatch({ type: 'IS_GENRE_MENU_OPEN' });
               }}
@@ -82,25 +91,26 @@ export function NavigationList() {
           </div>
         </li>
         <li className={styles.NavigationList__item}>
-          {!isFetchError &&
+          {!isFetchError && (
             <ul
               className={classNames(styles.NavigationList__booksList, {
                 [styles.NavigationList__booksList_hidden]: isMenuOpen || isLoading,
               })}
             >
               <Link
-                to='/books'
+                to='/books/all'
                 data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
                 onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books' && `${styles.NavigationList__booksItem_active}`
+                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all' ? `${styles.NavigationList__booksItem_active}` :
+                    `${styles.NavigationList__subtitle_regular}`
                   }`}
               >
                 Все книги
               </Link>
 
               {renderCategories()}
-            </ul>}
-
+            </ul>
+          )}
         </li>
         <li className={styles.NavigationList__item}>
           <Link
