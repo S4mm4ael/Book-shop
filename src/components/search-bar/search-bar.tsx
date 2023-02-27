@@ -4,6 +4,7 @@ import classNames from 'classnames';
 
 import cross from '../../assets/svg/cross.svg';
 import search from '../../assets/svg/search.svg';
+import searchActive from '../../assets/svg/search-active.svg';
 import sort from '../../assets/svg/sort.svg';
 import { AppDispatch, RootState } from '../../redux/store';
 import { SearchBarProps } from '../../shared/types.interface';
@@ -12,6 +13,7 @@ import styles from './search-bar.module.css';
 
 export function SearchBar({ isSearching, changeView }: SearchBarProps) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 660);
+  const [isFocus, setIsFocus] = useState(false);
   const dispatch: AppDispatch = useDispatch();
   const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
   const searchQuery: string | undefined = useSelector((state: RootState) => state.data.searchQuery);
@@ -53,7 +55,7 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
             type='button'
             onClick={() => changeView(true)}
           >
-            <img className={styles.SearchBar__icon} src={search} alt='search-icon' />
+            <img className={styles.SearchBar__icon} src={isFocus ? searchActive : search} alt='search-icon' />
           </button>
 
           <div className={styles.SearchBar__wrapper}>
@@ -64,6 +66,8 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
               placeholder='Поиск книги или автора…'
               onChange={(e) => handleSearchQuery(e.target.value)}
               value={searchQuery || ''}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
             />
             <button
               onClick={() => changeView(false)}
@@ -78,7 +82,7 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
       )}
       {isDesktop && (
         <React.Fragment>
-          <img data-test-id='button-search-open' className={styles.SearchBar__icon} src={search} alt='search-icon' />
+          <img data-test-id='button-search-open' className={styles.SearchBar__icon} src={isFocus ? searchActive : search} alt='search-icon' />
           <input
             data-test-id='input-search'
             className={styles.SearchBar__input}
@@ -86,6 +90,8 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
             placeholder={isDesktop ? 'Поиск книги или автора…' : ''}
             onChange={(e) => handleSearchQuery(e.target.value)}
             value={searchQuery || ''}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => setIsFocus(false)}
           />
         </React.Fragment>
       )}

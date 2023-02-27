@@ -131,4 +131,10 @@
     display:inline;
   }
 }
-
+.NavigationList__subtitle_regular{
+  font-weight:400;
+  font-size:16px;
+  line-height:24px;
+  display:flex;
+  align-items:center;
+}
