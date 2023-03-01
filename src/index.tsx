@@ -6,9 +6,11 @@ import { ApiProvider } from '@reduxjs/toolkit/dist/query/react';
 import { Layout } from './components/layout';
 import { LayoutMainPage } from './components/layout-main-page';
 import { ScrollToTop } from './hooks/scroll-to-top';
+import { AuthPage } from './pages/auth';
 import { BookPage } from './pages/book';
 import { MainPage } from './pages/main';
 import { ProfilePage } from './pages/profile';
+import { RegistrationPage } from './pages/registration';
 import { TermsPage } from './pages/terms';
 import { booksApi } from './redux/features/books-slice';
 import { store } from './redux/store';
@@ -23,6 +25,9 @@ root.render(
       <ScrollToTop />
       <Provider store={store}>
         <Routes>
+          <Route path='/registration' element={<RegistrationPage />} />
+          <Route path='/auth' element={<AuthPage contentView='auth' />} />
+          <Route path='/forgot-pass' element={<AuthPage contentView='restore' />} />
           <Route path='/' element={<Layout />}>
             <Route path='/' element={<LayoutMainPage />}>
               <Route path='/' element={<Navigate to='/books/all' />} />
