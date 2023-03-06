@@ -5,8 +5,17 @@
   display:flex;
   align-items:center;
   justify-content:center;
+  flex-direction:column;
+  gap:59px;
 }
-.Auth__formContainer{
+.Auth__mainTitle{
+  font-weight:700;
+  font-size:32px;
+  line-height:40px;
+  color:#FFFFFF;
+}
+.Auth__formContainer,
+.Auth__errorContainer{
   display:flex;
   flex-direction:column;
   align-items:flex-start;
@@ -27,12 +36,13 @@
 }
 .Auth__formItem{
   background:#F9F9FA;
-  border-radius:4px;
+  border-radius:4px 4px 0px 0px;
   height:56px;
   width:416px;
   border:none;
   padding:19px 12px;
   color:#363636;
+  border-bottom:1px solid #BFC4C9;
 }
 .Auth__formItem:first-child{
   margin-bottom:36px;
@@ -41,11 +51,11 @@
   font-weight:700;
   font-size:24px;
   line-height:30px;
-  margin:0 auto;
 }
 .Auth__formForgot{
   width:392px;
   margin-top:20px;
+  margin-bottom:32px;
   font-weight:500;
   font-size:12px;
   line-height:16px;
@@ -54,7 +64,7 @@
 }
 .Auth__formButton{
   border:none;
-  width:350px;
+  width:416px;
   height:52px;
   text-transform:uppercase;
   color:#FFFFFF;
@@ -65,5 +75,32 @@
   background:linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
   border-radius:30px;
   cursor:pointer;
-  margin-bottom:62px;
+
 }
+.Auth__registrationContainer{
+  display:flex;
+  width:100%;
+  gap:16px;
+  margin-top:-16px;
+  align-items:center;
+}
+.Auth__registrationP{
+  font-size:16px;
+  line-height:24px;
+  text-align:center;
+  letter-spacing:0.1px;
+  color:#727272;
+}
+.Auth__registrationLink{
+  font-weight:600;
+  font-size:12px;
+  line-height:18px;
+  letter-spacing:0.2px;
+  text-transform:uppercase;
+
+}
+.Auth__errorContainer{
+  height:266px;
+  align-items:center;
+}
+
