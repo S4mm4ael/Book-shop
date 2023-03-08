@@ -15,7 +15,8 @@
   color:#FFFFFF;
 }
 .Auth__formContainer,
-.Auth__errorContainer{
+.Auth__errorContainer,
+.Auth__successContainer{
   display:flex;
   flex-direction:column;
   align-items:flex-start;
@@ -99,8 +100,83 @@
   text-transform:uppercase;
 
 }
-.Auth__errorContainer{
+.Auth__errorContainer,
+.Auth__successContainer{
   height:266px;
   align-items:center;
 }
+.Auth__successContainer{
+  height:206px;
+}
+.Auth__formForgot_restore{
 
+  margin-top:0;
+}
+.Auth__formItem_restore:first-child{
+  margin-bottom:0;
+}
+.Auth__toAuthLink{
+  display:flex;
+  gap:12px;
+}
+.Auth__toAuthLink
+span {
+  font-weight:600;
+  font-size:12px;
+  line-height:18px;
+  align-items:center;
+  text-align:center;
+  letter-spacing:0.2px;
+  text-transform:uppercase;
+  color:#727272;
+}
+.Auth__toAuthLinkContainer{
+  width:100%;
+  padding:20px 0px 20px 16px;
+  background:#F9F9FA;
+  height:64px;
+  border-radius:16px 16px 0px 0px;
+}
+.Auth__formContainer_restore{
+  justify-content:flex-start;
+  padding:0;
+  height:422px;
+}
+.Auth__formItemWrapper{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  padding:0px 0px 48px;
+  gap:32px;
+}
+.Auth__formItemWrapper
+h2{
+  display:block;
+  width:100%;
+  padding-left:56px;
+}
+.Auth__formContainer_restore
+.Auth__registrationContainer
+{
+  margin:0;
+  margin-top:16px;
+}
+.Auth__formButton_restore{
+  margin-top:60px;
+}
+.Auth__formForgot_restoreTip{
+  width:357px;
+  letter-spacing:0.1px;
+  height:30px;
+  margin:0;
+}
+.Auth__formContainer_restore{
+  padding:0;
+  padding-top:48px;
+  height:470px;
+}
+.Auth__formItemWrapper_restore{
+  padding:0;
+}
