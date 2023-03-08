@@ -1,3 +1,10 @@
+.Auth
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+  -webkit-box-shadow:0 0 0 30px #F9F9FA inset !important;
+}
 .Auth{
   min-width:100vh;
   min-height:100vh;
@@ -179,4 +186,66 @@ h2{
 }
 .Auth__formItemWrapper_restore{
   padding:0;
+}
+.Auth__registrationContainer img{
+  display:none;
+}
+@media screen and (max-width:600px) {
+  .Auth{
+    padding:0 20px;
+  }
+  .Auth__formContainer{
+    width:100%;
+    align-items:center;
+    padding:24px 16px;
+  }
+  .Auth__registrationContainer{
+    justify-content:center;
+  }
+  .Auth__registrationContainer img{
+    display:block;
+  }
+  .Auth__formItem{
+    width:340px;
+    min-width:256px;
+  }
+  .Auth__formButton{
+    width:255px;
+  }
+  .Auth__formForgot{
+    width:340px;
+  }
+  .Auth__registrationLink{
+    display:flex;
+    gap:12px;
+  }
+}
+@media screen and (max-width:400px) {
+  .Auth__formContainer{
+    width:100%;
+    padding:0;
+  }
+  .Auth{
+    gap:12px;
+    padding:20px 12px;
+  }
+  .Auth__mainTitle{
+    font-size:18px;
+    line-height:28px;
+  }
+  .Auth__title{
+    margin-left:-85px;
+    width:250px;
+    font-size:28px;
+    line-height:30px;
+  }
+  .Auth__registrationContainer{
+    width:340px;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .Auth__formButton{
+    width:340px;
+  }
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-forgot.svg'
+import arrowBlack from '../../assets/svg/arrow-registration.svg'
 
 import styles from './auth-page.module.css'
 
@@ -98,7 +99,8 @@ export function AuthPage({ contentView }: AuthProps) {
           </form>
           <div className={styles.Auth__registrationContainer}>
             <p className={styles.Auth__registrationP}>Нет учётной записи?</p>
-            <Link className={styles.Auth__registrationLink} to="/registration">Регистрация</Link>
+            <Link className={styles.Auth__registrationLink} to="/registration">Регистрация <img src={arrowBlack} alt="arrow" /></Link>
+
           </div>
 
         </div></React.Fragment>
