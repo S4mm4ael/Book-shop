@@ -88,7 +88,7 @@ export function RegistrationPage() {
 
         <div className={styles.Registration__registrationContainer}>
           <p className={styles.Registration__registrationP}>Есть учётная запись?</p>
-          <Link className={styles.Registration__registrationLink} to="/registration">войти<img src={arrow} alt="arrow" /></Link>
+          <Link className={styles.Registration__registrationLink} to="/auth">войти<img src={arrow} alt="arrow" /></Link>
         </div>
 
       </div></React.Fragment>}

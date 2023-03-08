@@ -219,33 +219,48 @@ h2{
     display:flex;
     gap:12px;
   }
-}
-@media screen and (max-width:400px) {
-  .Auth__formContainer{
+  .Auth__formItemWrapper_restore{
+    height:480px;
+  }
+  .Auth__successContainer{
+    width:380px;
+    height:186px;
+  }
+  .Auth__successContainer h2{
     width:100%;
-    padding:0;
-  }
-  .Auth{
-    gap:12px;
-    padding:20px 12px;
-  }
-  .Auth__mainTitle{
+    margin:0 auto;
     font-size:18px;
-    line-height:28px;
+    text-align:center;
   }
-  .Auth__title{
-    margin-left:-85px;
-    width:250px;
-    font-size:28px;
-    line-height:30px;
-  }
-  .Auth__registrationContainer{
-    width:340px;
-    flex-direction:column;
-    align-items:flex-start;
-    gap:8px;
-  }
-  .Auth__formButton{
-    width:340px;
+
+  @media screen and (max-width:400px) {
+    .Auth__formContainer{
+      width:100%;
+      padding:0;
+    }
+    .Auth{
+      gap:125px;
+      padding:20px 12px;
+      justify-content:flex-start;
+    }
+    .Auth__mainTitle{
+      font-size:18px;
+      line-height:28px;
+    }
+    .Auth__title{
+      margin-left:-85px;
+      width:250px;
+      font-size:28px;
+      line-height:30px;
+    }
+    .Auth__registrationContainer{
+      width:340px;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+    }
+    .Auth__formButton{
+      width:340px;
+    }
   }
 }

@@ -14,21 +14,28 @@ type AuthProps = {
 export function AuthPage({ contentView }: AuthProps) {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSend, setIsSend] = useState<boolean>(false);
-  const [email, setEmail] = useState<boolean>(true);
+  const [email, setEmail] = useState<boolean>(false);
 
   if (contentView === 'restore') {
     return <section className={styles.Auth}>
-      {isError && !isSend && <div className={styles.Auth__errorContainer}>
-        <h2 className={styles.Auth__title}>Данные не сохранились</h2>
-        <p className={styles.Auth__registrationP}>Что-то пошло не так. Попробуйте ещё раз</p>
-        <button className={styles.Auth__formButton} type="submit"
-          onClick={() => setIsError(false)}>Повторить</button>
-      </div>
+      {isError && !isSend &&
+        <React.Fragment>
+          <h1 className={styles.Auth__mainTitle}>Cleverland</h1>
+          <div className={styles.Auth__errorContainer}>
+            <h2 className={styles.Auth__title}>Данные не сохранились</h2>
+            <p className={styles.Auth__registrationP}>Что-то пошло не так. Попробуйте ещё раз</p>
+            <button className={styles.Auth__formButton} type="submit"
+              onClick={() => setIsError(false)}>Повторить</button>
+          </div></React.Fragment>
+
       }
-      {!isError && isSend && <div className={styles.Auth__successContainer}>
-        <h2 className={styles.Auth__title}>Письмо выслано</h2>
-        <p className={styles.Auth__registrationP}>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
-      </div>
+      {!isError && isSend && <React.Fragment>
+        <h1 className={styles.Auth__mainTitle}>Cleverland</h1>
+        <div className={styles.Auth__successContainer}>
+          <h2 className={styles.Auth__title}>Письмо выслано</h2>
+          <p className={styles.Auth__registrationP}>Перейдите в вашу почту, чтобы воспользоваться подсказками по восстановлению пароля</p>
+        </div></React.Fragment>
+
       }
       {!isError && !isSend && !email && <React.Fragment> <h1 className={styles.Auth__mainTitle}>Cleverland</h1>
         <div className={`${styles.Auth__formContainer} ${styles.Auth__formContainer_restore}`}>
@@ -54,9 +61,9 @@ export function AuthPage({ contentView }: AuthProps) {
           </div>
 
         </div></React.Fragment>}
-      {!isError && !isSend && email && <React.Fragment> <h1 className={styles.Auth__mainTitle}>Cleverland</h1>
+      {!isError && !isSend && email && <React.Fragment>
+        <h1 className={styles.Auth__mainTitle}>Cleverland</h1>
         <div className={`${styles.Auth__formContainer} ${styles.Auth__formContainer_restore}`}>
-
           <div className={`${styles.Auth__formItemWrapper} ${styles.Auth__formItemWrapper_restore}`}>
             <h2 className={styles.Auth__title}>Восстановление пароля</h2>
             <form className={styles.Auth__form} action="">

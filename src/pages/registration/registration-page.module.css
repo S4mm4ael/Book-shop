@@ -127,3 +127,81 @@ input:-webkit-autofill:active{
   display:flex;
   gap:15px;
 }
+@media screen and (max-width:600px) {
+  .Registration{
+    padding:0 20px;
+  }
+  .Registration__formContainer{
+    width:100%;
+    align-items:center;
+    padding:24px 16px;
+  }
+  .Registration__registrationContainer{
+    justify-content:center;
+  }
+  .Registration__registrationContainer img{
+    display:block;
+  }
+  .Registration__formItem{
+    width:340px;
+    min-width:256px;
+  }
+  .Registration__formButton{
+    width:255px;
+  }
+  .Registration__formForgot{
+    width:340px;
+  }
+  .Registration__registrationLink{
+    display:flex;
+    gap:12px;
+  }
+}
+@media screen and (max-width:550px) {
+  .Registration__formContainer{
+    width:100%;
+    padding:0;
+  }
+  .Registration{
+    gap:12px;
+    padding:20px 12px;
+  }
+  .Registration__mainTitle{
+    font-size:18px;
+    line-height:28px;
+  }
+  .Registration__title{
+    margin-left:-85px;
+    font-size:24px;
+    line-height:30px;
+    margin:0 auto;
+  }
+  .Registration__registrationContainer{
+    width:340px;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px;
+  }
+  .Registration__formButton{
+    width:340px;
+  }
+  .Registration__inputsContainer{
+    width:340px;
+  }
+  .Registration__step{
+    width:330px;
+  }
+  .Registration__errorContainer{
+    padding:42px 16px 32px;
+    width:360px;
+  }
+  .Registration__formButton{
+    height:50px;
+  }
+  .Registration__registrationP{
+    letter-spacing:0.3px;
+    font-size:15px;
+    line-height:20px;
+  }
+
+}
