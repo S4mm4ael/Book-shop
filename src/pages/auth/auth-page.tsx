@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-forgot.svg'
 import arrowBlack from '../../assets/svg/arrow-registration.svg'
+import eyeClosed from '../../assets/svg/eye-closed.svg'
+import eyeOpened from '../../assets/svg/eye-open.svg'
 
 import styles from './auth-page.module.css'
 
@@ -14,6 +16,23 @@ export function AuthPage({ contentView }: AuthProps) {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSend, setIsSend] = useState<boolean>(false);
   const [email, setEmail] = useState<boolean>(false);
+  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
+  const [isPasswordRecoverShow, setIsPasswordRecoverShow] = useState<boolean>(false);
+  const [isPasswordRecoverRepeatShow, setIsPasswordRecoverRepeatShow] = useState<boolean>(false);
+  const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
+
+
+  function handlePasswordVisibility() {
+    if (isPasswordEntered) {
+      if (isPasswordShow === false) {
+        setIsPasswordShow(true)
+      }
+      if (isPasswordShow === true) {
+        setIsPasswordShow(false)
+      }
+
+    }
+  }
 
   if (contentView === 'restore') {
     return <section className={styles.Auth}>
@@ -46,7 +65,7 @@ export function AuthPage({ contentView }: AuthProps) {
             <input className={`${styles.Auth__formItem} ${styles.Auth__formItem_restore}`} type="email" placeholder='Email' />
             <p className={`${styles.Auth__formForgot} ${styles.Auth__formForgot_restore}`}>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
             <button className={styles.Auth__formButton} type="submit"
-              onClick={() => setIsSend(true)} >Восстановить</button>
+              onClick={() => setIsSend(true)}>Восстановить</button>
             <div className={styles.Auth__registrationContainer}>
               <p className={styles.Auth__registrationP}>Нет учётной записи?</p>
               <Link className={styles.Auth__registrationLink} to="/registration">Регистрация</Link>
@@ -60,9 +79,20 @@ export function AuthPage({ contentView }: AuthProps) {
         <div className={`${styles.Auth__formItemWrapper} ${styles.Auth__formItemWrapper_restore}`}>
           <h2 className={styles.Auth__title}>Восстановление пароля</h2>
           <form className={styles.Auth__form} action="">
-            <input className={`${styles.Auth__formItem} ${styles.Auth__formItem_restore}`} type="password" placeholder='Новый пароль' />
+
+            {/* <input className={`${styles.Auth__formItem} ${styles.Auth__formItem_restore}`} type="password" placeholder='Новый пароль' />
             <p className={`${styles.Auth__formForgot} ${styles.Auth__formForgot_restore}`}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
-            <input className={`${styles.Auth__formItem} ${styles.Auth__formItem_restore}`} type="password" placeholder='Повторите пароль' />
+            <input className={`${styles.Auth__formItem} ${styles.Auth__formItem_restore}`} type="password" placeholder='Повторите пароль' /> */}
+
+            {isPasswordEntered &&
+              <div className={styles.Auth__ItemWrapper}>
+                <input className={styles.Auth__formItem} type={isPasswordRecoverShow ? 'text' : 'password'} placeholder='Новый пароль' onChange={() => setisPasswordEntered(true)} />
+                <button className={styles.Auth__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordRecoverShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+              </div>}
+            {!isPasswordEntered && <input className={styles.Auth__formItem} type="password" placeholder='Новый пароль' onChange={() => setisPasswordEntered(true)} />}
+
+
+
             <button className={`${styles.Auth__formButton} ${styles.Auth__formButton_restore}`} type="submit"
               onClick={() => setIsSend(true)} >сохранить изменения</button>
             <div className={styles.Auth__registrationContainer}>
@@ -93,7 +123,12 @@ export function AuthPage({ contentView }: AuthProps) {
         <h2 className={styles.Auth__title}>Вход в личный кабинет</h2>
         <form className={styles.Auth__form} action="">
           <input className={styles.Auth__formItem} type="text" placeholder='Логин' />
-          <input className={styles.Auth__formItem} type="password" placeholder='Пароль' />
+          {isPasswordEntered &&
+            <div className={styles.Auth__ItemWrapper}>
+              <input className={styles.Auth__formItem} type={isPasswordShow ? 'text' : 'password'} placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />
+              <button className={styles.Auth__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+            </div>}
+          {!isPasswordEntered && <input className={styles.Auth__formItem} type="password" placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />}
           <Link to="/forgot-pass"><p className={styles.Auth__formForgot}>Забыли логин или пароль?</p></Link>
           <button className={styles.Auth__formButton} type="submit"
             onClick={() => setIsError(true)} >Вход</button>
@@ -104,7 +139,7 @@ export function AuthPage({ contentView }: AuthProps) {
 
         </div>
 
-      </div>
+      </div >
     }
   </section >
 

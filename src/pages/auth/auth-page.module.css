@@ -4,6 +4,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
   -webkit-box-shadow:0 0 0 30px #F9F9FA inset !important;
+  box-shadow:0 0 0 30px #F9F9FA inset !important;
 }
 .Auth{
   min-width:100vh;
@@ -51,6 +52,17 @@ input:-webkit-autofill:active{
   padding:19px 12px;
   color:#363636;
   border-bottom:1px solid #BFC4C9;
+
+}
+.Auth__ItemWrapper{
+  position:relative;
+  height:56px;
+}
+.Auth__formItemImage{
+  all:unset;
+  position:absolute;
+  right:10px;
+  top:18px;
 }
 .Auth__formItem:first-child{
   margin-bottom:36px;

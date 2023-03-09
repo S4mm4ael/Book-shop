@@ -14,6 +14,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active{
   -webkit-box-shadow:0 0 0 30px #F9F9FA inset !important;
+  box-shadow:0 0 0 30px #F9F9FA inset !important;
+
 }
 .Registration__step{
   font-weight:600;
@@ -39,6 +41,16 @@ input:-webkit-autofill:active{
   height:492px;
   background:#FFFFFF;
   border-radius:16px;
+}
+.Registration__ItemWrapper{
+  position:relative;
+  height:56px;
+}
+.Registration__formItemImage{
+  all:unset;
+  position:absolute;
+  right:10px;
+  top:18px;
 }
 .Registration__form{
   display:flex;
@@ -172,10 +184,9 @@ input:-webkit-autofill:active{
     line-height:28px;
   }
   .Registration__title{
-    margin-left:-85px;
+    width:256px;
     font-size:18px;
     line-height:30px;
-    margin:0 auto;
   }
   .Registration__registrationContainer{
     width:256px;

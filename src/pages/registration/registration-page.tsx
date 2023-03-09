@@ -1,8 +1,10 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-registration.svg'
+import eyeClosed from '../../assets/svg/eye-closed.svg'
+import eyeOpened from '../../assets/svg/eye-open.svg'
 
 import styles from './registration-page.module.css'
 
@@ -10,6 +12,20 @@ export function RegistrationPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
+  const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
+  const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
+
+  function handlePasswordVisibility() {
+    if (isPasswordEntered) {
+      if (isPasswordShow === false) {
+        setIsPasswordShow(true)
+      }
+      if (isPasswordShow === true) {
+        setIsPasswordShow(false)
+      }
+
+    }
+  }
 
   function renderForm(step: number) {
     switch (step) {
@@ -50,10 +66,15 @@ export function RegistrationPage() {
               <input className={styles.Registration__formItem} type="text" placeholder='Придумайте логин для входа' />
               <p className={styles.Registration__formTips} >Используйте для логина латинский алфавит и цифры</p>
             </div>
-            <div >
-              <input className={styles.Registration__formItem} type="text" placeholder='Пароль' />
-              <p className={styles.Registration__formTips}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
-            </div>
+
+            {isPasswordEntered &&
+              <div className={styles.Registration__ItemWrapper}>
+                <input className={styles.Registration__formItem} type={isPasswordShow ? 'text' : 'password'} placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />
+                <button className={styles.Registration__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+              </div>}
+            {!isPasswordEntered && <input className={styles.Registration__formItem} type="password" placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />}
+            <p className={styles.Registration__formTips}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
+
           </div>
           <button className={styles.Registration__formButton} type="submit"
             onClick={() => { setStep(step + 1) }} >Следующий шаг</button>
