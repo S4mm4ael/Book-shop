@@ -122,6 +122,7 @@ input:-webkit-autofill:active{
   align-items:center;
   display:flex;
   gap:32px;
+  margin-top:125px;
 }
 .Registration__registrationLink{
   display:flex;
@@ -130,6 +131,7 @@ input:-webkit-autofill:active{
 @media screen and (max-width:600px) {
   .Registration{
     padding:0 20px;
+    min-width:auto;
   }
   .Registration__formContainer{
     width:100%;
@@ -143,14 +145,13 @@ input:-webkit-autofill:active{
     display:block;
   }
   .Registration__formItem{
-    width:340px;
-    min-width:256px;
+    width:256px;
   }
   .Registration__formButton{
     width:255px;
   }
   .Registration__formForgot{
-    width:340px;
+    width:256px;
   }
   .Registration__registrationLink{
     display:flex;
@@ -172,34 +173,33 @@ input:-webkit-autofill:active{
   }
   .Registration__title{
     margin-left:-85px;
-    font-size:24px;
+    font-size:18px;
     line-height:30px;
     margin:0 auto;
   }
   .Registration__registrationContainer{
-    width:340px;
+    width:256px;
     flex-direction:column;
     align-items:flex-start;
     gap:8px;
   }
   .Registration__formButton{
-    width:340px;
+    width:256px;
   }
   .Registration__inputsContainer{
-    width:340px;
+    width:256px;
   }
   .Registration__step{
-    width:330px;
+    width:256px;
   }
   .Registration__errorContainer{
     padding:42px 16px 32px;
-    width:360px;
+    width:288px;
   }
   .Registration__formButton{
     height:50px;
   }
   .Registration__registrationP{
-    letter-spacing:0.3px;
     font-size:15px;
     line-height:20px;
   }

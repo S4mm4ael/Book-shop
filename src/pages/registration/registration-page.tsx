@@ -1,6 +1,5 @@
 
 import React, { useState } from 'react';
-import { render } from 'react-dom';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-registration.svg'
@@ -66,6 +65,7 @@ export function RegistrationPage() {
 
 
   return <section className={styles.Registration}>
+    <h1 className={styles.Registration__mainTitle}>Cleverland</h1>
     {isError && <div className={styles.Registration__errorContainer}>
       <h2 className={styles.Registration__title}>Данные не сохранились</h2>
       <p className={styles.Registration__registrationP}>Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.</p>
@@ -80,18 +80,15 @@ export function RegistrationPage() {
         onClick={() => { setIsError(true); setStep(1) }} >вход</button>
     </div>
     }
-    {!isError && !isSuccess && <React.Fragment> <h1 className={styles.Registration__mainTitle}>Cleverland</h1>
-      <div className={styles.Registration__formContainer}>
-        <h2 className={styles.Registration__title}>Регистрация</h2>
-        <p className={styles.Registration__step}>{step.toString()} шаг из 3</p>
-        {renderForm(step)}
-
-        <div className={styles.Registration__registrationContainer}>
-          <p className={styles.Registration__registrationP}>Есть учётная запись?</p>
-          <Link className={styles.Registration__registrationLink} to="/auth">войти<img src={arrow} alt="arrow" /></Link>
-        </div>
-
-      </div></React.Fragment>}
+    {!isError && !isSuccess && <div className={styles.Registration__formContainer}>
+      <h2 className={styles.Registration__title}>Регистрация</h2>
+      <p className={styles.Registration__step}>{step.toString()} шаг из 3</p>
+      {renderForm(step)}
+      <div className={styles.Registration__registrationContainer}>
+        <p className={styles.Registration__registrationP}>Есть учётная запись?</p>
+        <Link className={styles.Registration__registrationLink} to="/auth">войти<img src={arrow} alt="arrow" /></Link>
+      </div>
+    </div>}
   </section >
 
 }

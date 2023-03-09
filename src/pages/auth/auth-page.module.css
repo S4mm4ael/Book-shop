@@ -181,7 +181,6 @@ h2{
 }
 .Auth__formContainer_restore{
   padding:0;
-  padding-top:48px;
   height:470px;
 }
 .Auth__formItemWrapper_restore{
@@ -193,11 +192,22 @@ h2{
 @media screen and (max-width:600px) {
   .Auth{
     padding:0 20px;
+    min-width:auto;
+  }
+  .Auth__formItemWrapper
+  h2{
+    padding-left:20px;
+  }
+  .Auth__formItemWrapper{
+    padding-left:0 ;
   }
   .Auth__formContainer{
     width:100%;
     align-items:center;
     padding:24px 16px;
+  }
+  .Auth__errorContainer{
+    margin-top:125px;
   }
   .Auth__registrationContainer{
     justify-content:center;
@@ -206,14 +216,13 @@ h2{
     display:block;
   }
   .Auth__formItem{
-    width:340px;
-    min-width:256px;
+    width:256px;
   }
   .Auth__formButton{
-    width:255px;
+    width:256px;
   }
   .Auth__formForgot{
-    width:340px;
+    width:256px;
   }
   .Auth__registrationLink{
     display:flex;
@@ -223,14 +232,39 @@ h2{
     height:480px;
   }
   .Auth__successContainer{
-    width:380px;
+    margin-top:125px;
+    width:288px;
     height:186px;
+    padding:0 16px;
+    padding-top:42px;
+    padding-bottom:32px;
+    gap:24px;
+  }
+  .Auth__successContainer
+  .Auth__registrationP{
+    letter-spacing:-0.3px;
   }
   .Auth__successContainer h2{
     width:100%;
     margin:0 auto;
     font-size:18px;
     text-align:center;
+  }
+  .Auth__errorContainer{
+    padding:34px 16px 32px;
+    gap:24px;
+    width:288px;
+    height:230px;
+  }
+  .Auth__errorContainer h2{
+    width:256px;
+    font-size:18px;
+    line-height:28px;
+    text-align:center;
+  }
+  .Auth__errorContainer
+  .Auth__formButton{
+    height:40px;
   }
 
   @media screen and (max-width:400px) {
@@ -239,7 +273,7 @@ h2{
       padding:0;
     }
     .Auth{
-      gap:125px;
+      gap:12px;
       padding:20px 12px;
       justify-content:flex-start;
     }
@@ -248,19 +282,18 @@ h2{
       line-height:28px;
     }
     .Auth__title{
-      margin-left:-85px;
       width:250px;
       font-size:28px;
       line-height:30px;
     }
     .Auth__registrationContainer{
-      width:340px;
+      width:256px;
       flex-direction:column;
       align-items:flex-start;
       gap:8px;
     }
     .Auth__formButton{
-      width:340px;
+      width:256px;
     }
   }
 }
