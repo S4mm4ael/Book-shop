@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -32,14 +33,18 @@ export function RegistrationPage() {
       case 2:
         return <form className={styles.Registration__form} action="">
           <div className={styles.Registration__inputsContainer}>
-            <div >
-              <input className={styles.Registration__formItem} type="text" placeholder='Имя' />
+            <div className={styles.Registration__inputWrapper}>
+              <input className={styles.Registration__formItem} type="text" required={true} />
+              <span className={styles.Registration__placeholder}>Имя</span>
               <p className={styles.Registration__formTips} >{' '}</p>
             </div>
-            <div >
-              <input className={styles.Registration__formItem} type="text" placeholder='Фамилия' />
+
+            <div className={styles.Registration__inputWrapper}>
+              <input className={styles.Registration__formItem} type="text" required={true} />
+              <span className={styles.Registration__placeholder}>Фамилия</span>
               <p className={styles.Registration__formTips} >{' '}</p>
             </div>
+
           </div>
           <button className={styles.Registration__formButton} type="submit"
             onClick={() => { setStep(step + 1) }} >Следующий шаг</button>
@@ -47,13 +52,15 @@ export function RegistrationPage() {
       case 3:
         return <form className={styles.Registration__form} action="">
           <div className={styles.Registration__inputsContainer}>
-            <div >
-              <input className={styles.Registration__formItem} type="text" placeholder='Номер телефона' />
+            <div className={styles.Registration__inputWrapper}>
+              <input className={styles.Registration__formItem} type="text" required={true} />
+              <span className={styles.Registration__placeholder}>Номер телефона</span>
               <p className={styles.Registration__formTips} >{'  '}</p>
             </div>
-            <div >
-              <input className={styles.Registration__formItem} type="email" placeholder='E-mail' />
-              <p className={styles.Registration__formTips} >{' '}</p>
+            <div className={styles.Registration__inputWrapper}>
+              <input className={styles.Registration__formItem} type="text" required={true} />
+              <span className={styles.Registration__placeholder}>E-mail</span>
+              <p className={styles.Registration__formTips} >{'  '}</p>
             </div>
           </div>
           <button className={styles.Registration__formButton} type="submit"
@@ -62,15 +69,18 @@ export function RegistrationPage() {
       default:
         return <form className={styles.Registration__form} action="">
           <div className={styles.Registration__inputsContainer}>
-            <div >
-              <input className={styles.Registration__formItem} type="text" placeholder='Придумайте логин для входа' />
+            <div className={styles.Registration__inputWrapper}>
+              <input className={styles.Registration__formItem} type="text" required={true} />
+              <span className={styles.Registration__placeholder}>Придумайте логин для входа</span>
               <p className={styles.Registration__formTips} >Используйте для логина латинский алфавит и цифры</p>
             </div>
-
             {isPasswordEntered &&
               <div className={styles.Registration__ItemWrapper}>
-                <input className={styles.Registration__formItem} type={isPasswordShow ? 'text' : 'password'} placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />
-                <button className={styles.Registration__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+                <div className={styles.Registration__inputWrapper}>
+                  <input className={styles.Registration__formItem} type={isPasswordShow ? 'text' : 'password'} autoFocus={true} required={true} onChange={() => setisPasswordEntered(true)} />
+                  <button className={styles.Registration__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+                  <span className={styles.Registration__placeholder}>Пароль</span>
+                </div>
               </div>}
             {!isPasswordEntered && <input className={styles.Registration__formItem} type="password" placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />}
             <p className={styles.Registration__formTips}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
@@ -88,14 +98,14 @@ export function RegistrationPage() {
   return <section className={styles.Registration}>
     <h1 className={styles.Registration__mainTitle}>Cleverland</h1>
     {isError && <div className={styles.Registration__errorContainer}>
-      <h2 className={styles.Registration__title}>Данные не сохранились</h2>
+      <h2 className={`${styles.Registration__title} ${styles.Registration__title_center}`}>Данные не сохранились</h2>
       <p className={styles.Registration__registrationP}>Такой логин или e-mail уже записан в системе. Попробуйте зарегистрироваться по другому логину или e-mail.</p>
       <button className={styles.Registration__formButton} type="submit"
         onClick={() => { setIsError(false); setStep(1); setIsSuccess(false) }} >назад к регистрации</button>
     </div>
     }
     {!isError && isSuccess && <div className={styles.Registration__errorContainer}>
-      <h2 className={styles.Registration__title}>Регистрация успешна</h2>
+      <h2 className={`${styles.Registration__title} ${styles.Registration__title_center}`}>Регистрация успешна</h2>
       <p className={styles.Registration__registrationP}>Регистрация прошла успешно. Зайдите в личный кабинет, используя свои логин и пароль</p>
       <button className={styles.Registration__formButton} type="submit"
         onClick={() => { setIsError(true); setStep(1) }} >вход</button>

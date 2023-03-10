@@ -200,7 +200,8 @@ h2{
 }
 .Forgot__formContainer_restore{
   padding:0;
-  height:470px;
+  height:auto;
+  height:400px;
 }
 .Forgot__formItemWrapper_restore{
   padding:0;
@@ -211,6 +212,13 @@ h2{
 .Forgot__formForgot_restoreDouble{
   margin-bottom:18px;
 }
+.Forgot__formItemImage_second{
+  position:absolute;
+  right:5px;
+  top:8px;
+}
+
+
 @media screen and (max-width:600px) {
   .Forgot{
     padding:0 20px;
@@ -263,6 +271,11 @@ h2{
   .Forgot__registrationLink{
     display:flex;
     gap:12px;
+  }
+  .Forgot__formItemImage_second{
+    position:absolute;
+    right:6px;
+    top:8px;
   }
   .Forgot__formItemWrapper_restore{
     height:480px;
@@ -334,4 +347,21 @@ h2{
       width:256px;
     }
   }
+}
+.Forgot__inputWrapper{
+  position:relative;
+}
+.Forgot__inputWrapper input {
+  font-size:12px;
+}
+.Forgot__placeholder {
+  position:absolute;
+  pointer-events:none;
+  left:12px;
+  top:20px;
+  transition:0.1s ease all;
+}
+input:valid ~ .Forgot__placeholder{
+  top:1px;
+  font-size:11px;
 }

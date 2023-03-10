@@ -309,3 +309,20 @@ h2{
     }
   }
 }
+.Auth__inputWrapper{
+  position:relative;
+}
+.Auth__inputwrapper input {
+  font-size:12px;
+}
+.Auth__placeholder {
+  position:absolute;
+  pointer-events:none;
+  left:12px;
+  top:20px;
+  transition:0.1s ease all;
+}
+input:valid ~ .Auth__placeholder{
+  top:1px;
+  font-size:11px;
+}

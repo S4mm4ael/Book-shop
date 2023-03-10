@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -41,21 +42,29 @@ export function AuthPage() {
       !isError && <div className={styles.Auth__formContainer}>
         <h2 className={styles.Auth__title}>Вход в личный кабинет</h2>
         <form className={styles.Auth__form} action="">
-          <input className={styles.Auth__formItem} type="text" placeholder='Логин' />
+          <div className={styles.Auth__inputWrapper}>
+            <input className={styles.Auth__formItem} type="text" required={true} />
+            <span className={styles.Auth__placeholder}>Логин</span>
+          </div>
+
           {isPasswordEntered &&
             <div className={styles.Auth__ItemWrapper}>
-              <input className={styles.Auth__formItem} type={isPasswordShow ? 'text' : 'password'} placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />
-              <button className={styles.Auth__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+              <div className={styles.Auth__inputWrapper}>
+                <input className={styles.Auth__formItem} autoFocus={true} type={isPasswordShow ? 'text' : 'password'} required={true} onChange={() => setisPasswordEntered(true)} />
+                <span className={styles.Auth__placeholder}>Пароль</span>
+                <button className={styles.Auth__formItemImage} type="button" onClick={() => handlePasswordVisibility()}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+              </div>
             </div>}
-          {!isPasswordEntered && <input className={styles.Auth__formItem} type="password" placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />}
+          {!isPasswordEntered &&
+            <input className={styles.Auth__formItem} type="password" placeholder='Пароль' onChange={() => setisPasswordEntered(true)} />
+          }
           <Link to="/forgot-pass"><p className={styles.Auth__formForgot}>Забыли логин или пароль?</p></Link>
           <button className={styles.Auth__formButton} type="submit"
-            onClick={() => setIsError(true)} >Вход</button>
+            onClick={() => setIsError(true)}>Вход</button>
         </form>
         <div className={styles.Auth__registrationContainer}>
           <p className={styles.Auth__registrationP}>Нет учётной записи?</p>
           <Link className={styles.Auth__registrationLink} to="/registration">Регистрация <img src={arrowBlack} alt="arrow" /></Link>
-
         </div>
 
       </div >

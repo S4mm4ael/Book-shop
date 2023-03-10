@@ -140,6 +140,9 @@ input:-webkit-autofill:active{
   display:flex;
   gap:15px;
 }
+.Registration__title_center{
+  text-align:center;
+}
 @media screen and (max-width:600px) {
   .Registration{
     padding:0 20px;
@@ -215,4 +218,21 @@ input:-webkit-autofill:active{
     line-height:20px;
   }
 
+}
+.Registration__inputWrapper{
+  position:relative;
+}
+.Registration__inputWrapper input {
+  font-size:12px;
+}
+.Registration__placeholder {
+  position:absolute;
+  pointer-events:none;
+  left:12px;
+  top:20px;
+  transition:0.1s ease all;
+}
+input:valid ~ .Registration__placeholder{
+  top:1px;
+  font-size:11px;
 }

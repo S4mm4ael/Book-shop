@@ -1,8 +1,10 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 /* eslint-disable complexity */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-forgot.svg'
+import arrowBlack from '../../assets/svg/arrow-registration.svg'
 import eyeClosed from '../../assets/svg/eye-closed.svg'
 import eyeOpened from '../../assets/svg/eye-open.svg'
 
@@ -80,13 +82,16 @@ export function ForgotPage() {
       <div className={styles.Forgot__formItemWrapper}>
         <h2 className={`${styles.Forgot__title} `}>Восстановление пароля</h2>
         <form className={styles.Forgot__form} action="">
-          <input className={`${styles.Forgot__formItem} ${styles.Forgot__formItem_restore}`} type="email" placeholder='Email' />
-          <p className={`${styles.Forgot__formForgot} ${styles.Forgot__formForgot_restore}`}>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
+          <div className={styles.Forgot__inputWrapper}>
+            <input className={`${styles.Forgot__formItem} ${styles.Forgot__formItem_restore}`} type="text" required={true} />
+            <span className={styles.Forgot__placeholder}>E-mail</span>
+            <p className={`${styles.Forgot__formForgot} ${styles.Forgot__formForgot_restore}`}>На это email  будет отправлено письмо с инструкциями по восстановлению пароля</p>
+          </div>
           <button className={styles.Forgot__formButton} type="submit"
             onClick={() => setEmail(true)}>Восстановить</button>
           <div className={styles.Forgot__registrationContainer}>
             <p className={styles.Forgot__registrationP}>Нет учётной записи?</p>
-            <Link className={styles.Forgot__registrationLink} to="/registration">Регистрация</Link>
+            <Link className={styles.Forgot__registrationLink} to="/registration">Регистрация<img src={arrowBlack} alt="arrow" /></Link>
           </div>
         </form>
 
@@ -99,11 +104,22 @@ export function ForgotPage() {
         <form className={styles.Forgot__form} action="">
           {isPasswordEntered &&
             <div className={styles.Forgot__ItemWrapper}>
-              <input className={`${styles.Forgot__formItem} ${styles.Forgot__formItem_restore}`} type={isPasswordShow ? 'text' : 'password'} placeholder='Новый пароль' onChange={() => setIsPasswordEntered(true)} />
-              <button className={styles.Forgot__formItemImage} type="button" onClick={() => handlePasswordVisibility(true)}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
-              <p className={`${styles.Forgot__formForgot} ${styles.Forgot__formForgot_restore} ${styles.Forgot__formForgot_restoreDouble}`}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
-              <input className={`${styles.Forgot__formItem} ${styles.Forgot__formItem_restore}`} type={isPasswordRepeatShow ? 'text' : 'password'} placeholder='Повторите пароль' onChange={() => setIsPasswordEntered(true)} />
-              <button className={`${styles.Forgot__formItemImage}, ${styles.Forgot__formItemImage_second}`} type="button" onClick={() => handlePasswordVisibility(false)}><img src={isPasswordRepeatShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+              <div className={styles.Forgot__inputWrapper}>
+                <input className={`${styles.Forgot__formItem} ${styles.Forgot__formItem_restore}`} type={isPasswordShow ? 'text' : 'password'} required={true} autoFocus={true} onChange={() => setIsPasswordEntered(true)} />
+                <span className={styles.Forgot__placeholder}>Новый пароль</span>
+                <button className={styles.Forgot__formItemImage} type="button" onClick={() => handlePasswordVisibility(true)}><img src={isPasswordShow ? eyeOpened : eyeClosed} alt="show/hide" /> </button>
+                <p className={`${styles.Forgot__formForgot} ${styles.Forgot__formForgot_restore} ${styles.Forgot__formForgot_restoreDouble}`}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
+              </div>
+
+              <div className={styles.Forgot__inputWrapper}>
+                <input className={`${styles.Forgot__formItem} ${styles.Forgot__formItem_restore}`} type={isPasswordRepeatShow ? 'text' : 'password'} required={true} autoFocus={true} onChange={() => setIsPasswordEntered(true)} />
+                <span className={styles.Forgot__placeholder}>Повторите пароль</span>
+                <button className={`${styles.Forgot__formItemImage}, ${styles.Forgot__formItemImage_second}`} type="button" onClick={() => handlePasswordVisibility(false)}>
+                  <img className={styles.Forgot__formItemImage_second} src={isPasswordRepeatShow ? eyeOpened : eyeClosed} alt="show/hide" />
+                </button>
+              </div>
+
+
             </div>}
           {!isPasswordEntered && <div className={styles.Forgot__ItemWrapper}>
             <input className={styles.Forgot__formItem} type="password" placeholder='Новый пароль' onChange={() => setIsPasswordEntered(true)} />
