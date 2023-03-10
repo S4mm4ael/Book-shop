@@ -58,6 +58,7 @@ input:-webkit-autofill:active{
   align-items:center;
   justify-content:center;
   margin:0 auto;
+  height:260px;
 }
 .Registration__formTips:first-child{
   margin-bottom:16px;
