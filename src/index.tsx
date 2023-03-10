@@ -9,6 +9,7 @@ import { ProtectedRoute } from './components/protected-route';
 import { ScrollToTop } from './hooks/scroll-to-top';
 import { AuthPage } from './pages/auth';
 import { BookPage } from './pages/book';
+import { ForgotPage } from './pages/forgot';
 import { MainPage } from './pages/main';
 import { ProfilePage } from './pages/profile';
 import { RegistrationPage } from './pages/registration';
@@ -27,8 +28,8 @@ root.render(
       <Provider store={store}>
         <Routes>
           <Route path='/registration' element={<RegistrationPage />} />
-          <Route path='/auth' element={<AuthPage contentView='auth' />} />
-          <Route path='/forgot-pass' element={<AuthPage contentView='restore' />} />
+          <Route path='/auth' element={<AuthPage />} />
+          <Route path='/forgot-pass' element={<ForgotPage />} />
           <Route path='/' element={<ProtectedRoute />}>
             <Route path='/' element={<Layout />}>
               <Route path='/' element={<LayoutMainPage />}>
