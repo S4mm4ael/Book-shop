@@ -1,51 +1,27 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-registration.svg';
 
 import { Step1Form } from './steps-form/step1-form';
 import { Step2Form } from './steps-form/step2-form';
+import { Step3Form } from './steps-form/step3-form';
 
 import styles from './registration-page.module.css';
 
 export function RegistrationPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(3);
 
   function renderForm() {
     switch (step) {
       case 2:
-        return <Step2Form step={step} setStep={setStep} />;
+        return <Step2Form setStep={setStep} />;
       case 3:
-        return (
-          <form
-            className={styles.Registration__form}
-            onSubmit={() => {
-              setIsSuccess(true);
-              setStep(step + 1);
-            }}
-            autoComplete='off'
-          >
-            <div className={styles.Registration__inputsContainer}>
-              <div className={styles.Registration__inputWrapper}>
-                <input className={styles.Registration__formItem} type='text' required={true} />
-                <span className={styles.Registration__placeholder}>Номер телефона</span>
-                <p className={styles.Registration__formTips}>{'  '}</p>
-              </div>
-              <div className={styles.Registration__inputWrapper}>
-                <input className={styles.Registration__formItem} type='text' required={true} />
-                <span className={styles.Registration__placeholder}>E-mail</span>
-                <p className={styles.Registration__formTips}>{'  '}</p>
-              </div>
-            </div>
-            <button className={styles.Registration__formButton} type='submit'>
-              зарегистрироваться
-            </button>
-          </form>
-        );
+        return <Step3Form setIsSuccess={setIsSuccess} />;
       default:
         return <Step1Form step={step} setStep={setStep} />;
     }

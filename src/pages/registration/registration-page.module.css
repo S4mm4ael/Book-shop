@@ -220,7 +220,7 @@ input:-webkit-autofill:active{
   position:relative;
 }
 .Registration__inputWrapper input {
-  font-size:12px;
+  font-size:14px;
 }
 .Registration__placeholder {
   position:absolute;
@@ -234,7 +234,7 @@ input:valid ~ .Registration__placeholder{
   font-size:11px;
 }
 .Registration__formTips_error{
-  color:#F83600;
+  color:#F42C4F;
 }
 .Registration__formTips_noPadding{
   padding-left:0;
@@ -242,4 +242,7 @@ input:valid ~ .Registration__placeholder{
 .Registration__passwprdImgContainer{
   display:flex;
   gap:4px;
+}
+.Registration__formItem_error{
+  border-bottom:1px solid #F42C4F;
 }

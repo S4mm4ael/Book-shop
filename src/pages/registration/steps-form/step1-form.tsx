@@ -42,7 +42,6 @@ export function Step1Form({ step, setStep }: Step1FormProps) {
   const {
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({ mode: 'all' });
 
@@ -184,7 +183,9 @@ export function Step1Form({ step, setStep }: Step1FormProps) {
               return e.target.value;
             }}
             onChange={loginField.onChange}
-            className={styles.Registration__formItem}
+            className={classNames(styles.Registration__formItem, {
+              [styles.Registration__formItem_error]: isShowAllErrorLogin,
+            })}
             type='text'
             required={true}
           />
@@ -213,7 +214,9 @@ export function Step1Form({ step, setStep }: Step1FormProps) {
                   return e.target.value;
                 }}
                 onChange={passwordField.onChange}
-                className={styles.Registration__formItem}
+                className={classNames(styles.Registration__formItem, {
+                  [styles.Registration__formItem_error]: isShowAllErrorPassword,
+                })}
                 type={isPasswordShow ? 'text' : 'password'}
                 required={true}
                 autoFocus={true}

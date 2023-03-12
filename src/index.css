@@ -116,4 +116,6 @@ h5{
   }
 
 }
-
+textarea:focus, input:focus{
+  outline:none;
+}

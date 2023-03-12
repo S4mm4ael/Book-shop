@@ -1,21 +1,17 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useController, useForm } from 'react-hook-form';
+import classNames from 'classnames';
 
 import styles from '../registration-page.module.css';
 
 type Step2FormProps = {
-  step: number;
   setStep: Dispatch<SetStateAction<number>>;
 };
 
-export function Step2Form({ step, setStep }: Step2FormProps) {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ mode: 'all' });
+export function Step2Form({ setStep }: Step2FormProps) {
+  const { control, handleSubmit } = useForm({ mode: 'all' });
 
   const { field: firstNameField, fieldState: firstNameFieldState } = useController({
     name: 'firstName',
@@ -48,7 +44,9 @@ export function Step2Form({ step, setStep }: Step2FormProps) {
       <div className={styles.Registration__inputsContainer}>
         <div className={styles.Registration__inputWrapper}>
           <input
-            className={styles.Registration__formItem}
+            className={classNames(styles.Registration__formItem, {
+              [styles.Registration__formItem_error]: firstNameFieldState.invalid,
+            })}
             type='text'
             required={true}
             key='firstName'
@@ -61,11 +59,16 @@ export function Step2Form({ step, setStep }: Step2FormProps) {
               Поле не может быть пустым
             </p>
           )}
+          {!firstNameFieldState.invalid && (
+            <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}> </p>
+          )}
         </div>
 
         <div className={styles.Registration__inputWrapper}>
           <input
-            className={styles.Registration__formItem}
+            className={classNames(styles.Registration__formItem, {
+              [styles.Registration__formItem_error]: lastNameFieldState.invalid,
+            })}
             type='text'
             required={true}
             key='lastName'
@@ -77,6 +80,9 @@ export function Step2Form({ step, setStep }: Step2FormProps) {
             <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}>
               Поле не может быть пустым
             </p>
+          )}
+          {!lastNameFieldState.invalid && (
+            <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}> </p>
           )}
         </div>
       </div>
