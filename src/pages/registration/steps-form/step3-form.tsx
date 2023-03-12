@@ -26,9 +26,8 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
     },
   });
   const onSubmit = () => {
-    console.log(0);
     if (!errors.phoneNumber && !emailFieldState.invalid) {
-      console.log(1);
+      setIsSuccess(true);
     }
   };
 
@@ -57,27 +56,6 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
                 className={classNames(styles.Registration__formItem, {
                   [styles.Registration__formItem_error]: errors.phoneNumber,
                 })}
-                // mask={[
-                //   '+',
-                //   '3',
-                //   '7',
-                //   '5',
-                //   ' ',
-                //   '(',
-                //   /\x/,
-                //   /\d/,
-                //   ')',
-                //   ' ',
-                //   /\d/,
-                //   /\d/,
-                //   /\d/,
-                //   '-',
-                //   /\d/,
-                //   /\d/,
-                //   '-',
-                //   /\d/,
-                //   /\d/,
-                // ]}
                 mask='+375 (99) 999-99-99'
                 maskPlaceholder='x'
                 value={field.value || ''}
