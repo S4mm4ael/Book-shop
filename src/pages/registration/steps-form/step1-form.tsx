@@ -2,11 +2,13 @@
 
 import { Dispatch, SetStateAction, useState } from 'react';
 import { useController, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
 
 import check from '../../../assets/svg/check.svg';
 import eyeClosed from '../../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../../assets/svg/eye-open.svg';
+import { AppDispatch } from '../../../redux/store';
 
 import styles from '../registration-page.module.css';
 
@@ -15,10 +17,10 @@ type Step1FormProps = {
   setStep: Dispatch<SetStateAction<number>>;
 };
 
-export function Step1Form({ step, setStep }: Step1FormProps) {
+export function Step1Form({ setStep }: Step1FormProps) {
+  const dispatch: AppDispatch = useDispatch();
   const [isShowAllErrorLogin, setIsShowAllErrorLogin] = useState<boolean>(false);
   const [isShowAllErrorPassword, setIsShowAllErrorPassword] = useState<boolean>(false);
-
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
 
@@ -80,7 +82,9 @@ export function Step1Form({ step, setStep }: Step1FormProps) {
     if (!loginFieldState.invalid && !passwordFieldState.invalid) {
       setIsShowAllErrorLogin(false);
       setIsShowAllErrorPassword(false);
-      setStep(step + 1);
+      dispatch({ type: 'USER_NAME', payload: loginField.value });
+      dispatch({ type: 'PASSWORD', payload: passwordField.value });
+      setStep(2);
     }
   };
 

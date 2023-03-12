@@ -1,8 +1,11 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
+
+import { AppDispatch } from '../../../redux/store';
 
 import styles from '../registration-page.module.css';
 
@@ -11,9 +14,13 @@ type Step3FormProps = {
 };
 
 export function Step3Form({ setIsSuccess }: Step3FormProps) {
+  const dispatch: AppDispatch = useDispatch();
+
+  const [phone, setPhone] = useState<string>('');
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({ mode: 'all' });
 
@@ -27,6 +34,8 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
   });
   const onSubmit = () => {
     if (!errors.phoneNumber && !emailFieldState.invalid) {
+      dispatch({ type: 'PHONE', payload: watch('phone') });
+      dispatch({ type: 'EMAIL', payload: emailField.value });
       setIsSuccess(true);
     }
   };
@@ -42,7 +51,7 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
       <div className={styles.Registration__inputsContainer}>
         <div className={styles.Registration__inputWrapper}>
           <Controller
-            name='phoneNumber'
+            name='phone'
             control={control}
             rules={{
               required: true,
@@ -51,16 +60,16 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
                 message: 'В формате +375 (xx) xxx-xx-xx',
               },
             }}
-            render={({ field }) => (
+            render={({ field: phoneField }) => (
               <InputMask
                 className={classNames(styles.Registration__formItem, {
                   [styles.Registration__formItem_error]: errors.phoneNumber,
                 })}
                 mask='+375 (99) 999-99-99'
                 maskPlaceholder='x'
-                value={field.value || ''}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
+                value={phoneField.value || ''}
+                onChange={phoneField.onChange}
+                onBlur={phoneField.onBlur}
                 required={true}
               />
             )}
