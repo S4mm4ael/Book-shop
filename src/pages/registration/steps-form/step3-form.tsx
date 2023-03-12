@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
-import { AppDispatch } from '../../../redux/store';
+import { useRegisterUserMutation } from '../../../redux/features/books-slice';
+import { AppDispatch, RootState } from '../../../redux/store';
 
 import styles from '../registration-page.module.css';
 
@@ -15,8 +16,15 @@ type Step3FormProps = {
 
 export function Step3Form({ setIsSuccess }: Step3FormProps) {
   const dispatch: AppDispatch = useDispatch();
+  const [registerUser, response] = useRegisterUserMutation();
 
-  const [phone, setPhone] = useState<string>('');
+  const email = useSelector((state: RootState) => state.user.email);
+  const username = useSelector((state: RootState) => state.user.username);
+  const password = useSelector((state: RootState) => state.user.password);
+  const firstName = useSelector((state: RootState) => state.user.firstName);
+  const lastName = useSelector((state: RootState) => state.user.lastName);
+  const phone = useSelector((state: RootState) => state.user.phone);
+
   const {
     control,
     handleSubmit,
@@ -32,10 +40,33 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
       pattern: /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
   });
+  const sendData = () => {
+    const formData = {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      phone,
+    };
+
+    registerUser(formData)
+      .unwrap()
+      .then(() => {
+        console.log(response);
+      })
+      .then((error: any) => {
+        console.log(error);
+      });
+  };
+
   const onSubmit = () => {
     if (!errors.phoneNumber && !emailFieldState.invalid) {
       dispatch({ type: 'PHONE', payload: watch('phone') });
       dispatch({ type: 'EMAIL', payload: emailField.value });
+    }
+    if (!errors.phoneNumber && !emailFieldState.invalid) {
+      sendData();
       setIsSuccess(true);
     }
   };
