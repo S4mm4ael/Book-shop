@@ -1,11 +1,12 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-registration.svg';
 
 import { Step1Form } from './steps-form/step1-form';
+import { Step2Form } from './steps-form/step2-form';
 
 import styles from './registration-page.module.css';
 
@@ -17,32 +18,7 @@ export function RegistrationPage() {
   function renderForm() {
     switch (step) {
       case 2:
-        return (
-          <form
-            className={styles.Registration__form}
-            onSubmit={() => {
-              setStep(step + 1);
-            }}
-            autoComplete='off'
-          >
-            <div className={styles.Registration__inputsContainer}>
-              <div className={styles.Registration__inputWrapper}>
-                <input className={styles.Registration__formItem} type='text' required={true} />
-                <span className={styles.Registration__placeholder}>Имя</span>
-                <p className={styles.Registration__formTips}> </p>
-              </div>
-
-              <div className={styles.Registration__inputWrapper}>
-                <input className={styles.Registration__formItem} type='text' required={true} />
-                <span className={styles.Registration__placeholder}>Фамилия</span>
-                <p className={styles.Registration__formTips}> </p>
-              </div>
-            </div>
-            <button className={styles.Registration__formButton} type='submit'>
-              Следующий шаг
-            </button>
-          </form>
-        );
+        return <Step2Form step={step} setStep={setStep} />;
       case 3:
         return (
           <form
