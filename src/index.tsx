@@ -43,7 +43,6 @@ root.render(
               <Route path='/profile' element={<ProfilePage />} />
             </Route>
           </Route>
-
         </Routes>
       </Provider>
     </HashRouter>

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-interactive-element-to-noninteractive-role */
 /* eslint-disable jsx-a11y/no-autofocus */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
