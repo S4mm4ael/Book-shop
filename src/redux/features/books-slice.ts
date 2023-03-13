@@ -1,10 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-import { Book, Category, ExactBook } from '../../shared/types.books'
+import { Book, Category, ExactBook } from '../../shared/types.books';
+import { UserRegistration } from '../../shared/types.user';
 
-const baseUrl='https://strapi.cleverland.by'
-const booksUrl='/api/books'
-const catUrl='/api/categories'
+const baseUrl = 'https://strapi.cleverland.by';
+const booksUrl = '/api/books';
+const catUrl = '/api/categories';
+const loginUrl = '/api/auth/local/register';
 
 export const booksApi = createApi({
   reducerPath: 'booksApi',
@@ -14,13 +16,22 @@ export const booksApi = createApi({
       query: () => booksUrl,
     }),
     getBook: builder.query<ExactBook, string>({
-      query: (id) =>`${booksUrl}/${id}` ,
+      query: (id) => `${booksUrl}/${id}`,
     }),
-    getCategories
-    : builder.query<Category[], string>({
-      query: () => catUrl ,
+    getCategories: builder.query<Category[], string>({
+      query: () => catUrl,
+    }),
+    registerUser: builder.mutation<UserRegistration, UserRegistration>({
+      query: (payload) => ({
+        url: loginUrl,
+        method: 'POST',
+        body: payload,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
     }),
   }),
-})
+});
 
-export const { useGetAllBooksQuery, useGetBookQuery, useGetCategoriesQuery } = booksApi
+export const { useGetAllBooksQuery, useGetBookQuery, useGetCategoriesQuery, useRegisterUserMutation } = booksApi;

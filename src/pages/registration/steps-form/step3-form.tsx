@@ -2,7 +2,11 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
+
+import { useRegisterUserMutation } from '../../../redux/features/books-slice';
+import { AppDispatch, RootState } from '../../../redux/store';
 
 import styles from '../registration-page.module.css';
 
@@ -11,9 +15,20 @@ type Step3FormProps = {
 };
 
 export function Step3Form({ setIsSuccess }: Step3FormProps) {
+  const dispatch: AppDispatch = useDispatch();
+  const [registerUser, response] = useRegisterUserMutation();
+
+  const email = useSelector((state: RootState) => state.user.email);
+  const username = useSelector((state: RootState) => state.user.username);
+  const password = useSelector((state: RootState) => state.user.password);
+  const firstName = useSelector((state: RootState) => state.user.firstName);
+  const lastName = useSelector((state: RootState) => state.user.lastName);
+  const phone = useSelector((state: RootState) => state.user.phone);
+
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({ mode: 'all' });
 
@@ -25,8 +40,33 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
       pattern: /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
   });
+  const sendData = () => {
+    const formData = {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      phone,
+    };
+
+    registerUser(formData)
+      .unwrap()
+      .then(() => {
+        console.log(response);
+      })
+      .then((error: any) => {
+        console.log(error);
+      });
+  };
+
   const onSubmit = () => {
     if (!errors.phoneNumber && !emailFieldState.invalid) {
+      dispatch({ type: 'PHONE', payload: watch('phone') });
+      dispatch({ type: 'EMAIL', payload: emailField.value });
+    }
+    if (!errors.phoneNumber && !emailFieldState.invalid) {
+      sendData();
       setIsSuccess(true);
     }
   };
@@ -42,7 +82,7 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
       <div className={styles.Registration__inputsContainer}>
         <div className={styles.Registration__inputWrapper}>
           <Controller
-            name='phoneNumber'
+            name='phone'
             control={control}
             rules={{
               required: true,
@@ -51,16 +91,16 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
                 message: 'В формате +375 (xx) xxx-xx-xx',
               },
             }}
-            render={({ field }) => (
+            render={({ field: phoneField }) => (
               <InputMask
                 className={classNames(styles.Registration__formItem, {
                   [styles.Registration__formItem_error]: errors.phoneNumber,
                 })}
                 mask='+375 (99) 999-99-99'
                 maskPlaceholder='x'
-                value={field.value || ''}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
+                value={phoneField.value || ''}
+                onChange={phoneField.onChange}
+                onBlur={phoneField.onBlur}
                 required={true}
               />
             )}

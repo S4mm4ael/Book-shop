@@ -1,5 +1,3 @@
-
-
 interface CounterState {
   isBurgerOpen: boolean;
   isGenreMenuOpen: boolean;
@@ -7,15 +5,31 @@ interface CounterState {
   isLoading: boolean;
   category: string | undefined;
   sorting: boolean;
-  searchQuery: string ;
+  searchQuery: string;
 }
-
+interface CounterUserState {
+  email: string;
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+}
 export const initialState: CounterState = {
   isBurgerOpen: false,
   isGenreMenuOpen: false,
   isFetchError: false,
-  isLoading:true,
+  isLoading: true,
   sorting: true,
   category: undefined,
   searchQuery: '',
+};
+
+export const initialUserState: CounterUserState = {
+  email: ' ',
+  username: ' ',
+  password: ' ',
+  firstName: ' ',
+  lastName: '',
+  phone: '',
 };

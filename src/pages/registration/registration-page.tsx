@@ -14,7 +14,7 @@ import styles from './registration-page.module.css';
 export function RegistrationPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [step, setStep] = useState<number>(3);
+  const [step, setStep] = useState<number>(1);
 
   function renderForm() {
     switch (step) {

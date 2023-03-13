@@ -2,7 +2,10 @@
 
 import { Dispatch, SetStateAction } from 'react';
 import { useController, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames';
+
+import { AppDispatch } from '../../../redux/store';
 
 import styles from '../registration-page.module.css';
 
@@ -11,6 +14,7 @@ type Step2FormProps = {
 };
 
 export function Step2Form({ setStep }: Step2FormProps) {
+  const dispatch: AppDispatch = useDispatch();
   const { control, handleSubmit } = useForm({ mode: 'all' });
 
   const { field: firstNameField, fieldState: firstNameFieldState } = useController({
@@ -29,6 +33,8 @@ export function Step2Form({ setStep }: Step2FormProps) {
   });
   const onSubmit = () => {
     if (!firstNameFieldState.invalid && !lastNameFieldState.invalid) {
+      dispatch({ type: 'FIRST_NAME', payload: firstNameField.value });
+      dispatch({ type: 'LAST_NAME', payload: lastNameField.value });
       setStep(3);
     }
   };
