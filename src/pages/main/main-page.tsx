@@ -38,7 +38,7 @@ export function MainPage() {
       dispatch({ type: 'IS_LOADING', payload: false });
     }
     if (isLoading) {
-      dispatch({ type: 'IS_LOADING', payload: true });
+      // dispatch({ type: 'IS_LOADING', payload: true });
     }
     if (error) {
       dispatch({ type: 'IS_FETCH_ERROR', payload: true });
