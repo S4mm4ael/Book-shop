@@ -1,14 +1,14 @@
 export interface Book {
   issueYear: string;
-  rating: number;
+  rating: number | null;
   title: string;
   authors: string[];
-  image: ImageBook;
+  image: ImageBook | null;
   categories: string[];
-  id: string;
+  id: string | number;
   booking: null | Booking;
   delivery: null | Delievery;
-  histories: null | Histories;
+  histories: null | Histories[];
 }
 
 export type ImageBook = {
