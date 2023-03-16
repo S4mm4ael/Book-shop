@@ -13,7 +13,7 @@ export interface Book {
 
 export type ImageBook = {
   url: string;
-}
+};
 
 type Booking = {
   id: number;
@@ -22,12 +22,12 @@ type Booking = {
   customerId: number;
   customerFirstName: string;
   customerLastName: string;
-}
+};
 
 type Histories = {
   id: number;
   userId: number;
-}
+};
 
 type Delievery = {
   id: number;
@@ -37,18 +37,18 @@ type Delievery = {
   recipientId: number;
   recipientFirstName: string;
   recipientLastName: string;
-}
+};
 
 export type BookCard = {
   key: string;
   bookItem: Book;
   isListView: boolean;
-}
+};
 
-export interface Category  {
-  name:string;
-  path:string;
-  id: string;
+export interface Category {
+  name: string;
+  path: string;
+  id: string | number;
 }
 
 export interface ExactBook extends Book {
@@ -65,12 +65,12 @@ export interface ExactBook extends Book {
   images: ImageBook[];
 }
 
-interface Comment  {
+interface Comment {
   id: number;
   rating: number;
   text: string;
   createdAt: string;
-  user: User
+  user: User;
 }
 
 type User = {
@@ -78,9 +78,8 @@ type User = {
   firstName: string;
   lastName: string;
   avatarUrl: string;
+};
 
-}
-
-export interface CommentBook extends Comment{
-user: User;
+export interface CommentBook extends Comment {
+  user: User;
 }
