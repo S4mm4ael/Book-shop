@@ -22,25 +22,28 @@ export function BookPage() {
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const { bookId } = useParams();
   const { category } = useParams();
-  const { data: book, error, isLoading } = useGetBookQuery(`${bookId}`);
+
+  const book =
+
+  // const { data: book, error, isLoading } = useGetBookQuery(`${bookId}`);
 
   const updateMedia = () => {
     setDesktopSize(window.innerWidth > 768);
   };
 
-  useEffect(() => {
-    if (!isLoading && book) {
-      dispatch({ type: 'IS_LOADING', payload: false });
-    }
-    if (isLoading) {
-      dispatch({ type: 'IS_LOADING', payload: true });
-    }
-    if (error) {
-      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  });
+  // useEffect(() => {
+  //   if (!isLoading && book) {
+  //     dispatch({ type: 'IS_LOADING', payload: false });
+  //   }
+  //   if (isLoading) {
+  //     dispatch({ type: 'IS_LOADING', payload: true });
+  //   }
+  //   if (error) {
+  //     dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+  //     // eslint-disable-next-line no-console
+  //     console.log(error);
+  //   }
+  // });
   useEffect(() => {
     window.addEventListener('resize', updateMedia);
 
