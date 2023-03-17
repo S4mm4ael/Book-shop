@@ -140,7 +140,8 @@ export function BookPage() {
               <h5>Рейтинг</h5>
               {book && (
                 <div className={styles.BookPage__ratingStars}>
-                  {renderStars(book.rating)} <span>{book.rating}</span>
+                  {/* book.rating && { renderStars(book.rating)} <span>{book.rating}</span>}
+                  !book.rating && <span>null</span> */}
                 </div>
               )}
             </div>

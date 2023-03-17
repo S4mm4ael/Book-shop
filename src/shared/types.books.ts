@@ -5,7 +5,7 @@ export interface Book {
   authors: string[];
   image: ImageBook | null;
   categories: string[];
-  id: string | number;
+  id: number;
   booking: null | Booking;
   delivery: null | Delievery;
   histories: null | Histories[];
