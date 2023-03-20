@@ -1,4 +1,4 @@
-export const book = [
+export const bookExact = [
   {
     id: 2,
     title: 'Построение бизнес-моделей: Настольная книга стратега и новатора',

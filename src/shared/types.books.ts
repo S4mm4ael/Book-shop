@@ -60,7 +60,7 @@ export interface ExactBook extends Book {
   format: string;
   ISBN: string;
   producer: string;
-  comments: Comment[];
+  comments: Comment[] | null;
   user: User;
   images: ImageBook[];
 }
@@ -77,7 +77,7 @@ type User = {
   commentUserId: number;
   firstName: string;
   lastName: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
 };
 
 export interface CommentBook extends Comment {

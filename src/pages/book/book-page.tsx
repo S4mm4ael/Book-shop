@@ -7,29 +7,35 @@ import strokeUp from '../../assets/svg/stroke-up-black.svg';
 import { Comment } from '../../components/comment/comment';
 import { NavigationList } from '../../components/navigation-list';
 import { SliderBook } from '../../components/slider-book';
+import { bookExact } from '../../mock/book-exact';
 import { useGetBookQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { defineRoute } from '../../shared/define-ru-category';
 import { renderStars } from '../../shared/render-stars';
-import { CommentBook } from '../../shared/types.books';
 
 import styles from './book-page.module.css';
 
 export function BookPage() {
-  const dispatch: AppDispatch = useDispatch();
+  // const dispatch: AppDispatch = useDispatch();
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 768);
   const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(true);
+  const [book, setBook] = useState(bookExact[7]);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const { bookId } = useParams();
   const { category } = useParams();
 
-  const book =
+  useEffect(() => {
+    if (bookId) {
+      setBook(bookExact[+bookId - 2]);
+    }
+  }, [book, bookId]);
 
   // const { data: book, error, isLoading } = useGetBookQuery(`${bookId}`);
 
   const updateMedia = () => {
     setDesktopSize(window.innerWidth > 768);
   };
+  const error = false;
 
   // useEffect(() => {
   //   if (!isLoading && book) {
@@ -50,17 +56,23 @@ export function BookPage() {
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
 
-  function renderComments(comments: CommentBook[]) {
-    return comments.map((comment) => (
-      <Comment
-        key={comment.id}
-        avatar={comment.user.avatarUrl}
-        name={comment.user.firstName + comment.user.lastName}
-        rating={comment.rating}
-        date={comment.createdAt}
-        text={comment.text}
-      />
-    ));
+  function renderComments() {
+    if (book.comments) {
+      const { comments } = book;
+
+      return comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          avatar={comment.user.avatarUrl}
+          name={comment.user.firstName + comment.user.lastName}
+          rating={comment.rating}
+          date={comment.createdAt}
+          text={comment.text}
+        />
+      ));
+    }
+
+    return ' ';
   }
 
   return (
@@ -143,8 +155,7 @@ export function BookPage() {
               <h5>Рейтинг</h5>
               {book && (
                 <div className={styles.BookPage__ratingStars}>
-                  {/* book.rating && { renderStars(book.rating)} <span>{book.rating}</span>}
-                  !book.rating && <span>null</span> */}
+                  {renderStars(book.rating)} <span>{book.rating}</span>
                 </div>
               )}
             </div>
@@ -214,7 +225,9 @@ export function BookPage() {
               </div>
               <div className={styles.BookPage__commentSection}>
                 <ul className={styles.BookPage__commentList}>
-                  {book?.comments ? isCommentsOpen && renderComments(book?.comments) : 'Комментариев пока нет'}
+                  {/* {book?.comments ? isCommentsOpen && renderComments(book?.comments) : 'Комментариев пока нет'} */}
+                  {!book?.comments && isCommentsOpen && 'Комментариев пока нет'}
+                  {book?.comments && isCommentsOpen && book?.comments !== null && renderComments()}
                 </ul>
                 <button data-test-id='button-rating' type='button' className={`${styles.BookPage__bookIt}`}>
                   Оценить книгу
