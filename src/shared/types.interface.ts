@@ -14,7 +14,7 @@ export type SearchBarProps = {
 
 export type SliderProps = {
   isDesktopSize: boolean;
-  images: ImageBook[];
+  images: ImageBook[] | null;
 };
 
 export type CommentProps = {

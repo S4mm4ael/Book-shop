@@ -26,6 +26,13 @@ export function SliderBook({ isDesktopSize, images }: SliderProps) {
         </SwiperSlide>
       );
     }
+    if (!images) {
+      return (
+        <SwiperSlide data-test-id={thumb && 'slide-mini'} className={className}>
+          <img src={noCover} alt='cover' height={`${height}px`} />
+        </SwiperSlide>
+      );
+    }
 
     return images.map((el) => (
       <SwiperSlide key={Math.random()} data-test-id={thumb && 'slide-mini'} className={className}>
