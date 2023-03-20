@@ -75,7 +75,7 @@ export function Card(props: BookCard) {
     return (
       <Link to={`/books/${defineLink()}/${id}`}>
         {' '}
-        <div id={id} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
+        <div id={id.toString()} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
           {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' width='120px' />}
           {!image && <img src={emptyList} alt='book-cover' height='170px' />}
           <div className={`${styles.Card__wrapper} ${styles.Card__wrapperList}`}>
@@ -123,7 +123,7 @@ export function Card(props: BookCard) {
   return (
     <Link to={`/books/:${defineLink()}/${id}`}>
       {' '}
-      <div id={id} className={styles.Card} data-test-id='card'>
+      <div id={id.toString()} className={styles.Card} data-test-id='card'>
         <div className={styles.Card__image}>
           {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' height='174px' />}
           {!image && <img src={empty} alt='book-cover' />}

@@ -1,0 +1,26 @@
+[
+  {
+    "email": "awdawda2233@dd.com",
+    "firstName": "wdadwa",
+    "lastName": "awdawdrgh",
+    "password": "wdawd@awddsxE3",
+    "phone": "+375 (22) 222-22-22",
+    "username": "awdwadawd1"
+  },
+  {
+    "jwt": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTI5LCJpYXQiOjE2Nzg4MDIyNDgsImV4cCI6MTY4MTM5NDI0OH0.Q7czskcwoFdVjbBsczV2SrGmi91M5puFGLRrNt4vRFc",
+    "user": {
+      "id": 929,
+      "username": "awdwadawd1",
+      "email": "awdawda2233@dd.com",
+      "provider": "local",
+      "confirmed": true,
+      "blocked": false,
+      "createdAt": "2023-03-14T13:57:28.700Z",
+      "updatedAt": "2023-03-14T13:57:28.700Z",
+      "firstName": "wdadwa",
+      "lastName": "awdawdrgh",
+      "phone": "+375 (22) 222-22-22"
+    }
+  }
+]

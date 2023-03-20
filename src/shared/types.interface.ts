@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { ImageBook } from './types.books'
+import { ImageBook } from './types.books';
 
 export type SearchProps = {
   isListView: boolean;
@@ -14,11 +14,11 @@ export type SearchBarProps = {
 
 export type SliderProps = {
   isDesktopSize: boolean;
-  images:ImageBook[] ;
+  images: ImageBook[] | null;
 };
 
 export type CommentProps = {
-  avatar: string | undefined;
+  avatar: string | null;
   name: string;
   rating: number;
   date: string;

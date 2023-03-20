@@ -52,9 +52,7 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
 
     registerUser(formData)
       .unwrap()
-      .then(() => {
-        console.log(response);
-      })
+      .then(() => {})
       .then((error: any) => {
         console.log(error);
       });

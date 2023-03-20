@@ -7,57 +7,72 @@ import strokeUp from '../../assets/svg/stroke-up-black.svg';
 import { Comment } from '../../components/comment/comment';
 import { NavigationList } from '../../components/navigation-list';
 import { SliderBook } from '../../components/slider-book';
+import { bookExact } from '../../mock/book-exact';
 import { useGetBookQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { defineRoute } from '../../shared/define-ru-category';
 import { renderStars } from '../../shared/render-stars';
-import { CommentBook } from '../../shared/types.books';
 
 import styles from './book-page.module.css';
 
 export function BookPage() {
-  const dispatch: AppDispatch = useDispatch();
+  // const dispatch: AppDispatch = useDispatch();
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 768);
   const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(true);
+  const [book, setBook] = useState(bookExact[7]);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const { bookId } = useParams();
   const { category } = useParams();
-  const { data: book, error, isLoading } = useGetBookQuery(`${bookId}`);
+
+  useEffect(() => {
+    if (bookId) {
+      setBook(bookExact[+bookId - 2]);
+    }
+  }, [book, bookId]);
+
+  // const { data: book, error, isLoading } = useGetBookQuery(`${bookId}`);
 
   const updateMedia = () => {
     setDesktopSize(window.innerWidth > 768);
   };
+  const error = false;
 
-  useEffect(() => {
-    if (!isLoading && book) {
-      dispatch({ type: 'IS_LOADING', payload: false });
-    }
-    if (isLoading) {
-      dispatch({ type: 'IS_LOADING', payload: true });
-    }
-    if (error) {
-      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  });
+  // useEffect(() => {
+  //   if (!isLoading && book) {
+  //     dispatch({ type: 'IS_LOADING', payload: false });
+  //   }
+  //   if (isLoading) {
+  //     dispatch({ type: 'IS_LOADING', payload: true });
+  //   }
+  //   if (error) {
+  //     dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+  //     // eslint-disable-next-line no-console
+  //     console.log(error);
+  //   }
+  // });
   useEffect(() => {
     window.addEventListener('resize', updateMedia);
 
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
 
-  function renderComments(comments: CommentBook[]) {
-    return comments.map((comment) => (
-      <Comment
-        key={comment.id}
-        avatar={comment.user.avatarUrl}
-        name={comment.user.firstName + comment.user.lastName}
-        rating={comment.rating}
-        date={comment.createdAt}
-        text={comment.text}
-      />
-    ));
+  function renderComments() {
+    if (book.comments) {
+      const { comments } = book;
+
+      return comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          avatar={comment.user.avatarUrl}
+          name={comment.user.firstName + comment.user.lastName}
+          rating={comment.rating}
+          date={comment.createdAt}
+          text={comment.text}
+        />
+      ));
+    }
+
+    return ' ';
   }
 
   return (
@@ -88,7 +103,8 @@ export function BookPage() {
             {isDesktopSize ? (
               <div className={styles.BookPage__bookWrapper}>
                 <div className={styles.BookPage__slider}>
-                  {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                  {book.images && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                  {!book.images && <SliderBook isDesktopSize={isDesktopSize} images={null} />}
                 </div>
                 <div className={styles.BookPage__text}>
                   <h1 className={styles.BookPage__title} data-test-id='book-title'>
@@ -210,7 +226,8 @@ export function BookPage() {
               </div>
               <div className={styles.BookPage__commentSection}>
                 <ul className={styles.BookPage__commentList}>
-                  {book?.comments ? isCommentsOpen && renderComments(book?.comments) : 'Комментариев пока нет'}
+                  {!book?.comments && isCommentsOpen && 'Комментариев пока нет'}
+                  {book?.comments && isCommentsOpen && book?.comments !== null && renderComments()}
                 </ul>
                 <button data-test-id='button-rating' type='button' className={`${styles.BookPage__bookIt}`}>
                   Оценить книгу
