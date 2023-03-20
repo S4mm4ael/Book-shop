@@ -103,7 +103,8 @@ export function BookPage() {
             {isDesktopSize ? (
               <div className={styles.BookPage__bookWrapper}>
                 <div className={styles.BookPage__slider}>
-                  {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                  {book.images && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                  {!book.images && <SliderBook isDesktopSize={isDesktopSize} images={null} />}
                 </div>
                 <div className={styles.BookPage__text}>
                   <h1 className={styles.BookPage__title} data-test-id='book-title'>
@@ -225,7 +226,6 @@ export function BookPage() {
               </div>
               <div className={styles.BookPage__commentSection}>
                 <ul className={styles.BookPage__commentList}>
-                  {/* {book?.comments ? isCommentsOpen && renderComments(book?.comments) : 'Комментариев пока нет'} */}
                   {!book?.comments && isCommentsOpen && 'Комментариев пока нет'}
                   {book?.comments && isCommentsOpen && book?.comments !== null && renderComments()}
                 </ul>
