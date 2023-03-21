@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-interactive-element-to-noninteractive-role */
 /* eslint-disable jsx-a11y/no-autofocus */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import arrowBlack from '../../assets/svg/arrow-registration.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { RootState } from '../../redux/store';
 
 import styles from './auth-page.module.css';
 
@@ -13,6 +15,12 @@ export function AuthPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
+
+  const [userLogin, setUserLogin] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>('');
+
+  const login: string = useSelector((state: RootState) => state.user.username);
+  const password: string = useSelector((state: RootState) => state.user.password);
 
   function handlePasswordVisibility() {
     if (isPasswordEntered) {
@@ -22,6 +30,19 @@ export function AuthPage() {
       if (isPasswordShow === true) {
         setIsPasswordShow(false);
       }
+    }
+  }
+  function handleLoginChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUserLogin(e.target.value);
+  }
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUserPassword(e.target.value);
+  }
+  function handleSubmit() {
+    if (userLogin === login && userPassword === password) {
+      console.log('success');
+    } else {
+      console.log('no');
     }
   }
 
@@ -40,9 +61,15 @@ export function AuthPage() {
       {!isError && (
         <div className={styles.Auth__formContainer}>
           <h2 className={styles.Auth__title}>Вход в личный кабинет</h2>
-          <form className={styles.Auth__form} onSubmit={() => setIsError(true)}>
+          <form className={styles.Auth__form} onSubmit={() => handleSubmit()}>
             <div className={styles.Auth__inputWrapper}>
-              <input className={styles.Auth__formItem} type='text' required={true} />
+              <input
+                className={styles.Auth__formItem}
+                type='text'
+                value={userLogin}
+                required={true}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleLoginChange(e)}
+              />
               <span className={styles.Auth__placeholder}>Логин</span>
             </div>
 
@@ -54,7 +81,10 @@ export function AuthPage() {
                     autoFocus={true}
                     type={isPasswordShow ? 'text' : 'password'}
                     required={true}
-                    onChange={() => setisPasswordEntered(true)}
+                    value={userPassword}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      handlePasswordChange(e);
+                    }}
                   />
                   <span className={styles.Auth__placeholder}>Пароль</span>
                   <button

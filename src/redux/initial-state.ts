@@ -28,8 +28,8 @@ export const initialState: CounterState = {
 
 export const initialUserState: CounterUserState = {
   email: ' ',
-  username: ' ',
-  password: ' ',
+  username: 'admin1',
+  password: 'AdminTest1234',
   firstName: ' ',
   lastName: '',
   phone: '',
