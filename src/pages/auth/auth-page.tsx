@@ -83,11 +83,15 @@ export function AuthPage() {
             </button>
           </form>
           <div className={styles.Auth__registrationContainer}>
-            <p className={styles.Auth__registrationP}>Нет учётной записи?</p>
+            <Link className={`${styles.Auth__registrationLink} ${styles.Auth__registrationLink_back}`} to='/'>
+              <img className={styles.Auth__registrationLink_backArrow} src={arrowBlack} alt='arrow' />
+              Вернуться на главную
+            </Link>
             <Link className={styles.Auth__registrationLink} to='/registration'>
               Регистрация <img src={arrowBlack} alt='arrow' />
             </Link>
           </div>
+          <div className={styles.Auth__registrationContainer} />
         </div>
       )}
     </section>

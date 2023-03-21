@@ -97,12 +97,16 @@ input:-webkit-autofill:active{
   cursor:pointer;
 
 }
+.Auth__registrationLink_backArrow {
+  transform:rotate(180deg);
+}
 .Auth__registrationContainer{
   display:flex;
   width:100%;
   gap:16px;
   margin-top:-16px;
   align-items:center;
+  justify-content:space-between;
 }
 .Auth__registrationP{
   font-size:16px;
@@ -202,6 +206,7 @@ h2{
   display:flex;
   gap:12px;
 }
+
 @media screen and (max-width:600px) {
   .Auth{
     padding:0 20px;
