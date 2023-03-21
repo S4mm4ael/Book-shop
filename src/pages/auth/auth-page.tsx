@@ -1,13 +1,13 @@
 /* eslint-disable jsx-a11y/no-interactive-element-to-noninteractive-role */
 /* eslint-disable jsx-a11y/no-autofocus */
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import arrowBlack from '../../assets/svg/arrow-registration.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
-import { RootState } from '../../redux/store';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import styles from './auth-page.module.css';
 
@@ -21,6 +21,11 @@ export function AuthPage() {
 
   const login: string = useSelector((state: RootState) => state.user.username);
   const password: string = useSelector((state: RootState) => state.user.password);
+  const isLogged: boolean = useSelector((state: RootState) => state.user.isLogged);
+
+  const navigate = useNavigate();
+
+  const dispatch: AppDispatch = useDispatch();
 
   function handlePasswordVisibility() {
     if (isPasswordEntered) {
@@ -38,11 +43,16 @@ export function AuthPage() {
   function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
     setUserPassword(e.target.value);
   }
-  function handleSubmit() {
+  function redirectToMain() {
+    dispatch({ type: 'IS_LOGGED', payload: true });
+    navigate('/');
+  }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     if (userLogin === login && userPassword === password) {
-      console.log('success');
+      redirectToMain();
     } else {
-      console.log('no');
+      setIsError(true);
     }
   }
 
@@ -61,7 +71,7 @@ export function AuthPage() {
       {!isError && (
         <div className={styles.Auth__formContainer}>
           <h2 className={styles.Auth__title}>Вход в личный кабинет</h2>
-          <form className={styles.Auth__form} onSubmit={() => handleSubmit()}>
+          <form className={styles.Auth__form} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
             <div className={styles.Auth__inputWrapper}>
               <input
                 className={styles.Auth__formItem}
