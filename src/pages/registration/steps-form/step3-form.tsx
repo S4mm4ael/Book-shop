@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,13 +18,6 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
   const dispatch: AppDispatch = useDispatch();
   const [registerUser, response] = useRegisterUserMutation();
 
-  const email = useSelector((state: RootState) => state.user.email);
-  const username = useSelector((state: RootState) => state.user.username);
-  const password = useSelector((state: RootState) => state.user.password);
-  const firstName = useSelector((state: RootState) => state.user.firstName);
-  const lastName = useSelector((state: RootState) => state.user.lastName);
-  const phone = useSelector((state: RootState) => state.user.phone);
-
   const {
     control,
     handleSubmit,
@@ -40,23 +33,23 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
       pattern: /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
   });
-  const sendData = () => {
-    const formData = {
-      email,
-      username,
-      password,
-      firstName,
-      lastName,
-      phone,
-    };
+  // const sendData = () => {
+  //   const formData = {
+  //     email,
+  //     username,
+  //     password,
+  //     firstName,
+  //     lastName,
+  //     phone,
+  //   };
 
-    registerUser(formData)
-      .unwrap()
-      .then(() => {})
-      .then((error: any) => {
-        console.log(error);
-      });
-  };
+  //   registerUser(formData)
+  //     .unwrap()
+  //     .then(() => {})
+  //     .then((error: any) => {
+  //       console.log(error);
+  //     });
+  // };
 
   const onSubmit = () => {
     if (!errors.phoneNumber && !emailFieldState.invalid) {
@@ -64,7 +57,7 @@ export function Step3Form({ setIsSuccess }: Step3FormProps) {
       dispatch({ type: 'EMAIL', payload: emailField.value });
     }
     if (!errors.phoneNumber && !emailFieldState.invalid) {
-      sendData();
+      // sendData();
       setIsSuccess(true);
     }
   };

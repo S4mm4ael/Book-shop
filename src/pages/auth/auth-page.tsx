@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-interactive-element-to-noninteractive-role */
 /* eslint-disable jsx-a11y/no-autofocus */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -26,6 +26,21 @@ export function AuthPage() {
   const navigate = useNavigate();
 
   const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    const userObject = localStorage.getItem('user');
+
+    if (userObject) {
+      const userObjectParced = JSON.parse(userObject);
+
+      dispatch({ type: 'EMAIL', payload: userObjectParced.email });
+      dispatch({ type: 'USER_NAME', payload: userObjectParced.username });
+      dispatch({ type: 'PASSWORD', payload: userObjectParced.password });
+      dispatch({ type: 'PHONE', payload: userObjectParced.phone });
+      dispatch({ type: 'FIRST_NAME', payload: userObjectParced.firstName });
+      dispatch({ type: 'LAST_NAME', payload: userObjectParced.lastName });
+    }
+  });
 
   function handlePasswordVisibility() {
     if (isPasswordEntered) {

@@ -1,9 +1,11 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import arrow from '../../assets/svg/arrow-registration.svg';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import { Step1Form } from './steps-form/step1-form';
 import { Step2Form } from './steps-form/step2-form';
@@ -15,6 +17,16 @@ export function RegistrationPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [step, setStep] = useState<number>(1);
+  const navigate = useNavigate();
+
+  const dispatch: AppDispatch = useDispatch();
+
+  const email = useSelector((state: RootState) => state.user.email);
+  const username = useSelector((state: RootState) => state.user.username);
+  const password = useSelector((state: RootState) => state.user.password);
+  const firstName = useSelector((state: RootState) => state.user.firstName);
+  const lastName = useSelector((state: RootState) => state.user.lastName);
+  const phone = useSelector((state: RootState) => state.user.phone);
 
   function renderForm() {
     switch (step) {
@@ -25,6 +37,23 @@ export function RegistrationPage() {
       default:
         return <Step1Form step={step} setStep={setStep} />;
     }
+  }
+
+  function handleSuccessRegistration() {
+    const user = {
+      email,
+      username,
+      password,
+      firstName,
+      lastName,
+      phone,
+    };
+
+    localStorage.setItem('token', 'awe2sefF2fxcegf27awdd9');
+    localStorage.setItem('user', JSON.stringify(user));
+
+    dispatch({ type: 'IS_LOGGED', payload: true });
+    navigate('/');
   }
 
   return (
@@ -62,7 +91,7 @@ export function RegistrationPage() {
             type='submit'
             onClick={() => {
               setIsError(true);
-              setStep(1);
+              handleSuccessRegistration();
             }}
           >
             вход

@@ -28,10 +28,10 @@ export const initialState: CounterState = {
 
 export const initialUserState: CounterUserState = {
   email: ' ',
-  username: 'admin1',
-  password: 'AdminTest1234',
+  username: ' ',
+  password: ' ',
   firstName: ' ',
-  lastName: '',
-  phone: '',
+  lastName: ' ',
+  phone: ' ',
   isLogged: false,
 };
