@@ -10,6 +10,7 @@ const firstName = createAction<string>('FIRST_NAME');
 const lastName = createAction<string>('LAST_NAME');
 const phone = createAction<string>('PHONE');
 const isLogged = createAction<boolean>('IS_LOGGED');
+const token = createAction<string | null>('TOKEN');
 
 export const userReducer = createReducer(initialUserState, (builder) => {
   builder.addCase(email, (state, action) => {
@@ -32,5 +33,8 @@ export const userReducer = createReducer(initialUserState, (builder) => {
   });
   builder.addCase(isLogged, (state, action) => {
     state.isLogged = action.payload;
+  });
+  builder.addCase(token, (state, action) => {
+    state.token = action.payload;
   });
 });

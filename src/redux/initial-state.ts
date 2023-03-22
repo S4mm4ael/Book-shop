@@ -15,6 +15,7 @@ interface CounterUserState {
   lastName: string;
   phone: string;
   isLogged: boolean;
+  token: null | string;
 }
 export const initialState: CounterState = {
   isBurgerOpen: false,
@@ -34,4 +35,5 @@ export const initialUserState: CounterUserState = {
   lastName: ' ',
   phone: ' ',
   isLogged: false,
+  token: null,
 };

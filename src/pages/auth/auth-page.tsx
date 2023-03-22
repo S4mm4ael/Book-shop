@@ -21,7 +21,7 @@ export function AuthPage() {
 
   const login: string = useSelector((state: RootState) => state.user.username);
   const password: string = useSelector((state: RootState) => state.user.password);
-  const isLogged: boolean = useSelector((state: RootState) => state.user.isLogged);
+  const token: string | null = useSelector((state: RootState) => state.user.token);
 
   const navigate = useNavigate();
 
@@ -138,10 +138,20 @@ export function AuthPage() {
             </button>
           </form>
           <div className={styles.Auth__registrationContainer}>
-            <Link className={`${styles.Auth__registrationLink} ${styles.Auth__registrationLink_back}`} to='/'>
-              <img className={styles.Auth__registrationLink_backArrow} src={arrowBlack} alt='arrow' />
-              Вернуться на главную
-            </Link>
+            {token && (
+              <Link className={`${styles.Auth__registrationLink} ${styles.Auth__registrationLink_back}`} to='/'>
+                <img className={styles.Auth__registrationLink_backArrow} src={arrowBlack} alt='arrow' />
+                Вернуться на главную
+              </Link>
+            )}
+            {!token && (
+              <Link className={`${styles.Auth__registrationLink} ${styles.Auth__registrationLink_back}`} to='/'>
+                <button onClick={() => localStorage.setItem('token', 'guest_token')} type='button'>
+                  Войти как гость
+                </button>
+              </Link>
+            )}
+
             <Link className={styles.Auth__registrationLink} to='/registration'>
               Регистрация <img src={arrowBlack} alt='arrow' />
             </Link>
