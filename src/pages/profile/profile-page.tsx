@@ -26,8 +26,8 @@ export function ProfilePage() {
   });
   const onSubmit = () => {
     if (!firstNameFieldState.invalid && !lastNameFieldState.invalid) {
-      console.log(firstNameField.value);
-      console.log(lastNameField.value);
+      // console.log(firstNameField.value);
+      // console.log(lastNameField.value);
     }
   };
 
