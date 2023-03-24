@@ -1,7 +1,9 @@
 import { useController, useForm } from 'react-hook-form';
 import classNames from 'classnames';
 
-import avatar from '../../assets/png/avatar.png';
+import avatar from '../../assets/png/avatar-big.png';
+import intersect from '../../assets/png/avatar-intersect.png';
+import icon from '../../assets/svg/avatar-icon.svg';
 
 import styles from './profile-page.module.css';
 
@@ -32,7 +34,9 @@ export function ProfilePage() {
   return (
     <section className={styles.Profile}>
       <div className={styles.Profile__nameContainer}>
-        <img src={avatar} alt='avatar' />
+        <img className={styles.Profile__avatar} src={avatar} alt='avatar' />
+        <img className={styles.Profile__avatarIntersect} src={intersect} alt='avatar-change' />
+        <img className={styles.Profile__avatarIcon} height={32} src={icon} alt='avatar-icon' />
         <h2>
           Имя
           <br />
@@ -48,11 +52,11 @@ export function ProfilePage() {
       >
         <h3>Учётные данные</h3>
         <p className={styles.Profile__tips}>Здесь вы можете отредактировать информацию о себе</p>
-        <div className={styles.Registration__inputsContainer}>
-          <div className={styles.Registration__inputWrapper}>
+        <div className={styles.Profile__inputsContainer}>
+          <div className={styles.Profile__inputWrapper}>
             <input
-              className={classNames(styles.Registration__formItem, {
-                [styles.Registration__formItem_error]: firstNameFieldState.invalid,
+              className={classNames(styles.Profile__formItem, {
+                [styles.Profile__formItem_error]: firstNameFieldState.invalid,
               })}
               type='text'
               required={true}
@@ -60,21 +64,21 @@ export function ProfilePage() {
               {...firstNameField}
               value={firstNameField.value || ''}
             />
-            <span className={styles.Registration__placeholder}>Имя</span>
+            <span className={styles.Profile__placeholder}>Имя</span>
             {firstNameFieldState.invalid && (
-              <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}>
+              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
                 Поле не может быть пустым
               </p>
             )}
             {!firstNameFieldState.invalid && (
-              <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}> </p>
+              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
             )}
           </div>
 
-          <div className={styles.Registration__inputWrapper}>
+          <div className={styles.Profile__inputWrapper}>
             <input
-              className={classNames(styles.Registration__formItem, {
-                [styles.Registration__formItem_error]: lastNameFieldState.invalid,
+              className={classNames(styles.Profile__formItem, {
+                [styles.Profile__formItem_error]: lastNameFieldState.invalid,
               })}
               type='text'
               required={true}
@@ -82,19 +86,22 @@ export function ProfilePage() {
               {...lastNameField}
               value={lastNameField.value || ''}
             />
-            <span className={styles.Registration__placeholder}>Фамилия</span>
+            <span className={styles.Profile__placeholder}>Фамилия</span>
             {lastNameFieldState.invalid && (
-              <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}>
+              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
                 Поле не может быть пустым
               </p>
             )}
             {!lastNameFieldState.invalid && (
-              <p className={`${styles.Registration__formTips} ${styles.Registration__formTips_error}`}> </p>
+              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
             )}
           </div>
         </div>
-        <button className={styles.Registration__formButton} type='submit'>
-          Следующий шаг
+        <button className={styles.Profile__formButton} type='button'>
+          Редактировать
+        </button>
+        <button className={styles.Profile__formButton} type='submit'>
+          Сохранить изменения
         </button>
       </form>
       <div className={styles.Profile__booksContainer}>
@@ -108,6 +115,9 @@ export function ProfilePage() {
           <li> Книга 1</li>
           <li> Книга 1</li>
         </ul>
+      </div>
+      <div className={styles.Profile__bottomContainer}>
+        <button type='button'>Выйти из профиля</button>
       </div>
     </section>
   );
