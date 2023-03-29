@@ -231,7 +231,7 @@ export function Step1Form({ setStep }: Step1FormProps) {
                 type='button'
                 onClick={() => handlePasswordVisibility()}
               >
-                <div className={styles.Registration__passwprdImgContainer}>
+                <div className={styles.Registration__passwordImgContainer}>
                   {!passwordFieldState.invalid && passwordField.value && <img src={check} alt='check' />}
                   <img src={isPasswordShow ? eyeOpened : eyeClosed} alt='show/hide' />
                 </div>

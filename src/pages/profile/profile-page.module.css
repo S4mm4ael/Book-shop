@@ -1,7 +1,10 @@
 .Profile {
   display:flex;
+  width:100%;
   flex-direction:column;
   gap:90px;
+  margin-left:0;
+  margin-right:auto;
 }
 .Profile__nameContainer{
   position:relative;
@@ -14,6 +17,10 @@
   border-radius:150px;
   width:160px;
   height:160px;
+}
+.Profile__buttonContainer{
+  display:flex;
+  gap:30px;
 }
 .Profile__avatarIcon{
   position:absolute;
@@ -41,6 +48,7 @@
   line-height:30px;
 }
 .Profile__tips{
+  margin:10px 0;
   font-size:16px;
   line-height:24px;
   line-height:16px;
@@ -117,6 +125,7 @@ input:valid ~ .Profile__placeholder{
   width:255px;
   height:52px;
   text-transform:uppercase;
+  background-color:#FFFFFF;
   color:#000000;
   font-weight:600;
   font-size:16px;
@@ -125,4 +134,34 @@ input:valid ~ .Profile__placeholder{
   border-radius:30px;
   cursor:pointer;
   border:1px solid #BFC4C9;
+}
+.Profile__formButton_inactive{
+  cursor:default;
+  color:#FFFFFF;
+  background-color:#EBEBEB;
+  border-radius:30px;
+}
+.Profile__formButton_logout{
+  color:#FFFFFF;
+  background:linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
+}
+.Profile__bottomContainer{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px 0;
+}
+.Profile__passwordImgContainer{
+  display:flex;
+  gap:4px;
+}
+.Profile__ItemWrapper{
+  position:relative;
+  height:56px;
+}
+.Profile__formItemImage{
+  all:unset;
+  position:absolute;
+  left:380px;
+  top:18px;
 }
