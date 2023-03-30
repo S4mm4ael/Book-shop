@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import { useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import avatar from '../../assets/png/avatar-big.png';
@@ -10,21 +11,29 @@ import icon from '../../assets/svg/avatar-icon.svg';
 import check from '../../assets/svg/check.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { RootState } from '../../redux/store';
 
 import styles from './profile-page.module.css';
 
 export function ProfilePage() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ mode: 'all' });
   const [isUserDataChanges, setIsUserDataChanges] = useState<boolean>(false);
   const [isShowAllErrorLogin, setIsShowAllErrorLogin] = useState<boolean>(false);
   const [isShowAllErrorPassword, setIsShowAllErrorPassword] = useState<boolean>(false);
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
-
+  // User creds
+  const username = useSelector((state: RootState) => state.user.username);
+  const password = useSelector((state: RootState) => state.user.password);
+  const firstName = useSelector((state: RootState) => state.user.firstName);
+  const lastName = useSelector((state: RootState) => state.user.lastName);
+  const email = useSelector((state: RootState) => state.user.email);
+  const phone = useSelector((state: RootState) => state.user.phone);
+  // UseForm
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: 'all' });
   // Regexp for validation
   const hasOnlyLatinAndNumbers = (value: string) => /^[a-zA-Z0-9]*$/.test(value);
   const hasLatinSymbol = (value: string) => /[a-zA-Z]/.test(value);
@@ -36,6 +45,7 @@ export function ProfilePage() {
   const { field: firstNameField, fieldState: firstNameFieldState } = useController({
     name: 'firstName',
     control,
+    defaultValue: firstName,
     rules: {
       required: true,
     },
@@ -43,6 +53,7 @@ export function ProfilePage() {
   const { field: lastNameField, fieldState: lastNameFieldState } = useController({
     name: 'lastName',
     control,
+    defaultValue: lastName,
     rules: {
       required: true,
     },
@@ -50,6 +61,7 @@ export function ProfilePage() {
   const { field: loginField, fieldState: loginFieldState } = useController({
     name: 'login',
     control,
+    defaultValue: username,
     rules: {
       required: true,
       validate: {
@@ -62,6 +74,7 @@ export function ProfilePage() {
   const { field: passwordField, fieldState: passwordFieldState } = useController({
     name: 'password',
     control,
+    defaultValue: password,
     rules: {
       required: true,
       minLength: { value: 8, message: 'Password must be at least 8 characters' },
@@ -74,6 +87,7 @@ export function ProfilePage() {
   const { field: emailField, fieldState: emailFieldState } = useController({
     name: 'email',
     control,
+    defaultValue: email,
     rules: {
       required: true,
       pattern: /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -322,7 +336,7 @@ export function ProfilePage() {
                 <input
                   className={styles.Profile__formItem}
                   type='password'
-                  placeholder='Пароль'
+                  placeholder='Введите для изменения'
                   onChange={() => setisPasswordEntered(true)}
                   required={true}
                 />
@@ -334,6 +348,7 @@ export function ProfilePage() {
             <Controller
               name='phone'
               control={control}
+              defaultValue={phone}
               rules={{
                 required: true,
                 pattern: {
