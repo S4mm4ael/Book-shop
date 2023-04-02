@@ -66,9 +66,10 @@ input:-webkit-autofill:active{
 }
 .Profile__inputsContainer{
   display:flex;
-  flex-direction:column;
-  gap:16px;
-  margin-bottom:50px;
+  flex-direction:row;
+  width:100%;
+  justify-content:space-around;
+  margin:50px 0;
 }
 .Profile__formContainer{
   display:flex;

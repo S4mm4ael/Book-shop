@@ -149,43 +149,6 @@ export function ProfilePage() {
 
     return <p className={`${styles.Profile__formTips} `}>Используйте для логина латинский алфавит и цифры</p>;
   }
-  function renderPasswordValidationMessage() {
-    if (errors.password) {
-      return (
-        <p className={`${styles.Profile__formTips} `}>
-          Пароль
-          <span
-            className={classNames(styles.Profile__formTips, styles.Profile__formTips_noPadding, {
-              [styles.Profile__formTips_error]: !minLength(passwordField.value),
-            })}
-          >
-            {' '}
-            не менее 8 символов
-          </span>
-          , с
-          <span
-            className={classNames(styles.Profile__formTips, styles.Profile__formTips_noPadding, {
-              [styles.Profile__formTips_error]: !hasUpperCaseLetter(passwordField.value),
-            })}
-          >
-            {' '}
-            заглавной буквой
-          </span>{' '}
-          и
-          <span
-            className={classNames(styles.Profile__formTips, styles.Profile__formTips_noPadding, {
-              [styles.Profile__formTips_error]: !hasNumber(passwordField.value),
-            })}
-          >
-            {' '}
-            цифрой
-          </span>
-        </p>
-      );
-    }
-
-    return <p className={`${styles.Profile__formTips} `}> Пароль не менее 8 символов, с заглавной буквой и цифрой</p>;
-  }
 
   return (
     <section className={styles.Profile}>
@@ -209,196 +172,193 @@ export function ProfilePage() {
         <h3>Учётные данные</h3>
         <p className={styles.Profile__tips}>Здесь вы можете отредактировать информацию о себе</p>
         <div className={styles.Profile__inputsContainer}>
-          <div className={styles.Profile__inputWrapper}>
-            <input
-              className={classNames(styles.Profile__formItem, {
-                [styles.Profile__formItem_error]: firstNameFieldState.invalid,
-              })}
-              type='text'
-              required={true}
-              key='firstName'
-              {...firstNameField}
-              value={firstNameField.value || ''}
-            />
-            <span className={styles.Profile__placeholder}>Имя</span>
-            {firstNameFieldState.invalid && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
-                Поле не может быть пустым
-              </p>
-            )}
-            {!firstNameFieldState.invalid && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
-            )}
+          <div>
+            <div className={styles.Profile__inputWrapper}>
+              <input
+                className={classNames(styles.Profile__formItem, {
+                  [styles.Profile__formItem_error]: firstNameFieldState.invalid,
+                })}
+                type='text'
+                required={true}
+                key='firstName'
+                {...firstNameField}
+                value={firstNameField.value || ''}
+              />
+              <span className={styles.Profile__placeholder}>Имя</span>
+              {firstNameFieldState.invalid && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+                  Поле не может быть пустым
+                </p>
+              )}
+              {!firstNameFieldState.invalid && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
+              )}
+            </div>
+            <div className={styles.Profile__inputWrapper}>
+              <input
+                className={classNames(styles.Profile__formItem, {
+                  [styles.Profile__formItem_error]: lastNameFieldState.invalid,
+                })}
+                type='text'
+                required={true}
+                key='lastName'
+                {...lastNameField}
+                value={lastNameField.value || ''}
+              />
+              <span className={styles.Profile__placeholder}>Фамилия</span>
+              {lastNameFieldState.invalid && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+                  Поле не может быть пустым
+                </p>
+              )}
+              {!lastNameFieldState.invalid && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
+              )}
+            </div>
+            <div className={styles.Profile__inputWrapper}>
+              <input
+                key='login'
+                id='login'
+                {...loginField}
+                value={loginField.value || ''}
+                onBlur={(e) => {
+                  setIsShowAllErrorLogin(false);
+                  if (loginFieldState.invalid) {
+                    setIsShowAllErrorLogin(true);
+                  }
+
+                  return e.target.value;
+                }}
+                onChange={loginField.onChange}
+                className={classNames(styles.Profile__formItem, {
+                  [styles.Profile__formItem_error]: isShowAllErrorLogin,
+                })}
+                type='text'
+                required={true}
+              />
+              <span className={styles.Profile__placeholder}>Придумайте логин для входа</span>
+              <div>{!isShowAllErrorLogin && renderLoginValidationMessage()}</div>
+              {isShowAllErrorLogin && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+                  Используйте для логина латинский алфавит и цифры
+                </p>
+              )}
+            </div>
           </div>
-
-          <div className={styles.Profile__inputWrapper}>
-            <input
-              className={classNames(styles.Profile__formItem, {
-                [styles.Profile__formItem_error]: lastNameFieldState.invalid,
-              })}
-              type='text'
-              required={true}
-              key='lastName'
-              {...lastNameField}
-              value={lastNameField.value || ''}
-            />
-            <span className={styles.Profile__placeholder}>Фамилия</span>
-            {lastNameFieldState.invalid && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
-                Поле не может быть пустым
-              </p>
-            )}
-            {!lastNameFieldState.invalid && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
-            )}
-          </div>
-
-          <div className={styles.Profile__inputWrapper}>
-            <input
-              key='login'
-              id='login'
-              {...loginField}
-              value={loginField.value || ''}
-              onBlur={(e) => {
-                setIsShowAllErrorLogin(false);
-                if (loginFieldState.invalid) {
-                  setIsShowAllErrorLogin(true);
-                }
-
-                return e.target.value;
-              }}
-              onChange={loginField.onChange}
-              className={classNames(styles.Profile__formItem, {
-                [styles.Profile__formItem_error]: isShowAllErrorLogin,
-              })}
-              type='text'
-              required={true}
-            />
-            <span className={styles.Profile__placeholder}>Придумайте логин для входа</span>
-            <div>{!isShowAllErrorLogin && renderLoginValidationMessage()}</div>
-            {isShowAllErrorLogin && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
-                Используйте для логина латинский алфавит и цифры
-              </p>
-            )}
-          </div>
-          <div className={styles.Profile__inputWrapper}>
-            {isPasswordEntered && (
-              <div className={styles.Profile__ItemWrapper}>
-                <div className={styles.Profile__inputWrapper}>
-                  <input
-                    key='password'
-                    id='password'
-                    {...passwordField}
-                    value={passwordField.value || ''}
-                    onBlur={(e) => {
-                      setIsShowAllErrorPassword(false);
-                      if (passwordFieldState.invalid && !isShowAllErrorPassword) {
-                        setIsShowAllErrorPassword(true);
-                      }
-
-                      return e.target.value;
-                    }}
-                    onChange={passwordField.onChange}
+          <div>
+            <div className={styles.Profile__inputWrapper}>
+              <Controller
+                name='phone'
+                control={control}
+                defaultValue={phone}
+                rules={{
+                  required: true,
+                  pattern: {
+                    value: /^\+375 \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/,
+                    message: 'В формате +375 (xx) xxx-xx-xx',
+                  },
+                }}
+                render={({ field: phoneField }) => (
+                  <InputMask
                     className={classNames(styles.Profile__formItem, {
-                      [styles.Profile__formItem_error]: isShowAllErrorPassword,
+                      [styles.Profile__formItem_error]: errors.phoneNumber,
                     })}
-                    type={isPasswordShow ? 'text' : 'password'}
+                    mask='+375 (99) 999-99-99'
+                    maskPlaceholder='x'
+                    value={phoneField.value || ''}
+                    onChange={phoneField.onChange}
+                    onBlur={phoneField.onBlur}
                     required={true}
-                    // eslint-disable-next-line jsx-a11y/no-autofocus
-                    autoFocus={true}
-                    onFocus={() => setisPasswordEntered(true)}
                   />
-                  <button
-                    className={styles.Profile__formItemImage}
-                    type='button'
-                    onClick={() => handlePasswordVisibility()}
-                  >
-                    <div className={styles.Profile__passwordImgContainer}>
-                      {!passwordFieldState.invalid && passwordField.value && <img src={check} alt='check' />}
-                      <img src={isPasswordShow ? eyeOpened : eyeClosed} alt='show/hide' />
-                    </div>
-                  </button>
-                  <span className={styles.Profile__placeholder}>Пароль</span>
-                  <div>{!isShowAllErrorPassword && renderPasswordValidationMessage()}</div>
-                  <div>
-                    {isShowAllErrorPassword && (
-                      <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
-                        Пароль не менее 8 символов, с заглавной буквой и цифрой
-                      </p>
-                    )}
+                )}
+              />
+              {!errors.phoneNumber && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
+              )}
+              {errors.phoneNumber && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+                  В формате +375 (xx) xxx-xx-xx
+                </p>
+              )}
+              <span className={styles.Profile__placeholder}>Номер телефона</span>
+            </div>
+            <div className={styles.Profile__inputWrapper}>
+              <input
+                className={classNames(styles.Profile__formItem, {
+                  [styles.Profile__formItem_error]: emailFieldState.error,
+                })}
+                key='email'
+                {...emailField}
+                value={emailField.value || ''}
+                type='text'
+                required={true}
+              />
+              <span className={styles.Profile__placeholder}>E-mail</span>
+              {!emailFieldState.invalid && <p className={styles.Profile__formTips}>{'  '}</p>}
+              {emailFieldState.invalid && (
+                <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+                  Введите корректный e-mail
+                </p>
+              )}
+            </div>
+            <div className={styles.Profile__inputWrapper}>
+              {isPasswordEntered && (
+                <div className={styles.Profile__ItemWrapper}>
+                  <div className={styles.Profile__inputWrapper}>
+                    <input
+                      key='password'
+                      id='password'
+                      {...passwordField}
+                      value={passwordField.value || ''}
+                      onBlur={(e) => {
+                        setIsShowAllErrorPassword(false);
+                        if (passwordFieldState.invalid && !isShowAllErrorPassword) {
+                          setIsShowAllErrorPassword(true);
+                        }
+
+                        return e.target.value;
+                      }}
+                      onChange={passwordField.onChange}
+                      className={classNames(styles.Profile__formItem, {
+                        [styles.Profile__formItem_error]: isShowAllErrorPassword,
+                      })}
+                      type={isPasswordShow ? 'text' : 'password'}
+                      required={true}
+                      // eslint-disable-next-line jsx-a11y/no-autofocus
+                      autoFocus={true}
+                      onFocus={() => setisPasswordEntered(true)}
+                    />
+                    <button
+                      className={styles.Profile__formItemImage}
+                      type='button'
+                      onClick={() => handlePasswordVisibility()}
+                    >
+                      <div className={styles.Profile__passwordImgContainer}>
+                        <img src={isPasswordShow ? eyeOpened : eyeClosed} alt='show/hide' />
+                        {!passwordFieldState.invalid && passwordField.value && <img src={check} alt='check' />}
+                      </div>
+                    </button>
+                    <span className={styles.Profile__placeholder}>Пароль</span>
+                    <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+                      Пароль не менее 8 символов, с заглавной буквой и цифрой
+                    </p>
+                    <div />
                   </div>
                 </div>
-              </div>
-            )}
-            {!isPasswordEntered && (
-              <div>
-                <input
-                  className={styles.Profile__formItem}
-                  type='password'
-                  placeholder='Введите для изменения'
-                  onChange={() => setisPasswordEntered(true)}
-                  required={true}
-                />
-                <p className={styles.Profile__formTips}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
-              </div>
-            )}
-          </div>
-          <div className={styles.Profile__inputWrapper}>
-            <Controller
-              name='phone'
-              control={control}
-              defaultValue={phone}
-              rules={{
-                required: true,
-                pattern: {
-                  value: /^\+375 \([0-9]{2}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$/,
-                  message: 'В формате +375 (xx) xxx-xx-xx',
-                },
-              }}
-              render={({ field: phoneField }) => (
-                <InputMask
-                  className={classNames(styles.Profile__formItem, {
-                    [styles.Profile__formItem_error]: errors.phoneNumber,
-                  })}
-                  mask='+375 (99) 999-99-99'
-                  maskPlaceholder='x'
-                  value={phoneField.value || ''}
-                  onChange={phoneField.onChange}
-                  onBlur={phoneField.onBlur}
-                  required={true}
-                />
               )}
-            />
-            {!errors.phoneNumber && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}> </p>
-            )}
-            {errors.phoneNumber && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
-                В формате +375 (xx) xxx-xx-xx
-              </p>
-            )}
-            <span className={styles.Profile__placeholder}>Номер телефона</span>
-          </div>
-
-          <div className={styles.Profile__inputWrapper}>
-            <input
-              className={classNames(styles.Profile__formItem, {
-                [styles.Profile__formItem_error]: emailFieldState.error,
-              })}
-              key='email'
-              {...emailField}
-              value={emailField.value || ''}
-              type='text'
-              required={true}
-            />
-            <span className={styles.Profile__placeholder}>E-mail</span>
-            {!emailFieldState.invalid && <p className={styles.Profile__formTips}>{'  '}</p>}
-            {emailFieldState.invalid && (
-              <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
-                Введите корректный e-mail
-              </p>
-            )}
+              {!isPasswordEntered && (
+                <div>
+                  <input
+                    className={styles.Profile__formItem}
+                    type='password'
+                    placeholder='Введите для изменения'
+                    onChange={() => setisPasswordEntered(true)}
+                    required={true}
+                  />
+                  <p className={styles.Profile__formTips}>Пароль не менее 8 символов, с заглавной буквой и цифрой</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className={styles.Profile__buttonContainer}>
