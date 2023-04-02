@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 
 import avatar from '../../assets/png/avatar-big.png';
@@ -11,16 +11,18 @@ import icon from '../../assets/svg/avatar-icon.svg';
 import check from '../../assets/svg/check.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
-import { RootState } from '../../redux/store';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import styles from './profile-page.module.css';
 
 export function ProfilePage() {
+  const dispatch: AppDispatch = useDispatch();
   const [isUserDataChanges, setIsUserDataChanges] = useState<boolean>(false);
   const [isShowAllErrorLogin, setIsShowAllErrorLogin] = useState<boolean>(false);
   const [isShowAllErrorPassword, setIsShowAllErrorPassword] = useState<boolean>(false);
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
+  const [isErrors, setIsErrors] = useState<boolean>(false);
   // User creds
   const username = useSelector((state: RootState) => state.user.username);
   const password = useSelector((state: RootState) => state.user.password);
@@ -32,6 +34,7 @@ export function ProfilePage() {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({ mode: 'all' });
   // Regexp for validation
@@ -39,7 +42,6 @@ export function ProfilePage() {
   const hasLatinSymbol = (value: string) => /[a-zA-Z]/.test(value);
   const hasUpperCaseLetter = (value: string) => /[A-ZА-Я]/.test(value);
   const hasNumber = (value: string) => /\d+/.test(value);
-  const minLength = (value: string) => /^(?=.*\d).{8,}$/.test(value);
 
   // Form handling
   const { field: firstNameField, fieldState: firstNameFieldState } = useController({
@@ -53,6 +55,7 @@ export function ProfilePage() {
   const { field: lastNameField, fieldState: lastNameFieldState } = useController({
     name: 'lastName',
     control,
+
     defaultValue: lastName,
     rules: {
       required: true,
@@ -94,9 +97,22 @@ export function ProfilePage() {
     },
   });
   const onSubmit = () => {
-    if (!firstNameFieldState.invalid && !lastNameFieldState.invalid) {
-      // console.log(firstNameField.value);
-      // console.log(lastNameField.value);
+    if (
+      !firstNameFieldState.invalid &&
+      !lastNameFieldState.invalid &&
+      !loginFieldState.invalid &&
+      !passwordFieldState.invalid &&
+      !errors.phoneNumber &&
+      !emailFieldState.invalid
+    ) {
+      dispatch({ type: 'USER_NAME', payload: loginField.value });
+      dispatch({ type: 'PASSWORD', payload: passwordField.value });
+      dispatch({ type: 'FIRST_NAME', payload: firstNameField.value });
+      dispatch({ type: 'LAST_NAME', payload: lastNameField.value });
+      dispatch({ type: 'PHONE', payload: watch('phone') });
+      dispatch({ type: 'EMAIL', payload: emailField.value });
+      setIsErrors(false);
+      setIsUserDataChanges(false);
     }
   };
 
@@ -177,6 +193,7 @@ export function ProfilePage() {
               <input
                 className={classNames(styles.Profile__formItem, {
                   [styles.Profile__formItem_error]: firstNameFieldState.invalid,
+                  [styles.Profile__formItem_disabled]: !isUserDataChanges,
                 })}
                 type='text'
                 required={true}
@@ -198,6 +215,7 @@ export function ProfilePage() {
               <input
                 className={classNames(styles.Profile__formItem, {
                   [styles.Profile__formItem_error]: lastNameFieldState.invalid,
+                  [styles.Profile__formItem_disabled]: !isUserDataChanges,
                 })}
                 type='text'
                 required={true}
@@ -232,6 +250,7 @@ export function ProfilePage() {
                 onChange={loginField.onChange}
                 className={classNames(styles.Profile__formItem, {
                   [styles.Profile__formItem_error]: isShowAllErrorLogin,
+                  [styles.Profile__formItem_disabled]: !isUserDataChanges,
                 })}
                 type='text'
                 required={true}
@@ -262,6 +281,7 @@ export function ProfilePage() {
                   <InputMask
                     className={classNames(styles.Profile__formItem, {
                       [styles.Profile__formItem_error]: errors.phoneNumber,
+                      [styles.Profile__formItem_disabled]: !isUserDataChanges,
                     })}
                     mask='+375 (99) 999-99-99'
                     maskPlaceholder='x'
@@ -286,6 +306,7 @@ export function ProfilePage() {
               <input
                 className={classNames(styles.Profile__formItem, {
                   [styles.Profile__formItem_error]: emailFieldState.error,
+                  [styles.Profile__formItem_disabled]: !isUserDataChanges,
                 })}
                 key='email'
                 {...emailField}
@@ -321,6 +342,7 @@ export function ProfilePage() {
                       onChange={passwordField.onChange}
                       className={classNames(styles.Profile__formItem, {
                         [styles.Profile__formItem_error]: isShowAllErrorPassword,
+                        [styles.Profile__formItem_disabled]: !isUserDataChanges,
                       })}
                       type={isPasswordShow ? 'text' : 'password'}
                       required={true}
@@ -349,7 +371,9 @@ export function ProfilePage() {
               {!isPasswordEntered && (
                 <div>
                   <input
-                    className={styles.Profile__formItem}
+                    className={classNames(styles.Profile__formItem, {
+                      [styles.Profile__formItem_disabled]: !isUserDataChanges,
+                    })}
                     type='password'
                     placeholder='Введите для изменения'
                     onChange={() => setisPasswordEntered(true)}
@@ -362,19 +386,23 @@ export function ProfilePage() {
           </div>
         </div>
         <div className={styles.Profile__buttonContainer}>
-          <button className={styles.Profile__formButton} type='button'>
+          <button className={styles.Profile__formButton} type='button' onClick={() => setIsUserDataChanges(true)}>
             Редактировать
           </button>
           <button
             className={classNames(styles.Profile__formButton, {
               [styles.Profile__formButton_inactive]: !isUserDataChanges,
             })}
-            type='submit'
+            type={isUserDataChanges ? 'submit' : 'button'}
           >
             Сохранить изменения
           </button>
         </div>
-        <div className={styles.Profile__buttonContainer} />
+        {isErrors && (
+          <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
+            Пожалуйста, проверьте введённые данные
+          </p>
+        )}
       </form>
       <div className={styles.Profile__booksContainer}>
         <h3>Забронированные книги</h3>

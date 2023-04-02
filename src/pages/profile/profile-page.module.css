@@ -20,6 +20,7 @@
 }
 .Profile__buttonContainer{
   display:flex;
+  justify-content:center;
   gap:30px;
 }
 .Profile__avatarIcon{
@@ -111,6 +112,10 @@ input:valid ~ .Profile__placeholder{
   padding:19px 12px;
   color:#363636;
   border-bottom:1px solid #BFC4C9;
+
+}
+.Profile__formItem_disabled{
+  pointer-events:none;
 }
 .Profile__formTips{
   font-weight:500;
