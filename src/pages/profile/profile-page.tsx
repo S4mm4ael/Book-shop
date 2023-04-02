@@ -111,10 +111,26 @@ export function ProfilePage() {
       dispatch({ type: 'LAST_NAME', payload: lastNameField.value });
       dispatch({ type: 'PHONE', payload: watch('phone') });
       dispatch({ type: 'EMAIL', payload: emailField.value });
+      setToLocalStorage();
       setIsErrors(false);
       setIsUserDataChanges(false);
     }
   };
+
+  function setToLocalStorage() {
+    const user = {
+      email,
+      firstName,
+      lastName,
+      password,
+      phone,
+      username,
+    };
+
+    console.log(JSON.stringify(user));
+    localStorage.removeItem('user');
+    localStorage.setItem('user', JSON.stringify(user));
+  }
 
   function handlePasswordVisibility() {
     if (isPasswordEntered) {

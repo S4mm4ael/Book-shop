@@ -3,16 +3,15 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 export function ProtectedRoute() {
   const authLogin = localStorage.getItem('token');
+
   const dispatch = useDispatch();
-  const userData = localStorage.getItem('user');
 
   if (authLogin && authLogin !== 'guest_token') {
     dispatch({ type: 'IS_LOGGED', payload: true });
+    const userData = localStorage.getItem('user');
 
     if (userData) {
       const user = JSON.parse(userData);
-
-      console.log(user);
 
       dispatch({ type: 'USER_NAME', payload: user.username });
       dispatch({ type: 'PASSWORD', payload: user.password });
