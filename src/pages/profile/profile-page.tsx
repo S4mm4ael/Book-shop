@@ -189,9 +189,9 @@ export function ProfilePage() {
         <img className={styles.Profile__avatarIntersect} src={intersect} alt='avatar-change' />
         <img className={styles.Profile__avatarIcon} height={32} src={icon} alt='avatar-icon' />
         <h2>
-          Имя
+          {firstName}
           <br />
-          Фамилия
+          {lastName}
         </h2>
       </div>
       <form
@@ -204,7 +204,7 @@ export function ProfilePage() {
         <h3>Учётные данные</h3>
         <p className={styles.Profile__tips}>Здесь вы можете отредактировать информацию о себе</p>
         <div className={styles.Profile__inputsContainer}>
-          <div>
+          <div className={styles.Profile__inputsContainer_left}>
             <div className={styles.Profile__inputWrapper}>
               <input
                 className={classNames(styles.Profile__formItem, {
@@ -280,7 +280,7 @@ export function ProfilePage() {
               )}
             </div>
           </div>
-          <div>
+          <div className={styles.Profile__inputsContainer_right}>
             <div className={styles.Profile__inputWrapper}>
               <Controller
                 name='phone'
