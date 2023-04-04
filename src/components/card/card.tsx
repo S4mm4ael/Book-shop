@@ -1,5 +1,5 @@
 import Highlighter from 'react-highlight-words';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import empty from '../../assets/img/book-cover-none.jpg';
@@ -11,6 +11,7 @@ import { BookCard } from '../../shared/types.books';
 import { Highlight } from './highlight';
 
 import styles from './card.module.css';
+import { AppDispatch } from '../../redux/store';
 
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;

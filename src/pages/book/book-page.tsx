@@ -24,6 +24,9 @@ export function BookPage() {
   const { bookId } = useParams();
   const { category } = useParams();
 
+  const dispatch: AppDispatch = useDispatch();
+
+
   useEffect(() => {
     if (bookId) {
       setBook(bookExact[+bookId - 2]);
@@ -36,7 +39,9 @@ export function BookPage() {
     setDesktopSize(window.innerWidth > 768);
   };
   const error = false;
-
+  function handleBooking() {
+    dispatch({ type: 'ADD_BOOK', payload: bookId })
+  }
   // useEffect(() => {
   //   if (!isLoading && book) {
   //     dispatch({ type: 'IS_LOADING', payload: false });
@@ -87,49 +92,26 @@ export function BookPage() {
             /<span data-test-id='book-name'>{book?.title}</span>
           </div>
         ) : (
-          <div className={styles.BookPage__route_tablet}>
-            <Link data-test-id='breadcrumbs-link' to={`/books/${category}`}>
-              <span>{category && defineRoute(category)}</span>
-            </Link>{' '}
+            <div className={styles.BookPage__route_tablet}>
+              <Link data-test-id='breadcrumbs-link' to={`/books/${category}`}>
+                <span>{category && defineRoute(category)}</span>
+              </Link>{' '}
             / <span data-test-id='book-name'>{book?.title}</span>
-          </div>
-        )}
+            </div>
+          )}
       </div>
       {error ? (
         <div> </div>
       ) : (
-        <React.Fragment>
-          <div className={styles.BookPage__book}>
-            {isDesktopSize ? (
-              <div className={styles.BookPage__bookWrapper}>
-                <div className={styles.BookPage__slider}>
-                  {book.images && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
-                  {!book.images && <SliderBook isDesktopSize={isDesktopSize} images={null} />}
-                </div>
-                <div className={styles.BookPage__text}>
-                  <h1 className={styles.BookPage__title} data-test-id='book-title'>
-                    {book?.title}
-                  </h1>
-                  <div className={styles.BookPage__authors}>
-                    <p>{book?.authors.map((author) => `${author}, `)}</p>
-                    <span>{book?.issueYear}</span>
-                  </div>
-                  <button type='button' className={`${styles.BookPage__bookIt}`}>
-                    Забронировать
-                  </button>
-                  <div className={styles.BookPage__about}>
-                    <h5>О книге</h5>
-                    <article className={styles.BookPage__article}>{book?.description}</article>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <div className={styles.BookPage__bookWrapper}>
-                <div className={styles.BookPage__bookWrapper_tablet}>
+          <React.Fragment>
+            <div className={styles.BookPage__book}>
+              {isDesktopSize ? (
+                <div className={styles.BookPage__bookWrapper}>
                   <div className={styles.BookPage__slider}>
-                    {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                    {book.images && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                    {!book.images && <SliderBook isDesktopSize={isDesktopSize} images={null} />}
                   </div>
-                  <div className={styles.BookPage__bookWrapperRight_tablet}>
+                  <div className={styles.BookPage__text}>
                     <h1 className={styles.BookPage__title} data-test-id='book-title'>
                       {book?.title}
                     </h1>
@@ -137,106 +119,130 @@ export function BookPage() {
                       <p>{book?.authors.map((author) => `${author}, `)}</p>
                       <span>{book?.issueYear}</span>
                     </div>
-                    <button type='button' className={`${styles.BookPage__bookIt}`}>
+                    <button type='button' className={`${styles.BookPage__bookIt}`} onClick={() => handleBooking()}
+                    >
                       Забронировать
+                  </button>
+                    <div className={styles.BookPage__about}>
+                      <h5>О книге</h5>
+                      <article className={styles.BookPage__article}>{book?.description}</article>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                  <div className={styles.BookPage__bookWrapper}>
+                    <div className={styles.BookPage__bookWrapper_tablet}>
+                      <div className={styles.BookPage__slider}>
+                        {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                      </div>
+                      <div className={styles.BookPage__bookWrapperRight_tablet}>
+                        <h1 className={styles.BookPage__title} data-test-id='book-title'>
+                          {book?.title}
+                        </h1>
+                        <div className={styles.BookPage__authors}>
+                          <p>{book?.authors.map((author) => `${author}, `)}</p>
+                          <span>{book?.issueYear}</span>
+                        </div>
+                        <button type='button' className={`${styles.BookPage__bookIt}`}>
+                          Забронировать
                     </button>
+                      </div>
+                    </div>
+                    <div className={styles.BookPage__text}>
+                      <div className={styles.BookPage__about}>
+                        <h5>О книге</h5>
+                        <article className={styles.BookPage__article}>{book?.description}</article>
+                      </div>
+                    </div>
+                  </div>
+                )}
+            </div>
+            <div className={styles.BookPage__properties}>
+              <div className={styles.BookPage__rating}>
+                <h5>Рейтинг</h5>
+                {book && (
+                  <div className={styles.BookPage__ratingStars}>
+                    {renderStars(book.rating)} <span>{book.rating}</span>
+                  </div>
+                )}
+              </div>
+              <div className={styles.BookPage__details}>
+                <h5>Подробная информация</h5>
+                <div className={styles.BookPage__detailsBook}>
+                  <div className={styles.BookPage__detailsLeft}>
+                    <ul className={styles.BookPage__detailsList}>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Издательство</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.publish}</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Год издания</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.issueYear}</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Страниц</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.pages}</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Переплёт</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.cover}</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Формат</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.format}</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className={styles.BookPage__detailsRight}>
+                    <ul className={styles.BookPage__detailsList}>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Жанр</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.categories.map((el) => `${el}`)}</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Вес</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.weight} г</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>ISBN</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.ISBN}</span>
+                      </li>
+                      <li className={styles.BookPage__listItem}>
+                        <span className={styles.BookPage__listItemProperty}>Изготовитель</span>
+                        <span className={styles.BookPage__listItemPValue}>{book?.producer}</span>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-                <div className={styles.BookPage__text}>
-                  <div className={styles.BookPage__about}>
-                    <h5>О книге</h5>
-                    <article className={styles.BookPage__article}>{book?.description}</article>
-                  </div>
-                </div>
               </div>
-            )}
-          </div>
-          <div className={styles.BookPage__properties}>
-            <div className={styles.BookPage__rating}>
-              <h5>Рейтинг</h5>
-              {book && (
-                <div className={styles.BookPage__ratingStars}>
-                  {renderStars(book.rating)} <span>{book.rating}</span>
+              <div className={styles.BookPage__comments}>
+                <div className={styles.BookPage__commentsHeader}>
+                  <h5>
+                    Отзывы{' '}
+                    <span className={styles.BookPage__commentsCount}>{book?.comments && book?.comments.length}</span>
+                  </h5>
+                  <button
+                    data-test-id='button-hide-reviews'
+                    onClick={() => (isCommentsOpen ? setIsCommentsOpen(false) : setIsCommentsOpen(true))}
+                    type='button'
+                    className={styles.BookPage__stroke}
+                  >
+                    <img src={isCommentsOpen ? strokeUp : strokeDown} alt='stroke' />
+                  </button>
                 </div>
-              )}
-            </div>
-            <div className={styles.BookPage__details}>
-              <h5>Подробная информация</h5>
-              <div className={styles.BookPage__detailsBook}>
-                <div className={styles.BookPage__detailsLeft}>
-                  <ul className={styles.BookPage__detailsList}>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Издательство</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.publish}</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Год издания</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.issueYear}</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Страниц</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.pages}</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Переплёт</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.cover}</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Формат</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.format}</span>
-                    </li>
+                <div className={styles.BookPage__commentSection}>
+                  <ul className={styles.BookPage__commentList}>
+                    {!book?.comments && isCommentsOpen && 'Комментариев пока нет'}
+                    {book?.comments && isCommentsOpen && book?.comments !== null && renderComments()}
                   </ul>
-                </div>
-                <div className={styles.BookPage__detailsRight}>
-                  <ul className={styles.BookPage__detailsList}>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Жанр</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.categories.map((el) => `${el}`)}</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Вес</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.weight} г</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>ISBN</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.ISBN}</span>
-                    </li>
-                    <li className={styles.BookPage__listItem}>
-                      <span className={styles.BookPage__listItemProperty}>Изготовитель</span>
-                      <span className={styles.BookPage__listItemPValue}>{book?.producer}</span>
-                    </li>
-                  </ul>
+                  <button data-test-id='button-rating' type='button' className={`${styles.BookPage__bookIt}`}>
+                    Оценить книгу
+                </button>
                 </div>
               </div>
             </div>
-            <div className={styles.BookPage__comments}>
-              <div className={styles.BookPage__commentsHeader}>
-                <h5>
-                  Отзывы{' '}
-                  <span className={styles.BookPage__commentsCount}>{book?.comments && book?.comments.length}</span>
-                </h5>
-                <button
-                  data-test-id='button-hide-reviews'
-                  onClick={() => (isCommentsOpen ? setIsCommentsOpen(false) : setIsCommentsOpen(true))}
-                  type='button'
-                  className={styles.BookPage__stroke}
-                >
-                  <img src={isCommentsOpen ? strokeUp : strokeDown} alt='stroke' />
-                </button>
-              </div>
-              <div className={styles.BookPage__commentSection}>
-                <ul className={styles.BookPage__commentList}>
-                  {!book?.comments && isCommentsOpen && 'Комментариев пока нет'}
-                  {book?.comments && isCommentsOpen && book?.comments !== null && renderComments()}
-                </ul>
-                <button data-test-id='button-rating' type='button' className={`${styles.BookPage__bookIt}`}>
-                  Оценить книгу
-                </button>
-              </div>
-            </div>
-          </div>
-        </React.Fragment>
-      )}
+          </React.Fragment>
+        )}
     </section>
   );
 }
