@@ -1,4 +1,7 @@
-.Profile {
+.Profile{
+  display: flex;
+}
+.Profile__rightContainer {
   display:flex;
   width:100%;
   flex-direction:column;
