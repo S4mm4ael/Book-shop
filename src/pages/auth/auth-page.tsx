@@ -66,6 +66,8 @@ export function AuthPage() {
     e.preventDefault();
     if (userLogin === login && userPassword === password) {
       redirectToMain();
+      localStorage.removeItem('token');
+      localStorage.setItem('token', 'awe2sefF2fxcegf27awdd9')
     } else {
       setIsError(true);
     }

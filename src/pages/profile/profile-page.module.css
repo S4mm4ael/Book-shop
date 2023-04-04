@@ -209,5 +209,14 @@ input:valid ~ .Profile__placeholder{
   }
 }
 @media screen and (max-width:470px){
-
+ .Profile__inputWrapper{
+   width: 300px;
+ }
+ .Profile__formItem{
+   width: 300px;
+ }
+ .Profile__buttonContainer{
+   flex-direction: column;
+   align-items: center;
+ }
 }

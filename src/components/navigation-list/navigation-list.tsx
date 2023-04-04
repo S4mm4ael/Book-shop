@@ -70,9 +70,8 @@ export function NavigationList() {
       <ul className={styles.NavigationList__list}>
         <li className={styles.NavigationList__item}>
           <div
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/books/all' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all' && `${styles.NavigationList__title_active}`
+              }`}
           >
             {' '}
             <Link
@@ -104,11 +103,10 @@ export function NavigationList() {
                 to='/books/all'
                 data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
                 onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-                className={`${styles.NavigationList__subtitle} ${
-                  location.pathname === '/books/all'
-                    ? `${styles.NavigationList__booksItem_active}`
-                    : `${styles.NavigationList__subtitle_regular}`
-                }`}
+                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all'
+                  ? `${styles.NavigationList__booksItem_active}`
+                  : `${styles.NavigationList__subtitle_regular}`
+                  }`}
               >
                 Все книги
               </Link>
@@ -125,9 +123,8 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: true });
             }}
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/terms' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/terms' && `${styles.NavigationList__title_active}`
+              }`}
           >
             Правила пользования
           </Link>
@@ -140,9 +137,8 @@ export function NavigationList() {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: true });
             }}
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/contract' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/contract' && `${styles.NavigationList__title_active}`
+              }`}
           >
             Договор оферты
           </Link>
@@ -150,14 +146,13 @@ export function NavigationList() {
         <li className={`${styles.NavigationList__item} ${styles.NavigationList__item_empty}`} />
         <li className={styles.NavigationList__item}>
           <Link
-            to='/Profile'
+            to={localStorage.getItem('token') !== 'guest_token' ? '/Profile' : '/auth'}
             onClick={() => {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: false });
             }}
-            className={`${styles.NavigationList__subtitle} ${
-              location.pathname === '/profile' && `${styles.NavigationList__title_active}`
-            }`}
+            className={`${styles.NavigationList__subtitle} ${location.pathname === '/profile' && `${styles.NavigationList__title_active}`
+              }`}
           >
             Профиль
           </Link>

@@ -1,9 +1,10 @@
 /* eslint-disable complexity */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
+import { useNavigate } from 'react-router-dom'
 
 import avatar from '../../assets/png/avatar-big.png';
 import intersect from '../../assets/png/avatar-intersect.png';
@@ -23,6 +24,17 @@ export function ProfilePage() {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
   const [isErrors, setIsErrors] = useState<boolean>(false);
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem('token') === 'guest_token' ||
+      !localStorage.getItem('token')) {
+      navigate('/auth')
+    }
+
+  }, [navigate])
+
   // User creds
   const username = useSelector((state: RootState) => state.user.username);
   const password = useSelector((state: RootState) => state.user.password);
@@ -131,7 +143,14 @@ export function ProfilePage() {
     localStorage.removeItem('user');
     localStorage.setItem('user', JSON.stringify(user));
   }
-
+  function exitFromProfile() {
+    const token = localStorage.getItem('token')
+    if (token) {
+      localStorage.removeItem('token')
+    }
+    console.log('redirect')
+    navigate('/auth')
+  }
   function handlePasswordVisibility() {
     if (isPasswordEntered) {
       if (isPasswordShow === false) {
@@ -433,7 +452,7 @@ export function ProfilePage() {
         </ul>
       </div>
       <div className={styles.Profile__bottomContainer}>
-        <button className={`${styles.Profile__formButton} ${styles.Profile__formButton_logout}`} type='button'>
+        <button className={`${styles.Profile__formButton} ${styles.Profile__formButton_logout}`} type='button' onClick={() => exitFromProfile()}>
           Выйти из профиля
         </button>
       </div>
