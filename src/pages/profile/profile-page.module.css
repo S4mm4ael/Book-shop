@@ -171,3 +171,43 @@ input:valid ~ .Profile__placeholder{
   left:380px;
   top:18px;
 }
+@media screen and (max-width:1110px) {
+  .Profile{
+    padding:0 10px;
+  }
+
+}
+@media screen and (max-width:900px) {
+  .Profile__inputsContainer{
+    flex-direction:column;
+    justify-content:center;
+  }
+  .Profile__inputWrapper{
+    width:450px;
+    margin:0 auto;
+  }
+  .Profile h2{
+    font-size:48px;
+    line-height:54px;
+  }
+
+}
+@media screen and (max-width:700px) {
+  .Profile__nameContainer{
+    flex-direction:column;
+    justify-content:center;
+  }
+  .Profile h2{
+    font-size:40px;
+    line-height:44px;
+  }
+  .Profile__avatarIntersect{
+    top:112px;
+  }
+  .Profile__avatarIcon{
+    top:114px;
+  }
+}
+@media screen and (max-width:470px){
+
+}
