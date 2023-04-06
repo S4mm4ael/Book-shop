@@ -1,5 +1,5 @@
 /* eslint-disable complexity */
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,10 +12,13 @@ import icon from '../../assets/svg/avatar-icon.svg';
 import check from '../../assets/svg/check.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { Card } from '../../components/card';
 import { ModalAsk } from '../../components/modal-ask';
-import { ModalError } from '../../components/modal-error';
+// import { ModalError } from '../../components/modal-error';
 import { NavigationList } from '../../components/navigation-list';
+import { booksArray } from '../../mock/books';
 import { AppDispatch, RootState } from '../../redux/store';
+import { Book } from '../../shared/types.books';
 
 import styles from './profile-page.module.css';
 
@@ -28,6 +31,7 @@ export function ProfilePage() {
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
   const [isErrors, setIsErrors] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
+
 
   const navigate = useNavigate()
 
@@ -46,6 +50,7 @@ export function ProfilePage() {
   const lastName = useSelector((state: RootState) => state.user.lastName);
   const email = useSelector((state: RootState) => state.user.email);
   const phone = useSelector((state: RootState) => state.user.phone);
+  const bookedBooks = useSelector((state: RootState) => state.user.bookedBooks);
   // UseForm
   const {
     control,
@@ -213,6 +218,25 @@ export function ProfilePage() {
     }
 
     return <p className={`${styles.Profile__formTips} `}>Используйте для логина латинский алфавит и цифры</p>;
+  }
+  function renderBooks() {
+    const booksToRender: Book[] = []
+
+    // eslint-disable-next-line array-callback-return
+    bookedBooks.map((id: number) => {
+      const book: Book | undefined = booksArray.books.find((item: Book) => item.id === id)
+
+      if (book) {
+
+        booksToRender.push(book)
+      }
+    }
+    )
+
+    console.log(booksToRender)
+
+    return booksToRender.map((book: Book) => <Card key={book.title} bookItem={book} isListView={true} />);
+
   }
 
   return (
@@ -465,10 +489,7 @@ export function ProfilePage() {
             Здесь вы можете просмотреть забронированную книгу, а так же отменить бронь
           </p>
           <ul className={styles.Profile__booksList}>
-            <li> Книга 1</li>
-            <li> Книга 1</li>
-            <li> Книга 1</li>
-            <li> Книга 1</li>
+            {bookedBooks.length > 1 ? <React.Fragment>{renderBooks()}</React.Fragment> : <p className={styles.Profile__noBooks}>Пока книг нет</p>}
           </ul>
         </div>
         <div className={styles.Profile__bottomContainer}>

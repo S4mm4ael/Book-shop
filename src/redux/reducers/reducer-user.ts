@@ -11,8 +11,7 @@ const lastName = createAction<string>('LAST_NAME');
 const phone = createAction<string>('PHONE');
 const isLogged = createAction<boolean>('IS_LOGGED');
 const token = createAction<string | null>('TOKEN');
-const bookedBooks = createAction<string>('ADD_BOOK');
-
+const bookedBooks = createAction<number>('ADD_BOOK');
 
 export const userReducer = createReducer(initialUserState, (builder) => {
   builder.addCase(email, (state, action) => {
@@ -40,6 +39,6 @@ export const userReducer = createReducer(initialUserState, (builder) => {
     state.token = action.payload;
   });
   builder.addCase(bookedBooks, (state, action) => {
-    state.bookedBooks.push(action.payload)
+    state.bookedBooks.push(action.payload);
   });
 });

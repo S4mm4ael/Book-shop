@@ -16,7 +16,6 @@ import { renderStars } from '../../shared/render-stars';
 import styles from './book-page.module.css';
 
 export function BookPage() {
-  // const dispatch: AppDispatch = useDispatch();
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 768);
   const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(true);
   const [book, setBook] = useState(bookExact[7]);
@@ -25,6 +24,7 @@ export function BookPage() {
   const { category } = useParams();
 
   const dispatch: AppDispatch = useDispatch();
+  const bookedBooks = useSelector((state: RootState) => state.user.bookedBooks);
 
 
   useEffect(() => {
@@ -41,7 +41,10 @@ export function BookPage() {
   const error = false;
 
   function handleBooking() {
-    dispatch({ type: 'ADD_BOOK', payload: bookId })
+    if (bookId) {
+      if (!bookedBooks.find((id: number) => id === +bookId))
+        dispatch({ type: 'ADD_BOOK', payload: +bookId })
+    }
   }
   // useEffect(() => {
   //   if (!isLoading && book) {
