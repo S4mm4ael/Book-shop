@@ -1,5 +1,7 @@
 .Profile{
-  display: flex;
+  width:100%;
+  display:flex;
+  gap:20px;
 }
 .Profile__rightContainer {
   display:flex;
@@ -110,23 +112,23 @@ input:valid ~ .Profile__placeholder{
   background:#F9F9FA;
   border-radius:4px 4px 0px 0px;
   height:56px;
-  width:416px;
+  max-width:416px;
   border:none;
   padding:19px 12px;
   color:#363636;
   border-bottom:1px solid #BFC4C9;
-
+  width:340px;
 }
 .Profile__formItem_disabled{
   pointer-events:none;
 }
 .Profile__formTips{
   font-weight:500;
-  font-size:12px;
+  font-size:10px;
   line-height:16px;
   letter-spacing:0.2px;
   color:#A7A7A7;
-  padding-left:12px;
+  padding-left:0;
   min-height:16px;
 }
 .Profile__formButton{
@@ -154,11 +156,17 @@ input:valid ~ .Profile__placeholder{
   color:#FFFFFF;
   background:linear-gradient(231.58deg, #F83600 -53.35%, #F9D423 297.76%);
 }
+.Profile__formButton_delete{
+  color:#FFFFFF;
+  background:linear-gradient(231.58deg, #f80000 -53.35%, #ff4800 297.76%);
+}
 .Profile__bottomContainer{
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px 0;
+  gap:10px;
+  flex-direction:column;
 }
 .Profile__passwordImgContainer{
   display:flex;
@@ -212,14 +220,14 @@ input:valid ~ .Profile__placeholder{
   }
 }
 @media screen and (max-width:470px){
- .Profile__inputWrapper{
-   width: 300px;
- }
- .Profile__formItem{
-   width: 300px;
- }
- .Profile__buttonContainer{
-   flex-direction: column;
-   align-items: center;
- }
+  .Profile__inputWrapper{
+    width:300px;
+  }
+  .Profile__formItem{
+    width:300px;
+  }
+  .Profile__buttonContainer{
+    flex-direction:column;
+    align-items:center;
+  }
 }

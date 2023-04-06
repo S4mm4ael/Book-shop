@@ -19,8 +19,9 @@ export function Header() {
   useEffect(() => {
     function getUserFromLocal() {
       const userObject = JSON.parse(localStorage.getItem('user')!);
+      const authLogin = localStorage.getItem('token');
 
-      if (userObject) {
+      if (userObject && authLogin !== 'guest_token') {
         setUser(userObject);
       }
     }

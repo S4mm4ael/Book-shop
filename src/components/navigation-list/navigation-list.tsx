@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import strokeDown from '../../assets/svg/stroke-down.svg';
 import strokeUp from '../../assets/svg/stroke-up.svg';
 import { categoriesList } from '../../mock/categories';
-import { useGetCategoriesQuery } from '../../redux/features/books-slice';
+// import { useGetCategoriesQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { Category } from '../../shared/types.books';
 

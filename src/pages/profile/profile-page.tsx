@@ -1,10 +1,10 @@
 /* eslint-disable complexity */
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
 import { useDispatch, useSelector } from 'react-redux';
-import classNames from 'classnames';
 import { useNavigate } from 'react-router-dom'
+import classNames from 'classnames';
 
 import avatar from '../../assets/png/avatar-big.png';
 import intersect from '../../assets/png/avatar-intersect.png';
@@ -12,10 +12,10 @@ import icon from '../../assets/svg/avatar-icon.svg';
 import check from '../../assets/svg/check.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { NavigationList } from '../../components/navigation-list';
 import { AppDispatch, RootState } from '../../redux/store';
 
 import styles from './profile-page.module.css';
-import { NavigationList } from '../../components/navigation-list';
 
 export function ProfilePage() {
   const dispatch: AppDispatch = useDispatch();
@@ -140,16 +140,20 @@ export function ProfilePage() {
       username,
     };
 
-    console.log(JSON.stringify(user));
     localStorage.removeItem('user');
     localStorage.setItem('user', JSON.stringify(user));
   }
-  function exitFromProfile() {
+  function handleProfile(type: string) {
     const token = localStorage.getItem('token')
-    if (token) {
+    const user = localStorage.getItem('user')
+
+    if (type === 'logout' && token) {
       localStorage.removeItem('token')
     }
-    console.log('redirect')
+
+    if (type === 'delete' && token && user) {
+      localStorage.clear()
+    }
     navigate('/auth')
   }
   function handlePasswordVisibility() {
@@ -403,7 +407,7 @@ export function ProfilePage() {
                       <span className={styles.Profile__placeholder}>Пароль</span>
                       <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
                         Пароль не менее 8 символов, с заглавной буквой и цифрой
-                    </p>
+                      </p>
                       <div />
                     </div>
                   </div>
@@ -428,7 +432,7 @@ export function ProfilePage() {
           <div className={styles.Profile__buttonContainer}>
             <button className={styles.Profile__formButton} type='button' onClick={() => setIsUserDataChanges(true)}>
               Редактировать
-          </button>
+            </button>
             <button
               className={classNames(styles.Profile__formButton, {
                 [styles.Profile__formButton_inactive]: !isUserDataChanges,
@@ -436,7 +440,7 @@ export function ProfilePage() {
               type={isUserDataChanges ? 'submit' : 'button'}
             >
               Сохранить изменения
-          </button>
+            </button>
           </div>
           {isErrors && (
             <p className={`${styles.Profile__formTips} ${styles.Profile__formTips_error}`}>
@@ -448,7 +452,7 @@ export function ProfilePage() {
           <h3>Забронированные книги</h3>
           <p className={styles.Profile__tips}>
             Здесь вы можете просмотреть забронированную книгу, а так же отменить бронь
-        </p>
+          </p>
           <ul className={styles.Profile__booksList}>
             <li> Книга 1</li>
             <li> Книга 1</li>
@@ -458,9 +462,12 @@ export function ProfilePage() {
         </div>
         <div className={styles.Profile__bottomContainer}>
 
-          <button className={`${styles.Profile__formButton} ${styles.Profile__formButton_logout}`} type='button' onClick={() => exitFromProfile()}>
+          <button className={`${styles.Profile__formButton} ${styles.Profile__formButton_logout}`} type='button' onClick={() => handleProfile('logout')}>
             Выйти из профиля
-        </button>
+          </button>
+          <button className={`${styles.Profile__formButton} ${styles.Profile__formButton_delete}`} type='button' onClick={() => handleProfile('delete')}>
+            Удалить профиль
+          </button>
         </div>
       </div>
 

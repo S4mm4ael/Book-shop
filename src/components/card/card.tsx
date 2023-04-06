@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import empty from '../../assets/img/book-cover-none.jpg';
 import emptyList from '../../assets/img/book-cover-none-list.jpg';
 import { RootState } from '../../redux/reducers/root-reducer';
+// import { AppDispatch } from '../../redux/store';
 import { renderStars } from '../../shared/render-stars';
 import { BookCard } from '../../shared/types.books';
 
 import { Highlight } from './highlight';
 
 import styles from './card.module.css';
-import { AppDispatch } from '../../redux/store';
 
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
