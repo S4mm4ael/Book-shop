@@ -12,6 +12,8 @@ import icon from '../../assets/svg/avatar-icon.svg';
 import check from '../../assets/svg/check.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { ModalAsk } from '../../components/modal-ask';
+import { ModalError } from '../../components/modal-error';
 import { NavigationList } from '../../components/navigation-list';
 import { AppDispatch, RootState } from '../../redux/store';
 
@@ -25,6 +27,7 @@ export function ProfilePage() {
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
   const [isErrors, setIsErrors] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const navigate = useNavigate()
 
@@ -149,12 +152,18 @@ export function ProfilePage() {
 
     if (type === 'logout' && token) {
       localStorage.removeItem('token')
+      navigate('/auth')
     }
 
     if (type === 'delete' && token && user) {
-      localStorage.clear()
+      if (showModal) {
+        setShowModal(false)
+      }
+      if (!showModal) {
+        setShowModal(true)
+      }
     }
-    navigate('/auth')
+
   }
   function handlePasswordVisibility() {
     if (isPasswordEntered) {
@@ -207,7 +216,9 @@ export function ProfilePage() {
   }
 
   return (
+
     <section className={styles.Profile}>
+      {showModal && <ModalAsk setVisibility={setShowModal} />}
       <div className={styles.Profile__leftContainer}>
         <NavigationList />
       </div>

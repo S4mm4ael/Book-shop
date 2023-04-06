@@ -59,7 +59,7 @@ export function Header() {
       <div className={styles.Header__person}>
         {isLogged && (
           <React.Fragment>
-            <p className={styles.Header__text}>Привет, {user?.firstName}</p>
+            <p className={styles.Header__text}>Привет, {user ? user?.firstName : 'Гость'}</p>
             <Link to='/profile'>
               <img className={styles.Header__avatar} src={avatar} alt='avatar' />
             </Link>

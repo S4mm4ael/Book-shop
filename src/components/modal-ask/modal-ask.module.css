@@ -1,0 +1,74 @@
+.ModalAsk{
+  position:absolute;
+  position:fixed;
+  top:64px;
+  left:5px;
+  width:99%;
+  height:80px;
+  display:flex;
+  flex-direction:row;
+  justify-content:flex-start;
+  align-items:center;
+  padding:24px 32px;
+  background:#ffffff;
+  border:1.5px solid #F42C4F;
+  gap:10px;
+  border-radius:5px;
+  z-index:101;
+}
+.ModalAsk__answerYes,
+.ModalAsk__answerNo{
+  all:unset;
+  min-height:24px;
+  min-width:24px;
+  cursor:pointer;
+  font-weight:600;
+  font-size:16px;
+  line-height:24px;
+}
+.ModalAsk__answerYes{
+  margin-right:20px;
+  color:#3af003;
+}
+.ModalAsk__answerNo{
+  color:#F42C4F;
+}
+.ModalAsk p{
+  font-weight:600;
+  font-size:16px;
+  line-height:24px;
+  margin-right:auto;
+}
+@media screen and (max-width:352px) {
+  .ModalAsk p{
+    font-size:14px;
+    line-height:18px;
+  }
+  .ModalAsk{
+    height:78px;
+    padding:12px 16px;
+    height:78px;
+  }
+}
+@media screen and (max-width:320px) {
+  .ModalAsk{
+
+    align-items:flex-start;
+    height:98px;
+    width:280px;
+  }
+  .ModalAsk p{
+    letter-spacing:-0.2px;
+  }
+  .ModalAsk__close{
+    min-height:16px;
+    min-width:16px;
+  }
+  .ModalAsk__close img{
+    display:block;
+  }
+
+}
+.ModalAsk_hidden{
+  visibility:hidden;
+}
