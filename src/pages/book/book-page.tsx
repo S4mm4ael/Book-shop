@@ -44,20 +44,23 @@ export function BookPage() {
 
     const booked = localStorage.getItem('booked');
 
+    if (bookId) {
+      if (!booked) {
+        const newArray = [+bookId]
 
-    if (booked) {
+        localStorage.setItem('booked', JSON.stringify(newArray))
+      }
 
+      if (booked) {
 
-      if (bookId) {
         const bookedParced = JSON.parse(booked)
 
         if (!bookedParced.find((id: number) => id === +bookId))
-          bookedParced.push(bookId)
+          bookedParced.push(+bookId)
         localStorage.setItem('booked', JSON.stringify(bookedParced))
 
       }
     }
-
   }
 
 

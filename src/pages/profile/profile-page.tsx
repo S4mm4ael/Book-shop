@@ -499,7 +499,7 @@ export function ProfilePage() {
             Здесь вы можете просмотреть забронированную книгу, а так же отменить бронь
           </p>
           <ul className={styles.Profile__booksList}>
-            {bookedBooks.length > 1 ? <React.Fragment>{renderBooks()}</React.Fragment> : <p className={styles.Profile__noBooks}>Пока книг нет</p>}
+            {bookedBooks.length > 1 ? <React.Fragment>{renderBooks()}</React.Fragment> : <p className={styles.Profile__noBooks}>Книг пока нетнет</p>}
           </ul>
         </div>
         <div className={styles.Profile__bottomContainer}>
