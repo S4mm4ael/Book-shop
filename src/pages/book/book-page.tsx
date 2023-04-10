@@ -25,7 +25,6 @@ export function BookPage() {
   const { category } = useParams();
 
   const dispatch: AppDispatch = useDispatch();
-  const bookedBooks = useSelector((state: RootState) => state.user.bookedBooks);
 
 
   useEffect(() => {
@@ -41,24 +40,24 @@ export function BookPage() {
   };
   const error = false;
 
-  function handleLocalStorageBooking() {
-
-    localStorage.setItem('booked', JSON.stringify(bookedBooks))
-  }
-
   function handleBooking() {
 
     const booked = localStorage.getItem('booked');
 
+
     if (booked) {
+
+
       if (bookId) {
-        if (!bookedBooks.find((id: number) => id === +bookId))
-          dispatch({ type: 'ADD_BOOK', payload: +bookId })
+        const bookedParced = JSON.parse(booked)
+
+        if (!bookedParced.find((id: number) => id === +bookId))
+          bookedParced.push(bookId)
+        localStorage.setItem('booked', JSON.stringify(bookedParced))
 
       }
     }
 
-    handleLocalStorageBooking();
   }
 
 
