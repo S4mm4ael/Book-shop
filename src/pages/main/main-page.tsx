@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import { Card } from '../../components/card';
 import { NavigationList } from '../../components/navigation-list';
 import { Search } from '../../components/search';
-import { useGetAllBooksQuery } from '../../redux/features/books-slice';
+import { booksArray } from '../../mock/books';
+// import { useGetAllBooksQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { defineRoute } from '../../shared/define-ru-category';
 import { Book } from '../../shared/types.books';
@@ -17,35 +18,36 @@ export function MainPage() {
   const [isListView, setIsList] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
+  const isLoading: boolean = useSelector((state: RootState) => state.interface.isLoading);
   const category: string | undefined = useSelector((state: RootState) => state.data.category);
   const sorting: boolean = useSelector((state: RootState) => state.data.sorting);
   const searchQuery: string = useSelector((state: RootState) => state.data.searchQuery);
 
-  const {
-    data: books = [],
-    error,
-    isLoading,
-  } = useGetAllBooksQuery('', {
-    refetchOnMountOrArgChange: true,
-  });
+  // const {
+  //   data: books = [],
+  //   error,
+  //   isLoading,
+  // } = useGetAllBooksQuery('', {
+  //   refetchOnMountOrArgChange: true,
+  // });
 
   useEffect(() => {
     dispatch({ type: 'CATEGORY', payload: window.location.href.split(':')[3] });
   }, [dispatch]);
 
-  useEffect(() => {
-    if (!isLoading && books) {
-      dispatch({ type: 'IS_LOADING', payload: false });
-    }
-    if (isLoading) {
-      dispatch({ type: 'IS_LOADING', payload: true });
-    }
-    if (error) {
-      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  }, [isLoading, books, dispatch, error]);
+  // useEffect(() => {
+  //   if (!isLoading && books) {
+  //     dispatch({ type: 'IS_LOADING', payload: false });
+  //   }
+  //   if (isLoading) {
+  //     // dispatch({ type: 'IS_LOADING', payload: true });
+  //   }
+  //   if (error) {
+  //     // dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+  //     // eslint-disable-next-line no-console
+  //     console.log(error);
+  //   }
+  // }, [isLoading, books, dispatch, error]);
 
   function renderBooks() {
     let booksArray: Book[] = [];
@@ -54,7 +56,7 @@ export function MainPage() {
     booksArray = searchBooks(booksArray);
     booksArray = sortBooks(booksArray);
 
-    return booksArray.map((book: Book) => <Card key={book.id} bookItem={book} isListView={isListView} />);
+    return booksArray.map((book: Book) => <Card key={book.title} bookItem={book} isListView={isListView} />);
   }
   function showMessage(type: string, show: boolean) {
     const message = document.getElementById(type);
@@ -70,10 +72,10 @@ export function MainPage() {
     let booksArrayFiltered: Book[] = [];
 
     if (category) {
-      booksArrayFiltered = books.filter((book: Book) => book.categories.indexOf(defineRoute(category)) > -1);
+      booksArrayFiltered = booksArray.books.filter((book: Book) => book.categories.indexOf(defineRoute(category)) > -1);
     }
     if (category === undefined || window.location.href.slice(-3) === 'all') {
-      booksArrayFiltered = books;
+      booksArrayFiltered = booksArray.books;
     }
     if (booksArrayFiltered.length !== 0) {
       showMessage('empty', false);
@@ -89,10 +91,10 @@ export function MainPage() {
     let booksArraySorted: Book[] = [];
 
     if (!sorting) {
-      booksArraySorted = booksArray.slice().sort((a, b) => a.rating - b.rating);
+      booksArraySorted = booksArray.slice().sort((a, b) => a.rating! - b.rating!);
     }
     if (sorting) {
-      booksArraySorted = booksArray.slice().sort((a, b) => b.rating - a.rating);
+      booksArraySorted = booksArray.slice().sort((a, b) => b.rating! - a.rating!);
     }
 
     return booksArraySorted;

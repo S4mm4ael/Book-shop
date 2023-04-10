@@ -1,19 +1,19 @@
 export interface Book {
   issueYear: string;
-  rating: number;
+  rating: number | null;
   title: string;
   authors: string[];
-  image: ImageBook;
+  image: ImageBook | null;
   categories: string[];
-  id: string;
+  id: number;
   booking: null | Booking;
   delivery: null | Delievery;
-  histories: null | Histories;
+  histories: null | Histories[];
 }
 
 export type ImageBook = {
   url: string;
-}
+};
 
 type Booking = {
   id: number;
@@ -22,12 +22,12 @@ type Booking = {
   customerId: number;
   customerFirstName: string;
   customerLastName: string;
-}
+};
 
 type Histories = {
   id: number;
   userId: number;
-}
+};
 
 type Delievery = {
   id: number;
@@ -37,18 +37,19 @@ type Delievery = {
   recipientId: number;
   recipientFirstName: string;
   recipientLastName: string;
-}
+};
 
 export type BookCard = {
   key: string;
   bookItem: Book;
   isListView: boolean;
-}
+  isProfile?: boolean;
+};
 
-export interface Category  {
-  name:string;
-  path:string;
-  id: string;
+export interface Category {
+  name: string;
+  path: string;
+  id: string | number;
 }
 
 export interface ExactBook extends Book {
@@ -60,27 +61,26 @@ export interface ExactBook extends Book {
   format: string;
   ISBN: string;
   producer: string;
-  comments: Comment[];
+  comments: Comment[] | null;
   user: User;
   images: ImageBook[];
 }
 
-interface Comment  {
+interface Comment {
   id: number;
   rating: number;
   text: string;
   createdAt: string;
-  user: User
+  user: User;
 }
 
 type User = {
   commentUserId: number;
   firstName: string;
   lastName: string;
-  avatarUrl: string;
+  avatarUrl: string | null;
+};
 
-}
-
-export interface CommentBook extends Comment{
-user: User;
+export interface CommentBook extends Comment {
+  user: User;
 }

@@ -1,10 +1,12 @@
+/* eslint-disable complexity */
 import Highlighter from 'react-highlight-words';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import empty from '../../assets/img/book-cover-none.jpg';
 import emptyList from '../../assets/img/book-cover-none-list.jpg';
 import { RootState } from '../../redux/reducers/root-reducer';
+// import { AppDispatch } from '../../redux/store';
 import { renderStars } from '../../shared/render-stars';
 import { BookCard } from '../../shared/types.books';
 
@@ -15,7 +17,7 @@ import styles from './card.module.css';
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
   const category = categories[0];
-
+  const navigate = useNavigate()
   const searchQuery: string = useSelector((state: RootState) => state.data.searchQuery);
 
   function Truncate(string: string, amount: number) {
@@ -64,18 +66,42 @@ export function Card(props: BookCard) {
 
     return path;
   }
+
   function defineLink() {
     if (window.location.href.split('/')[5] === 'all') {
       return 'all';
     }
 
+
     return definePath(category);
+  }
+
+
+  function handleLocalStorageDelete() {
+    const booked = localStorage.getItem('booked');
+
+    if (booked) {
+      const bookedArray = JSON.parse(booked)
+      const index = bookedArray.indexOf(id)
+
+      if (index > -1) {
+        bookedArray.splice(index, 1)
+        if (bookedArray.length < 1) {
+          localStorage.removeItem('booked')
+        }
+        else {
+
+          localStorage.setItem('booked', JSON.stringify(bookedArray))
+        }
+      }
+
+    }
   }
   if (props.isListView) {
     return (
       <Link to={`/books/${defineLink()}/${id}`}>
         {' '}
-        <div id={id} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
+        <div id={id.toString()} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
           {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' width='120px' />}
           {!image && <img src={emptyList} alt='book-cover' height='170px' />}
           <div className={`${styles.Card__wrapper} ${styles.Card__wrapperList}`}>
@@ -97,9 +123,21 @@ export function Card(props: BookCard) {
                 <div className={`${styles.Card__rating} ${styles.Card__rating_list}`}>
                   {rating ? renderStars(rating) : 'ещё нет оценок'}
                 </div>
-                {!booking && (
+                {!props.isProfile && !booking && (
                   <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list}`}>
                     Забронировать
+                  </button>
+                )}
+                {props.isProfile && !booking && (
+                  <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+
+                    e.preventDefault();
+
+                    navigate('/profile')
+
+                    handleLocalStorageDelete();
+                  }} type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}>
+                    Отменить бронирование
                   </button>
                 )}
                 {booking?.order && !booking.dateOrder && (
@@ -123,7 +161,7 @@ export function Card(props: BookCard) {
   return (
     <Link to={`/books/:${defineLink()}/${id}`}>
       {' '}
-      <div id={id} className={styles.Card} data-test-id='card'>
+      <div id={id.toString()} className={styles.Card} data-test-id='card'>
         <div className={styles.Card__image}>
           {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' height='174px' />}
           {!image && <img src={empty} alt='book-cover' />}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
+import { booksArray } from '../../../mock/books';
 import { useGetAllBooksQuery } from '../../../redux/features/books-slice';
 import { AppDispatch } from '../../../redux/store';
 import { Category } from '../../../shared/types.books';
@@ -13,7 +14,7 @@ export function CategoryItem({ name, path }: Category) {
   const location = useLocation();
   const dispatch: AppDispatch = useDispatch();
 
-  const { data: books = [] } = useGetAllBooksQuery('');
+  // const { data: books = [] } = useGetAllBooksQuery('');
 
   useEffect(() => {
     const updateMedia = () => {
@@ -33,8 +34,8 @@ export function CategoryItem({ name, path }: Category) {
   function renderCount() {
     let count = 0;
 
-    for (let i = 0; i < books.length; i++) {
-      if (books[i].categories.includes(name)) {
+    for (let i = 0; i < booksArray.books.length; i++) {
+      if (booksArray.books[i].categories.includes(name)) {
         count += 1;
       }
     }

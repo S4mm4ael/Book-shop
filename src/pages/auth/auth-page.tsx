@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-interactive-element-to-noninteractive-role */
 /* eslint-disable jsx-a11y/no-autofocus */
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 import arrowBlack from '../../assets/svg/arrow-registration.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import styles from './auth-page.module.css';
 
@@ -13,6 +15,32 @@ export function AuthPage() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isPasswordShow, setIsPasswordShow] = useState<boolean>(false);
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
+
+  const [userLogin, setUserLogin] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>('');
+
+  const login: string = useSelector((state: RootState) => state.user.username);
+  const password: string = useSelector((state: RootState) => state.user.password);
+  const token: string | null = useSelector((state: RootState) => state.user.token);
+
+  const navigate = useNavigate();
+
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    const userObject = localStorage.getItem('user');
+
+    if (userObject) {
+      const userObjectParced = JSON.parse(userObject);
+
+      dispatch({ type: 'EMAIL', payload: userObjectParced.email });
+      dispatch({ type: 'USER_NAME', payload: userObjectParced.username });
+      dispatch({ type: 'PASSWORD', payload: userObjectParced.password });
+      dispatch({ type: 'PHONE', payload: userObjectParced.phone });
+      dispatch({ type: 'FIRST_NAME', payload: userObjectParced.firstName });
+      dispatch({ type: 'LAST_NAME', payload: userObjectParced.lastName });
+    }
+  });
 
   function handlePasswordVisibility() {
     if (isPasswordEntered) {
@@ -22,6 +50,26 @@ export function AuthPage() {
       if (isPasswordShow === true) {
         setIsPasswordShow(false);
       }
+    }
+  }
+  function handleLoginChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUserLogin(e.target.value);
+  }
+  function handlePasswordChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUserPassword(e.target.value);
+  }
+  function redirectToMain() {
+    dispatch({ type: 'IS_LOGGED', payload: true });
+    navigate('/');
+  }
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (userLogin === login && userPassword === password) {
+      redirectToMain();
+      localStorage.removeItem('token');
+      localStorage.setItem('token', 'awe2sefF2fxcegf27awdd9')
+    } else {
+      setIsError(true);
     }
   }
 
@@ -40,9 +88,15 @@ export function AuthPage() {
       {!isError && (
         <div className={styles.Auth__formContainer}>
           <h2 className={styles.Auth__title}>Вход в личный кабинет</h2>
-          <form className={styles.Auth__form} onSubmit={() => setIsError(true)}>
+          <form className={styles.Auth__form} onSubmit={(e: React.FormEvent<HTMLFormElement>) => handleSubmit(e)}>
             <div className={styles.Auth__inputWrapper}>
-              <input className={styles.Auth__formItem} type='text' required={true} />
+              <input
+                className={styles.Auth__formItem}
+                type='text'
+                value={userLogin}
+                required={true}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleLoginChange(e)}
+              />
               <span className={styles.Auth__placeholder}>Логин</span>
             </div>
 
@@ -54,7 +108,10 @@ export function AuthPage() {
                     autoFocus={true}
                     type={isPasswordShow ? 'text' : 'password'}
                     required={true}
-                    onChange={() => setisPasswordEntered(true)}
+                    value={userPassword}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      handlePasswordChange(e);
+                    }}
                   />
                   <span className={styles.Auth__placeholder}>Пароль</span>
                   <button
@@ -83,11 +140,25 @@ export function AuthPage() {
             </button>
           </form>
           <div className={styles.Auth__registrationContainer}>
-            <p className={styles.Auth__registrationP}>Нет учётной записи?</p>
+            {token && (
+              <Link className={`${styles.Auth__registrationLink} ${styles.Auth__registrationLink_back}`} to='/'>
+                <img className={styles.Auth__registrationLink_backArrow} src={arrowBlack} alt='arrow' />
+                Вернуться на главную
+              </Link>
+            )}
+            {!token && (
+              <Link className={`${styles.Auth__registrationLink} ${styles.Auth__registrationLink_back}`} to='/'>
+                <button onClick={() => localStorage.setItem('token', 'guest_token')} type='button'>
+                  Войти как гость
+                </button>
+              </Link>
+            )}
+
             <Link className={styles.Auth__registrationLink} to='/registration'>
               Регистрация <img src={arrowBlack} alt='arrow' />
             </Link>
           </div>
+          <div className={styles.Auth__registrationContainer} />
         </div>
       )}
     </section>

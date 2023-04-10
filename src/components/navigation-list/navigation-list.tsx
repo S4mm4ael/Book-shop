@@ -5,7 +5,8 @@ import classNames from 'classnames';
 
 import strokeDown from '../../assets/svg/stroke-down.svg';
 import strokeUp from '../../assets/svg/stroke-up.svg';
-import { useGetCategoriesQuery } from '../../redux/features/books-slice';
+import { categoriesList } from '../../mock/categories';
+// import { useGetCategoriesQuery } from '../../redux/features/books-slice';
 import { AppDispatch, RootState } from '../../redux/store';
 import { Category } from '../../shared/types.books';
 
@@ -17,6 +18,7 @@ export function NavigationList() {
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
+  const isLoading: boolean = useSelector((state: RootState) => state.interface.isLoading);
   const isMenuOpen: boolean = useSelector((state: RootState) => state.interface.isGenreMenuOpen);
   const isFetchError: boolean = useSelector((state: RootState) => state.interface.isFetchError);
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 945);
@@ -33,7 +35,7 @@ export function NavigationList() {
     return () => window.removeEventListener('resize', updateMedia);
   }, []);
 
-  const { data: categories = [], error, isLoading } = useGetCategoriesQuery('');
+  // const { data: categories = [], error, isLoading } = useGetCategoriesQuery('');
 
   useEffect(() => {
     if (path) {
@@ -41,16 +43,16 @@ export function NavigationList() {
     }
   }, [path, dispatch]);
 
-  useEffect(() => {
-    if (error) {
-      dispatch({ type: 'IS_FETCH_ERROR', payload: true });
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  });
+  // useEffect(() => {
+  //   if (error) {
+  //     dispatch({ type: 'IS_FETCH_ERROR', payload: true });
+  //     eslint-disable-next-line no-console
+  //     console.log(error);
+  //   }
+  // });
 
   const renderCategories = () =>
-    categories?.map((category: Category) => (
+    categoriesList.categories?.map((category: Category) => (
       <li key={category.path + category.id}>
         <CategoryItem name={category.name} path={category.path} id={category.id} />
       </li>
@@ -101,8 +103,9 @@ export function NavigationList() {
                 to='/books/all'
                 data-test-id={isDesktopSize ? 'navigation-books' : 'burger-books'}
                 onClick={() => dispatch({ type: 'IS_BURGER_OPEN', payload: false })}
-                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all' ? `${styles.NavigationList__booksItem_active}` :
-                    `${styles.NavigationList__subtitle_regular}`
+                className={`${styles.NavigationList__subtitle} ${location.pathname === '/books/all'
+                  ? `${styles.NavigationList__booksItem_active}`
+                  : `${styles.NavigationList__subtitle_regular}`
                   }`}
               >
                 Все книги
@@ -143,7 +146,7 @@ export function NavigationList() {
         <li className={`${styles.NavigationList__item} ${styles.NavigationList__item_empty}`} />
         <li className={styles.NavigationList__item}>
           <Link
-            to='/Profile'
+            to={localStorage.getItem('token') !== 'guest_token' ? '/Profile' : '/auth'}
             onClick={() => {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: false });

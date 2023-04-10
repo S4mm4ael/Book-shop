@@ -52,6 +52,9 @@ input:-webkit-autofill:active{
   right:10px;
   top:18px;
 }
+.Registration__passwordImgContainer{
+  display:flex;
+}
 .Registration__form{
   display:flex;
   flex-direction:column;

@@ -130,6 +130,11 @@
     max-width:fit-content;
     display:inline;
   }
+  .NavigationList_active{
+    padding-left:25px;
+    width:320px;
+
+  }
 }
 .NavigationList__subtitle_regular{
   font-weight:400;
@@ -138,3 +143,4 @@
   display:flex;
   align-items:center;
 }
+

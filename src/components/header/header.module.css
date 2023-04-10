@@ -32,6 +32,9 @@
 .Header__person p{
   font-size:14px;
 }
+.Header__avatar_dimmed{
+  filter:grayscale(1);
+}
 @media screen and (max-width:1110px) {
   .Header{
     padding-left:20px;

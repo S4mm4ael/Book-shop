@@ -6,3 +6,7 @@ export interface UserRegistration {
   lastName: string;
   phone: string;
 }
+
+export interface UserLogged extends UserRegistration {
+  token?: string | null;
+}

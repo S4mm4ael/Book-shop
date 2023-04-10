@@ -261,4 +261,6 @@
     min-width:300px;
     max-width:350px;
   }}
-
+.Card__bookIt_cancel{
+  background:linear-gradient(231.58deg, #f80000 -53.35%, #ff4800 297.76%);
+}
