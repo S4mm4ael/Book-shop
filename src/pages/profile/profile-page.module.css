@@ -238,3 +238,9 @@ input:valid ~ .Profile__placeholder{
   font-size:24px;
   margin-top:20px;
 }
+.Profile__booksList{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+

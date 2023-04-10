@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -98,9 +99,14 @@ export function Card(props: BookCard) {
                 <div className={`${styles.Card__rating} ${styles.Card__rating_list}`}>
                   {rating ? renderStars(rating) : 'ещё нет оценок'}
                 </div>
-                {!booking && (
+                {!props.isProfile && !booking && (
                   <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list}`}>
                     Забронировать
+                  </button>
+                )}
+                {props.isProfile && !booking && (
+                  <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}>
+                    Отменить бронирование
                   </button>
                 )}
                 {booking?.order && !booking.dateOrder && (

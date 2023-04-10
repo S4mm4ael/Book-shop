@@ -43,6 +43,7 @@ export type BookCard = {
   key: string;
   bookItem: Book;
   isListView: boolean;
+  isProfile?: boolean;
 };
 
 export interface Category {

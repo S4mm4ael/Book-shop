@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -40,12 +41,27 @@ export function BookPage() {
   };
   const error = false;
 
-  function handleBooking() {
-    if (bookId) {
-      if (!bookedBooks.find((id: number) => id === +bookId))
-        dispatch({ type: 'ADD_BOOK', payload: +bookId })
-    }
+  function handleLocalStorageBooking() {
+
+    localStorage.setItem('booked', JSON.stringify(bookedBooks))
   }
+
+  function handleBooking() {
+
+    const booked = localStorage.getItem('booked');
+
+    if (booked) {
+      if (bookId) {
+        if (!bookedBooks.find((id: number) => id === +bookId))
+          dispatch({ type: 'ADD_BOOK', payload: +bookId })
+
+      }
+    }
+
+    handleLocalStorageBooking();
+  }
+
+
   // useEffect(() => {
   //   if (!isLoading && book) {
   //     dispatch({ type: 'IS_LOADING', payload: false });
@@ -127,6 +143,9 @@ export function BookPage() {
                   >
                     Забронировать
                   </button>
+                  {/* {book.booking?.order && <button type='button' className={`${styles.BookPage__bookIt} ${styles.BookPage__bookIt_bookedList}`}>
+                    Забронирована
+                  </button>} */}
                   <div className={styles.BookPage__about}>
                     <h5>О книге</h5>
                     <article className={styles.BookPage__article}>{book?.description}</article>

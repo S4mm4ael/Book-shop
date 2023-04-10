@@ -551,4 +551,17 @@
   }
 
 }
+.BookPage__bookIt_booked,
+.BookPage__bookIt_bookedList{
+  background:#FFFFFF;
+  color:#363636;
+  border:1px solid #BFC4C9;
+  border-radius:20px;
+  cursor:default;
+}
+.BookPage__bookIt_booked:hover{
+  box-shadow:none;
+}
+
+
 

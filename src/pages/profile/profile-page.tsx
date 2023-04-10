@@ -32,16 +32,7 @@ export function ProfilePage() {
   const [isErrors, setIsErrors] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
 
-
   const navigate = useNavigate()
-
-  useEffect(() => {
-    if (localStorage.getItem('token') === 'guest_token' ||
-      !localStorage.getItem('token')) {
-      navigate('/auth')
-    }
-
-  }, [navigate])
 
   // User creds
   const username = useSelector((state: RootState) => state.user.username);
@@ -51,6 +42,27 @@ export function ProfilePage() {
   const email = useSelector((state: RootState) => state.user.email);
   const phone = useSelector((state: RootState) => state.user.phone);
   const bookedBooks = useSelector((state: RootState) => state.user.bookedBooks);
+
+  useEffect(() => {
+    const booked = localStorage.getItem('booked');
+
+    if (localStorage.getItem('token') === 'guest_token' ||
+      !localStorage.getItem('token')) {
+      navigate('/auth')
+    }
+    // if (booked) {
+    //   // eslint-disable-next-line array-callback-return
+    //   JSON.parse(booked).map((bookId: number) => {
+    //     if (!bookedBooks.find((id: number) => id === +bookId))
+    //       dispatch({ type: 'ADD_BOOK', payload: +bookId })
+    //   })
+    // }
+
+  })
+
+
+
+
   // UseForm
   const {
     control,
@@ -233,9 +245,7 @@ export function ProfilePage() {
     }
     )
 
-    console.log(booksToRender)
-
-    return booksToRender.map((book: Book) => <Card key={book.title} bookItem={book} isListView={true} />);
+    return booksToRender.map((book: Book) => <Card key={book.title} bookItem={book} isListView={true} isProfile={true} />);
 
   }
 
