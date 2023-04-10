@@ -31,7 +31,6 @@ export function ProfilePage() {
   const [isPasswordEntered, setisPasswordEntered] = useState<boolean>(false);
   const [isErrors, setIsErrors] = useState<boolean>(false);
   const [showModal, setShowModal] = useState<boolean>(false);
-
   const navigate = useNavigate()
 
   // User creds
@@ -44,7 +43,7 @@ export function ProfilePage() {
   const bookedBooks = useSelector((state: RootState) => state.user.bookedBooks);
 
   useEffect(() => {
-    const booked = localStorage.getItem('booked');
+
 
     if (localStorage.getItem('token') === 'guest_token' ||
       !localStorage.getItem('token')) {
@@ -231,22 +230,32 @@ export function ProfilePage() {
 
     return <p className={`${styles.Profile__formTips} `}>Используйте для логина латинский алфавит и цифры</p>;
   }
+
+
   function renderBooks() {
+
+    const booked = localStorage.getItem('booked');
     const booksToRender: Book[] = []
 
-    // eslint-disable-next-line array-callback-return
-    bookedBooks.map((id: number) => {
-      const book: Book | undefined = booksArray.books.find((item: Book) => item.id === id)
+    if (booked) {
+      // eslint-disable-next-line array-callback-return
+      JSON.parse(booked).map((id: number) => {
+        const book: Book | undefined = booksArray.books.find((item: Book) => item.id === id)
 
-      if (book) {
-
-        booksToRender.push(book)
+        if (book) {
+          booksToRender.push(book)
+        }
       }
+      )
+
+      return booksToRender.map((book: Book) => <Card key={book.title} bookItem={book} isListView={true} isProfile={true} />);
     }
-    )
 
-    return booksToRender.map((book: Book) => <Card key={book.title} bookItem={book} isListView={true} isProfile={true} />);
+    if (!booked) {
+      return <p className={styles.Profile__noBooks}>Книг пока нет</p>
+    }
 
+    return null
   }
 
   return (
@@ -499,7 +508,7 @@ export function ProfilePage() {
             Здесь вы можете просмотреть забронированную книгу, а так же отменить бронь
           </p>
           <ul className={styles.Profile__booksList}>
-            {bookedBooks.length > 1 ? <React.Fragment>{renderBooks()}</React.Fragment> : <p className={styles.Profile__noBooks}>Книг пока нетнет</p>}
+            {renderBooks()}
           </ul>
         </div>
         <div className={styles.Profile__bottomContainer}>

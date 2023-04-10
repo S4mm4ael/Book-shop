@@ -218,6 +218,9 @@ input:valid ~ .Profile__placeholder{
   .Profile__avatarIcon{
     top:114px;
   }
+  .Profile{
+    padding:0 ;
+  }
 }
 @media screen and (max-width:470px){
   .Profile__inputWrapper{
@@ -229,6 +232,13 @@ input:valid ~ .Profile__placeholder{
   .Profile__buttonContainer{
     flex-direction:column;
     align-items:center;
+  }
+  .Profile{
+    gap:0px;
+    padding:0 5px;
+  }
+  .Profile__rightContainer {
+    gap:20px;
   }
 }
 .Profile__noBooks{

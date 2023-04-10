@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import Highlighter from 'react-highlight-words';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import empty from '../../assets/img/book-cover-none.jpg';
 import emptyList from '../../assets/img/book-cover-none-list.jpg';
@@ -17,7 +17,7 @@ import styles from './card.module.css';
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
   const category = categories[0];
-
+  const navigate = useNavigate()
   const searchQuery: string = useSelector((state: RootState) => state.data.searchQuery);
 
   function Truncate(string: string, amount: number) {
@@ -66,12 +66,36 @@ export function Card(props: BookCard) {
 
     return path;
   }
+
   function defineLink() {
     if (window.location.href.split('/')[5] === 'all') {
       return 'all';
     }
 
+
     return definePath(category);
+  }
+
+
+  function handleLocalStorageDelete() {
+    const booked = localStorage.getItem('booked');
+
+    if (booked) {
+      const bookedArray = JSON.parse(booked)
+      const index = bookedArray.indexOf(id)
+
+      if (index > -1) {
+        bookedArray.splice(index, 1)
+        if (bookedArray.length < 1) {
+          localStorage.removeItem('booked')
+        }
+        else {
+
+          localStorage.setItem('booked', JSON.stringify(bookedArray))
+        }
+      }
+
+    }
   }
   if (props.isListView) {
     return (
@@ -105,7 +129,14 @@ export function Card(props: BookCard) {
                   </button>
                 )}
                 {props.isProfile && !booking && (
-                  <button type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}>
+                  <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+
+                    e.preventDefault();
+
+                    navigate('/profile')
+
+                    handleLocalStorageDelete();
+                  }} type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}>
                     Отменить бронирование
                   </button>
                 )}
