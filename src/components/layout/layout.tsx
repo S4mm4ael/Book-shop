@@ -18,7 +18,7 @@ export function Layout() {
   function setLoaded() {
     dispatch({ type: 'IS_LOADING', payload: false });
   }
-  setTimeout(setLoaded, 50);
+  setTimeout(setLoaded, 1200);
 
   return (
     <div className='layout'>
