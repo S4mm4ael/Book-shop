@@ -39,7 +39,14 @@
   line-height:24px;
   margin-right:auto;
 }
-@media screen and (max-width:352px) {
+@media screen and (max-width:550px) {
+  .ModalAsk{
+    padding:0px;
+  }
+  .ModalAsk button{
+    font-size:14px;
+    line-height:18px;
+  }
   .ModalAsk p{
     font-size:14px;
     line-height:18px;

@@ -96,7 +96,8 @@
     display:none;
   }
   .NavigationList__item_empty{
-    height:52px;
+    height:20px;
+    width:260px;
     border-bottom:1px solid #BFC4C9; ;
   }
   .NavigationList_active{
@@ -125,6 +126,7 @@
 @media screen and (max-width:550px) {
   .NavigationList_active{
     position:absolute;
+    height:850px;
     width:288px;
     left:16px;
     top:76px;

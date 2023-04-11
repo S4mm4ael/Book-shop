@@ -223,8 +223,20 @@ input:valid ~ .Profile__placeholder{
   }
 }
 @media screen and (max-width:470px){
+  .Profile__nameContainer h2{
+    margin:0 auto;
+  }
   .Profile__inputWrapper{
     width:300px;
+  }
+  .Profile__avatar{
+    margin:0 auto;
+  }
+  .Profile__avatarIntersect{
+    left:calc(50% - 70px);
+  }
+  .Profile__avatarIcon{
+    left:calc(50% - 16px);
   }
   .Profile__formItem{
     width:300px;
