@@ -29,10 +29,10 @@ export function ModalAsk(props: ModalAskProps) {
       <img src={warning} alt='warning' />
       <p>Вы уверены, что хотите удалить профиль?</p>
       <button className={styles.ModalAsk__answerYes} type='button' onClick={() => deleteUser()}>
-        Да, уверен
+        Да
       </button>
       <button className={styles.ModalAsk__answerNo} type='button' onClick={() => closeModal()}>
-        Нет, не хочу
+        Нет
       </button>
 
     </div >
