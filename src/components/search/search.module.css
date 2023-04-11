@@ -15,12 +15,13 @@
     margin:0 auto;
   }
   .Search__buttons{
-    gap:8px
+    gap:16px
   }
 }
 @media screen and (max-width:660px) {
   .Search{
     padding-left:16px;
+    padding-right:16px;
   }
   .Search__input{
     display:flex;

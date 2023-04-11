@@ -465,12 +465,9 @@
     align-items:center;
   }
 }
-@media screen and (max-width:360px) {
+@media screen and (max-width:415px) {
   .BookPage{
     gap:24px;
-  }
-  .BookPage__book{
-    padding:0;
   }
   .BookPage__properties{
     max-width:320px;
@@ -479,7 +476,7 @@
     max-width:320px;
     text-align:left;
     height:92px;
-    padding:20px 0 20px 16px;
+    padding:20px 5px;
     font-size:12px;
     line-height:16px;
     margin-top:20px;

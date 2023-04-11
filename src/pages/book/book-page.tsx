@@ -41,7 +41,6 @@ export function BookPage() {
   const error = false;
 
   function handleBooking() {
-
     const booked = localStorage.getItem('booked');
 
     if (bookId) {
@@ -168,7 +167,7 @@ export function BookPage() {
                       <p>{book?.authors.map((author) => `${author}, `)}</p>
                       <span>{book?.issueYear}</span>
                     </div>
-                    <button type='button' className={`${styles.BookPage__bookIt}`}>
+                    <button type='button' className={`${styles.BookPage__bookIt}`} onClick={() => handleBooking()}>
                       Забронировать
                     </button>
                   </div>
