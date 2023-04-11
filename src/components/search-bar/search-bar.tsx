@@ -105,7 +105,6 @@ export function SearchBar({ isSearching, changeView }: SearchBarProps) {
             />
             <select className={styles.SearchBar__sort} name='sorting' id='sorting'>
               {!isDesktop && <option value=''> </option>}
-              <option value='rating'>По рейтингу</option>
             </select>
           </button>
         </div>

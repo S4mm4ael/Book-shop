@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 
 import strokeDown from '../../assets/svg/stroke-down.svg';
@@ -15,6 +15,7 @@ import { CategoryItem } from './category-item';
 import styles from './navigation-list.module.css';
 
 export function NavigationList() {
+  const navigate = useNavigate()
   const dispatch: AppDispatch = useDispatch();
   const location = useLocation();
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
@@ -50,7 +51,17 @@ export function NavigationList() {
   //     console.log(error);
   //   }
   // });
+  function handleProfile() {
+    const token = localStorage.getItem('token')
 
+    if (token) {
+      localStorage.removeItem('token')
+      navigate('/auth')
+    }
+
+
+
+  }
   const renderCategories = () =>
     categoriesList.categories?.map((category: Category) => (
       <li key={category.path + category.id}>
@@ -158,16 +169,18 @@ export function NavigationList() {
           </Link>
         </li>
         <li className={styles.NavigationList__item}>
-          <Link
-            to='/exit'
+          <button
+
+            type='button'
             onClick={() => {
               dispatch({ type: 'IS_BURGER_OPEN', payload: false });
               dispatch({ type: 'IS_GENRE_MENU_OPEN', payload: false });
+              handleProfile()
             }}
-            className={styles.NavigationList__subtitle}
+            className={`${styles.NavigationList__subtitle} ${styles.NavigationList_exitButton}`}
           >
             Выход
-          </Link>
+          </button>
         </li>
       </ul>
     </div>

@@ -1,7 +1,10 @@
 .NavigationList{
   margin-top:-20px;
   width:279px;
-
+}
+.NavigationList_exitButton{
+  all:unset;
+  cursor:pointer;
 }
 .NavigationList__list{
   display:flex;
