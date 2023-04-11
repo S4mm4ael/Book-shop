@@ -182,8 +182,7 @@
 
 @media screen and (max-width:550px) {
   .Card {
-    min-width:350px;
-    max-width:400px;
+    width:320px;
     max-height:470px;
     align-items:center;
     padding:8px 14px 16px 14px;
@@ -214,8 +213,9 @@
     padding:16px 16px 16px 8px;
   }
   .Card__title_list{
+    height:40px;
+    line-height:14px;
     font-size:14px;
-    line-height:18px;
     margin-bottom:0;
   }
   .Card__authors_list{
@@ -226,12 +226,13 @@
   .Card__content_list{
     margin:0;
     max-height:150px;
-    gap:0;
+    gap:10px;
     justify-content:flex-start;
   }
   .Card_list img{
     width:70px;
     height:100px;
+    margin:auto 0;
   }
   .Card__rating_list{
     margin:0;
@@ -256,11 +257,16 @@
   }
 }
 
-@media screen and (max-width:370px) {
+@media screen and (max-width:415px) {
   .Card {
     min-width:300px;
     max-width:350px;
-  }}
+  }
+  .Card__bookIt_unavailable{
+    min-height:40px;
+    width:186px;
+  }
+}
 .Card__bookIt_cancel{
   background:linear-gradient(231.58deg, #f80000 -53.35%, #ff4800 297.76%);
 }

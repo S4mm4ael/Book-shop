@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom';
 import strokeDown from '../../assets/svg/stroke-down-black.svg';
 import strokeUp from '../../assets/svg/stroke-up-black.svg';
 import { Comment } from '../../components/comment/comment';
+import { ModalConfirm } from '../../components/modal-confirm';
 import { NavigationList } from '../../components/navigation-list';
 import { SliderBook } from '../../components/slider-book';
 import { bookExact } from '../../mock/book-exact';
@@ -20,11 +21,12 @@ export function BookPage() {
   const [isDesktopSize, setDesktopSize] = useState(window.innerWidth > 768);
   const [isCommentsOpen, setIsCommentsOpen] = useState<boolean>(true);
   const [book, setBook] = useState(bookExact[7]);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const isBurgerOpen: boolean = useSelector((state: RootState) => state.interface.isBurgerOpen);
   const { bookId } = useParams();
   const { category } = useParams();
 
-  const dispatch: AppDispatch = useDispatch();
+  // const dispatch: AppDispatch = useDispatch();
 
 
   useEffect(() => {
@@ -41,7 +43,6 @@ export function BookPage() {
   const error = false;
 
   function handleBooking() {
-
     const booked = localStorage.getItem('booked');
 
     if (bookId) {
@@ -49,6 +50,7 @@ export function BookPage() {
         const newArray = [+bookId]
 
         localStorage.setItem('booked', JSON.stringify(newArray))
+        setShowModal(true);
       }
 
       if (booked) {
@@ -58,7 +60,7 @@ export function BookPage() {
         if (!bookedParced.find((id: number) => id === +bookId))
           bookedParced.push(+bookId)
         localStorage.setItem('booked', JSON.stringify(bookedParced))
-
+        setShowModal(true);
       }
     }
   }
@@ -104,6 +106,7 @@ export function BookPage() {
 
   return (
     <section className={styles.BookPage}>
+      {showModal && <ModalConfirm setVisibility={setShowModal} />}
       {isBurgerOpen && !error && <NavigationList />}
       <div className={styles.BookPage__route}>
         {isDesktopSize ? (
@@ -168,7 +171,7 @@ export function BookPage() {
                       <p>{book?.authors.map((author) => `${author}, `)}</p>
                       <span>{book?.issueYear}</span>
                     </div>
-                    <button type='button' className={`${styles.BookPage__bookIt}`}>
+                    <button type='button' className={`${styles.BookPage__bookIt}`} onClick={() => handleBooking()}>
                       Забронировать
                     </button>
                   </div>
