@@ -40,7 +40,6 @@ export function ProfilePage() {
   const lastName = useSelector((state: RootState) => state.user.lastName);
   const email = useSelector((state: RootState) => state.user.email);
   const phone = useSelector((state: RootState) => state.user.phone);
-  const bookedBooks = useSelector((state: RootState) => state.user.bookedBooks);
 
   useEffect(() => {
 
@@ -58,9 +57,6 @@ export function ProfilePage() {
     // }
 
   })
-
-
-
 
   // UseForm
   const {
