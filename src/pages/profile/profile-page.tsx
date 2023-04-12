@@ -6,12 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames';
 
-import avatar from '../../assets/png/avatar-big.png';
-import intersect from '../../assets/png/avatar-intersect.png';
-import icon from '../../assets/svg/avatar-icon.svg';
 import check from '../../assets/svg/check.svg';
 import eyeClosed from '../../assets/svg/eye-closed.svg';
 import eyeOpened from '../../assets/svg/eye-open.svg';
+import { AvatarChange } from '../../components/avatar-change/avatar-change';
 import { Card } from '../../components/card';
 import { ModalAsk } from '../../components/modal-ask';
 // import { ModalError } from '../../components/modal-error';
@@ -257,15 +255,15 @@ export function ProfilePage() {
   return (
 
     <section className={styles.Profile}>
+
       {showModal && <ModalAsk setVisibility={setShowModal} />}
       <div className={styles.Profile__leftContainer}>
         <NavigationList />
       </div>
       <div className={styles.Profile__rightContainer}>
         <div className={styles.Profile__nameContainer}>
-          <img className={styles.Profile__avatar} src={avatar} alt='avatar' />
-          <img className={styles.Profile__avatarIntersect} src={intersect} alt='avatar-change' />
-          <img className={styles.Profile__avatarIcon} height={32} src={icon} alt='avatar-icon' />
+          <AvatarChange />
+
           <h2>
             {firstName}
             <br />
