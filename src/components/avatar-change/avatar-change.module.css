@@ -1,0 +1,55 @@
+.Profile_avatarContainer{
+  position:relative;
+  width:160px;
+  height:160px;
+}
+.Profile_input{
+  display:none;
+}
+.Profile__inputLabel{
+  cursor:pointer;
+}
+.Profile__avatar{
+  filter:drop-shadow(0px 2px 4px rgba(191, 196, 201, 0.2)) drop-shadow(0px 3px 4px rgba(191, 196, 201, 0.18)) drop-shadow(0px 1px 5px rgba(191, 196, 201, 0.24));
+  border-radius:160px;
+  width:160px;
+}
+.Profile__avatarIcon{
+  position:absolute;
+  z-index:1;
+  top:124px;
+  left:65px;
+  width:32px;
+  height:32px;
+}
+.Profile__avatarIntersect{
+  position:absolute;
+  z-index:1;
+  top:119px;
+  left:8px;
+  width:140.83px;
+  height:42px;
+}
+@media screen and (max-width:700px) {
+  .Profile__avatarIntersect{
+    top:119px;
+  }
+  .Profile__avatarIcon{
+    top:123px;
+  }
+
+}
+@media screen and (max-width:470px){
+  .Profile_avatarContainer{
+    margin:0 auto;
+  }
+  .Profile__avatar{
+    margin:0 auto;
+  }
+  .Profile__avatarIntersect{
+    left:calc(50% - 70px);
+  }
+  .Profile__avatarIcon{
+    left:calc(50% - 16px);
+  }
+}
