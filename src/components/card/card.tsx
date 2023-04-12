@@ -133,7 +133,7 @@ export function Card(props: BookCard) {
 
                     e.preventDefault();
 
-                    navigate('/profile')
+                    navigate('/profile#booked')
 
                     handleLocalStorageDelete();
                   }} type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}>

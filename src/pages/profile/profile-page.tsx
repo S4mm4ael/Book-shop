@@ -498,7 +498,7 @@ export function ProfilePage() {
             </p>
           )}
         </form>
-        <div className={styles.Profile__booksContainer}>
+        <div id="booked" className={styles.Profile__booksContainer}>
           <h3>Забронированные книги</h3>
           <p className={styles.Profile__tips}>
             Здесь вы можете просмотреть забронированную книгу, а так же отменить бронь
