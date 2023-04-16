@@ -17,7 +17,7 @@ import styles from './card.module.css';
 export function Card(props: BookCard) {
   const { id, image, authors, title, issueYear, rating, booking, categories } = props.bookItem;
   const category = categories[0];
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const searchQuery: string = useSelector((state: RootState) => state.data.searchQuery);
 
   function Truncate(string: string, amount: number) {
@@ -72,29 +72,24 @@ export function Card(props: BookCard) {
       return 'all';
     }
 
-
     return definePath(category);
   }
-
 
   function handleLocalStorageDelete() {
     const booked = localStorage.getItem('booked');
 
     if (booked) {
-      const bookedArray = JSON.parse(booked)
-      const index = bookedArray.indexOf(id)
+      const bookedArray = JSON.parse(booked);
+      const index = bookedArray.indexOf(id);
 
       if (index > -1) {
-        bookedArray.splice(index, 1)
+        bookedArray.splice(index, 1);
         if (bookedArray.length < 1) {
-          localStorage.removeItem('booked')
-        }
-        else {
-
-          localStorage.setItem('booked', JSON.stringify(bookedArray))
+          localStorage.removeItem('booked');
+        } else {
+          localStorage.setItem('booked', JSON.stringify(bookedArray));
         }
       }
-
     }
   }
   if (props.isListView) {
@@ -102,7 +97,7 @@ export function Card(props: BookCard) {
       <Link to={`/books/${defineLink()}/${id}`}>
         {' '}
         <div id={id.toString()} className={`${styles.Card} ${styles.Card_list}`} data-test-id='card'>
-          {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' width='120px' />}
+          {image && <img src={`/covers/${id}.webp`} alt='book-cover' width='120px' />}
           {!image && <img src={emptyList} alt='book-cover' height='170px' />}
           <div className={`${styles.Card__wrapper} ${styles.Card__wrapperList}`}>
             <div className={`${styles.Card__content} ${styles.Card__content_list}`}>
@@ -129,14 +124,17 @@ export function Card(props: BookCard) {
                   </button>
                 )}
                 {props.isProfile && !booking && (
-                  <button onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                  <button
+                    onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                      e.preventDefault();
 
-                    e.preventDefault();
+                      navigate('/profile#booked');
 
-                    navigate('/profile#booked')
-
-                    handleLocalStorageDelete();
-                  }} type='button' className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}>
+                      handleLocalStorageDelete();
+                    }}
+                    type='button'
+                    className={`${styles.Card__bookIt} ${styles.Card__bookIt_list} ${styles.Card__bookIt_cancel}`}
+                  >
                     Отменить бронирование
                   </button>
                 )}
@@ -163,7 +161,7 @@ export function Card(props: BookCard) {
       {' '}
       <div id={id.toString()} className={styles.Card} data-test-id='card'>
         <div className={styles.Card__image}>
-          {image && <img src={`https://strapi.cleverland.by${image.url}`} alt='book-cover' height='174px' />}
+          {image && <img src={`/covers/${id}.webp`} alt='book-cover' height='174px' />}
           {!image && <img src={empty} alt='book-cover' />}
         </div>
         <div className={styles.Card__rating}>{rating ? renderStars(rating) : 'ещё нет оценок'}</div>
