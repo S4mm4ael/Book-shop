@@ -28,7 +28,6 @@ export function BookPage() {
 
   // const dispatch: AppDispatch = useDispatch();
 
-
   useEffect(() => {
     if (bookId) {
       setBook(bookExact[+bookId - 2]);
@@ -47,24 +46,21 @@ export function BookPage() {
 
     if (bookId) {
       if (!booked) {
-        const newArray = [+bookId]
+        const newArray = [+bookId];
 
-        localStorage.setItem('booked', JSON.stringify(newArray))
+        localStorage.setItem('booked', JSON.stringify(newArray));
         setShowModal(true);
       }
 
       if (booked) {
+        const bookedParced = JSON.parse(booked);
 
-        const bookedParced = JSON.parse(booked)
-
-        if (!bookedParced.find((id: number) => id === +bookId))
-          bookedParced.push(+bookId)
-        localStorage.setItem('booked', JSON.stringify(bookedParced))
+        if (!bookedParced.find((id: number) => id === +bookId)) bookedParced.push(+bookId);
+        localStorage.setItem('booked', JSON.stringify(bookedParced));
         setShowModal(true);
       }
     }
   }
-
 
   // useEffect(() => {
   //   if (!isLoading && book) {
@@ -133,8 +129,8 @@ export function BookPage() {
             {isDesktopSize ? (
               <div className={styles.BookPage__bookWrapper}>
                 <div className={styles.BookPage__slider}>
-                  {book.images && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
-                  {!book.images && <SliderBook isDesktopSize={isDesktopSize} images={null} />}
+                  {book.images && <SliderBook isDesktopSize={isDesktopSize} images={book.images} id={book.id} />}
+                  {!book.images && <SliderBook isDesktopSize={isDesktopSize} images={null} id={book.id} />}
                 </div>
                 <div className={styles.BookPage__text}>
                   <h1 className={styles.BookPage__title} data-test-id='book-title'>
@@ -144,8 +140,7 @@ export function BookPage() {
                     <p>{book?.authors.map((author) => `${author}, `)}</p>
                     <span>{book?.issueYear}</span>
                   </div>
-                  <button type='button' className={`${styles.BookPage__bookIt}`} onClick={() => handleBooking()}
-                  >
+                  <button type='button' className={`${styles.BookPage__bookIt}`} onClick={() => handleBooking()}>
                     Забронировать
                   </button>
                   {/* {book.booking?.order && <button type='button' className={`${styles.BookPage__bookIt} ${styles.BookPage__bookIt_bookedList}`}>
@@ -161,7 +156,7 @@ export function BookPage() {
               <div className={styles.BookPage__bookWrapper}>
                 <div className={styles.BookPage__bookWrapper_tablet}>
                   <div className={styles.BookPage__slider}>
-                    {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} />}
+                    {book && <SliderBook isDesktopSize={isDesktopSize} images={book.images} id={book.id} />}
                   </div>
                   <div className={styles.BookPage__bookWrapperRight_tablet}>
                     <h1 className={styles.BookPage__title} data-test-id='book-title'>

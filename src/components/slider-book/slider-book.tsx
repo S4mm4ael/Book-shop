@@ -14,7 +14,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import 'swiper/css/pagination';
 
-export function SliderBook({ isDesktopSize, images }: SliderProps) {
+export function SliderBook({ isDesktopSize, images, id }: SliderProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -35,9 +35,14 @@ export function SliderBook({ isDesktopSize, images }: SliderProps) {
     }
 
     return images.map((el) => (
-      <SwiperSlide key={Math.random()} data-test-id={thumb && 'slide-mini'} className={className}>
-        {el && <img src={`https://strapi.cleverland.by${el.url}`} alt='cover' height={`${height}px`} />}
-      </SwiperSlide>
+      <React.Fragment>
+        <SwiperSlide key={Math.random()} data-test-id={thumb && 'slide-mini'} className={className}>
+          {el && <img src={`/covers/${id}.webp`} alt='cover' height={`${height}px`} />}
+        </SwiperSlide>
+        <SwiperSlide key={Math.random()} data-test-id={thumb && 'slide-mini'} className={className}>
+          {el && <img src='/covers/2.webp' alt='cover' height={`${height}px`} />}
+        </SwiperSlide>
+      </React.Fragment>
     ));
   }
 
